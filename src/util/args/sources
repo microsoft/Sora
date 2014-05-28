@@ -1,0 +1,8 @@
+!include "$(SORA_ROOT)\build\sources_ke.inc"
+
+TARGETNAME      = util_arg
+TARGETTYPE      = LIBRARY
+
+SOURCES         = \
+                  args.c
+

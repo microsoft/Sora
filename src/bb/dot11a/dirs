@@ -1,0 +1,4 @@
+DIRS= \
+     dot11 \
+     lutst \
+     mod

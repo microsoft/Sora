@@ -1,0 +1,21 @@
+!include "$(SORA_ROOT)\build\sources_ke.inc"
+
+USE_LIBCMT  = 1
+
+TARGETNAME      = 	tut1
+TARGETTYPE      = 	PROGRAM
+UMTYPE          = 	console
+
+SOURCES         = 	\
+					tut1.cpp
+                  
+
+USER_C_FLAGS    = 	$(USER_C_FLAGS) \
+					/DUSER_MODE \
+					/DUNICODE
+
+INCLUDES        = 	$(INCLUDES);
+
+TARGETLIBS  = 	$(TARGETLIBS) \
+                $(SORA_ROOT)\lib\$(BUILD_ALT_DIR)\*\usora.lib \
+                $(SORA_ROOT)\lib\$(BUILD_ALT_DIR)\*\DebugPlotU.lib

@@ -1,0 +1,30 @@
+!include "$(SORA_ROOT)\build\sources_ke.inc"
+
+TARGETNAME      = sdr_ll
+TARGETTYPE      = LIBRARY
+
+INCLUDES        = \
+                  ..\..\..\bb\dot11b;\
+                  ..\..\..\util\src;\
+                  ..\..\SDRMiniport;\
+                  ..\..\mac; \
+                  $(INCLUDES)
+
+C_DEFINES       = $(C_DEFINES) \
+                  -DNDIS_MINIPORT_DRIVER=1 \
+                  -DNDIS_WDM=1 \
+                  -DIOCTL_INTERFACE \
+                  -DEVENT_TRACING
+                  
+C_DEFINES=$(C_DEFINES) -DNDIS620_MINIPORT=1 -DNDIS61_MINIPORT=1
+
+SOURCES         = \
+                  ..\sdr_ll_main.c \
+                  ..\sdr_ll_util.c \
+                  sdr_ll_recv.c \
+                  sdr_ll_send.c
+   
+RUN_WPP         = \
+                  $(SOURCES) \
+                  -km \
+                  -func:TraceEvents(LEVEL,FLAGS,MSG,...)

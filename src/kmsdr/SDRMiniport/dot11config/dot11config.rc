@@ -1,0 +1,6 @@
+#define VER_FILEDESCRIPTION_STR     "SDR Miniport Driver Configuration Tool"
+#define VER_INTERNALNAME_STR        "dot11config.exe"
+#define VER_ORIGINALFILENAME_STR    "dot11config.exe"
+
+#include "Version.rc"
+

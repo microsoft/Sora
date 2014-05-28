@@ -1,0 +1,3 @@
+DIRS =  \
+    NDIS5\
+    dot11config

@@ -1,0 +1,5 @@
+DIRS =  \
+        ll \
+        mac \
+        phy \
+        SDRMiniport    

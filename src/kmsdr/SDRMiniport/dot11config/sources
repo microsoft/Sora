@@ -1,0 +1,19 @@
+!include "$(SORA_ROOT)\build\sources_ke.inc"
+
+TARGETNAME  = dot11config
+TARGETTYPE  = PROGRAM
+UMTYPE      = console
+    
+USE_MSVCRT  = 1
+
+TARGETLIBS      = $(TARGETLIBS) \
+                  $(TARGETPATH)\*\util_arg.lib
+
+INCLUDES        = \
+                  $(SORA_ROOT)\build; \
+                  $(INCLUDES)
+
+SOURCES     = \
+              main.c \
+              unittest.c \
+              dot11config.rc

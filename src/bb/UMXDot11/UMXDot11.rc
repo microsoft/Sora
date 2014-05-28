@@ -1,0 +1,6 @@
+#define VER_FILEDESCRIPTION_STR     "UMX Application for 802.11a/b"
+#define VER_INTERNALNAME_STR        "Dot11AppExt.exe"
+#define VER_ORIGINALFILENAME_STR    "Dot11AppExt.exe"
+
+#include "Version.rc"
+

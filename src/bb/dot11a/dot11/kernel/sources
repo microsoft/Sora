@@ -1,0 +1,45 @@
+!include "$(SORA_ROOT)\build\sources_ke.inc"
+
+TARGETNAME=dot11bbak
+TARGETTYPE=DRIVER_LIBRARY
+
+INCLUDES= \
+    ..\..\inc;  \
+    $(SORA_ROOT)\kernel\util\src;   \
+    ..\..\..\..\inc\bb; \
+    $(INCLUDES)
+
+USER_C_FLAGS = $(USER_C_FLAGS) /DSTATIC_LUT /Fd /TP /FAs
+
+## Set code optimization option "MSC_OPTIMIZATION" to /O2 (maximize speed)
+## in the sources file, which is necessary for DSP related inline functions.
+## Otherwise inline functions will not inline expanded. The default value
+## is /Oxs (minimize size) in free build, and /Od /Oi in check build.
+## ref: http://msdn.microsoft.com/en-us/library/ff549305%28VS.85%29.aspx
+!if "$(DDKBUILDENV)" == "fre"
+MSC_OPTIMIZATION=/O2
+!endif
+
+SOURCES= \
+    ..\a_init.c \
+    ..\arx_fd.c \
+    ..\arx_cs.c \
+    ..\arx_bg1.c \
+    ..\arx_vdc6.c \
+    ..\arx_vdc9.c \
+    ..\arx_vdc12.c \
+    ..\arx_vdc18.c \
+    ..\arx_vdc24.c \
+    ..\arx_vdc36.c \
+    ..\arx_vdc48.c \
+    ..\arx_vdc54.c \
+    ..\atx_fe.c \
+    ..\atx_6.c \
+    ..\atx_9.c \
+    ..\atx_12.c \
+    ..\atx_18.c \
+    ..\atx_24.c \
+    ..\atx_36.c \
+    ..\atx_48.c \
+    ..\atx_54.c \
+    ..\44MTo40M.c

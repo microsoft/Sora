@@ -1,0 +1,48 @@
+!include "$(SORA_ROOT)\build\sources_ke.inc"
+
+TARGETNAME          = sdr_phy
+TARGETTYPE          = LIBRARY
+
+PRECOMPILED_INCLUDE = sdr_phy_precomp.h
+PRECOMPILED_PCH     = sdr_phy_precomp.pch
+PRECOMPILED_OBJ     = sdr_phy_precomp.obj
+
+INCLUDES            = \
+                      ..\..\bb\dot11b;\
+                      ..\..\util\src;\
+                      ..\mac;\
+                      ..\SDRMiniport;\
+                      $(INCLUDES);
+ 
+!if !defined(DDK_TARGET_OS) || "$(DDK_TARGET_OS)"=="Win2K"
+#
+# The driver is built in the Win2K build environment
+#
+C_DEFINES=$(C_DEFINES) -DNDIS50_MINIPORT=1 
+!elseif "$(DDK_TARGET_OS)"=="WinXP" || "$(DDK_TARGET_OS)"=="WinNET"
+#
+# The driver is built in the XP or .NET build environment
+# So let us build NDIS 5.1 version.
+#
+C_DEFINES=$(C_DEFINES) -DNDIS51_MINIPORT=1 
+!else
+#
+# The driver is built in the Win7 build environment
+# So let us build NDIS 6.20 version.
+#
+C_DEFINES=$(C_DEFINES) -DNDIS620_MINIPORT=1 -DNDIS61_MINIPORT=1 -DNDIS_SUPPORT_NDIS6=1
+!endif
+
+C_DEFINES = $(C_DEFINES) -DEVENT_TRACING
+
+SOURCES             = \
+                      sdr_phy_tx.c\
+                      sdr_phy_rx.c\
+                      sdr_phy_cs.c\
+                      sdr_phy_main.c \
+                      sdr_phy_ack_cache.c
+    
+    
+RUN_WPP             = $(SOURCES)                            \
+                      -km                                   \
+                      -func:TraceEvents(LEVEL,FLAGS,MSG,...) 

@@ -1,0 +1,9 @@
+.PHONY: PACKAGE POSTBUILD
+POSTBUILD : PACKAGE
+
+OUTP=$(TARGETPATH)\$(TARGET_DIRECTORY)
+
+PACKAGE : $(OUTP)\UMXDot11.exe.ini
+
+$(OUTP)\UMXDot11.exe.ini: UMXDot11.exe.ini
+    copy /y UMXDot11.exe.ini $@
