@@ -1,0 +1,20 @@
+!include "$(SORA_ROOT)\build\sources_ke.inc"
+
+TARGETNAME  = dut
+TARGETTYPE  = PROGRAM
+UMTYPE      = console
+    
+USE_MSVCRT  = 1
+
+INCLUDES        = \
+                  $(SORA_ROOT)\build; \
+                  $(INCLUDES)
+
+TARGETLIBS      = $(TARGETLIBS) \
+                  $(TARGETPATH)\*\util_arg.lib \
+				  $(TARGETPATH)\*\usora.lib
+
+SOURCES     = \
+              dut.c \
+              main.c \
+              dut.rc

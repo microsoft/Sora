@@ -1,0 +1,35 @@
+!include "$(SORA_ROOT)\build\sources_ke.inc"
+
+TARGETNAME      = PCIE
+TARGETTYPE      = DRIVER
+
+KMDF_VERSION_MAJOR    = 1
+
+INF_NAME        = PCIE
+
+NTTARGETFILES   = $(TARGETPATH)\*\$(INF_NAME).inf
+MISCFILES       = $(NTTARGETFILES)
+
+TARGETLIBS      = $(TARGETLIBS) \
+                  $(TARGETPATH)\*\ksora.lib
+
+INCLUDES        = $(INCLUDES) \
+                  ..\core\src;\
+                  ..\..\build
+
+C_DEFINES       = $(C_DEFINES) \
+                  -DEVENT_TRACING
+    
+#USER_C_FLAGS    = $(USER_C_FLAGS) /FAs /DEVENT_TRACING
+
+SOURCES         = \
+                  device.c \
+                  Driver.c \
+                  IsrDpc.c \
+                  DeviceIo.c \
+                  RadioManVer.rc
+    
+RUN_WPP         = $(SOURCES)                            \
+                  -km                                   \
+                  -func:TraceEvents(LEVEL,FLAGS,MSG,...) \
+                  -gen:{km-WdfDefault.tpl}*.tmh

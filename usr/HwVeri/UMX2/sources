@@ -1,0 +1,23 @@
+!include "$(SORA_ROOT)\build\sources_usr.inc"
+
+TARGETNAME  = UMX2
+TARGETTYPE	= LIBRARY
+UMTYPE      = windows
+
+USE_STL     = 1
+USE_MSVCR  = 1
+
+INCLUDES    = $(INCLUDES) \
+              ..\Utility;
+
+USER_C_FLAGS  = $(USER_C_FLAGS) \
+                /D"_UNICODE" \
+                /D"UNICODE"
+
+SOURCES     = \
+              beacon.cpp \
+              Radio.cpp \
+              Receive.cpp \
+              Send.cpp \
+              Umx.cpp \
+              UmxCommonOps.cpp

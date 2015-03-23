@@ -73,7 +73,7 @@ uchar _bit_scope_us (ushort x) {
 FINL
 uchar _bit_scope_ui (uint x) {
 	ushort tt;
-	if ( tt = (x >> 16) ) {
+	if (( tt = (x >> 16) )) {
 		return _bit_scope_us (tt) + 16;
 	} else {
 		return _bit_scope_us ((ushort)(x));

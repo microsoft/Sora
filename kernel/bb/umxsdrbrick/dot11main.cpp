@@ -26,8 +26,6 @@ ULONG 				debug = 0;
 
 // RxStream for all radios
 SORA_RADIO_RX_STREAM	RxStream[MAX_RADIO_NUMBER] = { { NULL } };
-BB11A_RX_CONTEXT		RxContext;	// Used by 11a baseband
-
 
 PVOID				RxBuffer[MAX_RADIO_NUMBER] = { NULL };	                // Mapped Rx Buffer for 802.11a/b
 ULONG				RxBufferSize = 0;
@@ -129,7 +127,6 @@ void ConfigureRadio ()
     {
         // Start Radio
         radioNo = RadioNo[iss];
-        SoraURadioStart (radioNo);
         SoraURadioStart (radioNo);
 
         Sleep (10);
@@ -271,16 +268,12 @@ bool StartBaseband11n () {
 
     // Init bricks
     IQuery *q;
-    size_t found = pBB11nRxSource->TraverseGraph(&q, "TRxStream2", 1);
+    size_t found = pBB11nRxSource->TraverseGraph(&q, "TRxMIMOStream", 1);
     assert(found);
-    pRxStreams = q->QueryInterface<RxStreams>();
+    SampleRateDesc *rxSampleRate = q->QueryInterface<SampleRateDesc>();
+    rxSampleRate->Init(40);
+    RxStreams *pRxStreams = q->QueryInterface<RxStreams>();
     pRxStreams->Init(2, RxStream);
-    bool rc = pRxStreams->EstablishSync();
-    if (!rc) {
-        printf("failed to establish sync for all RX streams, possible hardware error\n");
-        return false;
-    }
-
     hViterbiThread = AllocStartThread ( ViterbiThread_11n, NULL );
     if (ViterbiThread_11n == NULL ) {
         printf("failed to start viterbi thread\n");
@@ -332,7 +325,7 @@ bool StartBaseband11b () {
         return false;
     }
 
-    hRxThread = AllocStartThread ( Dot11bRecvProc, &RxContext );
+    hRxThread = AllocStartThread ( Dot11bRecvProc, NULL );
     if (hRxThread == NULL) {
         printf("failed to start rx thread\n");
         return false;

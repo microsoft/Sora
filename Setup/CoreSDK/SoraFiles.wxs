@@ -1,0 +1,249 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <Fragment>
+    <ComponentGroup Id="group_SORA_FILES">
+      <ComponentRef Id="comp_SORA_FILES_LA" />
+      <ComponentRef Id="comp_SORA_FILES_Header" />
+      <ComponentRef Id="comp_inc_brick" />
+      <ComponentRef Id="comp_inc_sdl" />
+      <ComponentRef Id="comp_SORA_FILES_LibChk" />
+      <ComponentRef Id="comp_SORA_FILES_LibFre" />
+      <ComponentRef Id="comp_SORA_FILES_LibChk_amd64" />
+      <ComponentRef Id="comp_SORA_FILES_LibFre_amd64" />
+      <ComponentRef Id="comp_doc" />
+    </ComponentGroup>
+    <ComponentGroup Id="group_SORA_DRIVERS">
+      <ComponentRef Id="comp_SORA_FILES_HWTest_x86" />
+      <ComponentRef Id="comp_SORA_FILES_PCIE_x86" />
+      <ComponentRef Id="comp_SORA_FILES_HWTest_amd64" />
+      <ComponentRef Id="comp_SORA_FILES_PCIE_amd64" />
+    </ComponentGroup>
+    <ComponentGroup Id="group_SORA_UTILITIES">
+      <ComponentRef Id="comp_SORA_FILES_Exe" />
+      <ComponentRef Id="comp_HwVeri_data" />
+      <ComponentRef Id="comp_oscilloscope_config" />
+      <ComponentRef Id="comp_oscilloscope_RunInfo" />
+    </ComponentGroup>
+
+    <DirectoryRef Id="APPLICATIONFOLDER">
+      <Component Id="comp_SORA_FILES_LA" DiskId="1" KeyPath="yes" Guid="{137DE51A-AA7C-4BF6-9C54-2E099950A7A4}">
+        <File Id="file_SORA_FILES_kitagreement" Source="..\..\doc\AcademicKit-LA.pdf" />
+        <File Id="file_SORA_FILES_msrla" Source="..\..\doc\MSR-LA_software_academic_radio_kit.pdf" Name="MSR-LA.pdf" />
+        <File Id="file_SORA_FILES_samplela" Source="..\..\doc\Sora LA for sample.pdf" Name="Sample Code-LA.pdf" />
+        <File Id="file_SORA_FILES_readme" Source="Readme.htm" />
+      </Component>
+      <Directory Id="dir_doc" Name="doc">
+        <Component Id="comp_doc" DiskId="1" KeyPath="yes" Guid="{3DB69671-E502-4557-B60F-3C1AD42E72FD}">
+          <File Id="file_SORA_FILES_DriverInstall" Source="..\..\doc\Sora Device Drivers Installation.pdf" />
+          <!--<File Id="file_SORA_FILES_SdkRef" Source="..\..\doc\The Sora Manual-v1_5.pdf" />-->
+          <File Id="file_SORA_FILES_WinDDK_Root" Source="WinDDK_ROOT.png" />
+        </Component>
+      </Directory>
+      <Directory Id="dir_release_bin" Name="bin">
+        <Component Id="comp_SORA_FILES_Exe" DiskId="1" KeyPath="yes" Guid="{2EF2A3EA-71C5-4699-8C3B-7DFFAC032210}">
+          <File Id="file_SORA_FILES_dut" Checksum="yes" Source="..\..\target\ke\fre_wxp_x86\i386\dut.exe" />
+          <File Id="file_SORA_FILES_HwVeri" Checksum="yes" Source="..\..\target\usr\fre_wxp_x86\i386\HwVeri.exe" />
+          <File Id="file_SORA_FILES_dot11config" Checksum="yes" Source="..\..\target\ke\fre_wxp_x86\i386\dot11config.exe" />
+          <File Id="file_SORA_FILES_demod11" Checksum="yes" Source="..\..\target\ke\fre_wxp_x86\i386\demod11.exe" />
+          <File Id="file_SORA_FILES_UMXDot11_exe" Checksum="yes" Source="..\..\target\ke\fre_wxp_x86\i386\UMXDot11.exe" />
+          <File Id="file_SORA_FILES_UMXDot11_ini" Checksum="yes" Source="..\..\target\ke\fre_wxp_x86\i386\UMXDot11.exe.ini" />
+          <File Id="file_SORA_FILES_intfilter_exe" Checksum="yes" Source="..\..\target\usr\fre_wxp_x86\i386\IntFiltrCmd.exe" />
+          <File Id="file_SORA_FILES_intfilter_sys" Checksum="yes" Source="IntFiltr.sys" />
+          <File Id="file_SORA_FILES_intfilter_reg" Checksum="yes" Source="IntFiltr.reg" />
+          <File Id="file_SORA_FILES_sdscope_11a" Checksum="yes" Source="..\..\bintools\sdscope-11a.exe" />
+          <File Id="file_SORA_FILES_srview" Checksum="yes" Source="..\..\bintools\srview.exe" />
+          <File Id="file_SORA_FILES_oscilloscope_exe" Checksum="yes" Source="..\..\bintools\Oscilloscope_11b\Oscilloscope.exe" Name="sdscope-11b.exe"/>
+          <File Id="file_SORA_FILES_oscilloscope_ini" Checksum="yes" Source="..\..\bintools\Oscilloscope_11b\Oscilloscope.ini" />
+          <File Id="file_SORA_FILES_decoder11b" Checksum="yes" Source="..\..\bintools\Oscilloscope_11b\Decoder11b.dll" />
+          <File Id="file_SORA_FILES_PaintDll" Checksum="yes" Source="..\..\bintools\Oscilloscope_11b\PaintDll.dll" />
+          <!--new files in sora1.6-->
+          <File Id="file_SORA_FILES_brkmod11" Checksum="yes" Source="..\..\target\ke\fre_wxp_x86\i386\brkmod11.exe" />
+          <File Id="file_SORA_FILES_umxsdr" Checksum="yes" Source="..\..\target\ke\fre_wxp_x86\i386\umxsdra.exe" />
+          <File Id="file_SORA_FILES_DbgPlot" Checksum="yes" Source="..\..\DebugTool\source\Release\DbgPlot.exe" />
+          <!--new files in sora1.8-->
+          <File Id="file_SORA_FILES_umxsdrbrick" Checksum="yes" Source="..\..\target\ke\fre_wxp_x86\i386\umxsdrbrick.exe" />
+        </Component>
+        <Directory Id="dir_HwVeri_data" Name="data">
+          <Component Id="comp_HwVeri_data" DiskId="1" KeyPath="yes" Guid="{27613E82-ECA9-4C0C-9A93-AA957BAA25B7}">
+            <File Id="file_SORA_FILES_HwVeri_ofdm" Checksum="yes" Source="..\..\usr\HwVeri\data\ofdm.bin" />
+            <File Id="file_SORA_FILES_HwVeri_SineTest" Checksum="yes" Source="..\..\usr\HwVeri\data\SineTest.mht" />
+            <File Id="file_SORA_FILES_HwVeri_SnrTest" Checksum="yes" Source="..\..\usr\HwVeri\data\SnrTest.mht" />
+          </Component>
+        </Directory>
+        <Directory Id="dir_oscilloscope_config" Name="Config">
+          <Component Id="comp_oscilloscope_config" DiskId="1" KeyPath="yes" Guid="{92A20012-4B95-4530-9AF2-32C5255BC672}">
+            <File Id="file_SORA_FILES_oscilloscope_FilterInfo" Checksum="yes" Source="..\..\bintools\Oscilloscope_11b\Config\FilterInfo.conf" />
+            <File Id="file_SORA_FILES_oscilloscope_PaintModeInfo" Checksum="yes" Source="..\..\bintools\Oscilloscope_11b\Config\PaintModeInfo.conf" />
+          </Component>
+        </Directory>
+        <Directory Id="dir_oscilloscope_RunInfo" Name="ProtocolRunInfo">
+          <Component Id="comp_oscilloscope_RunInfo" DiskId="1" KeyPath="yes" Guid="{948E2D75-BCAE-497C-9B7A-DFC2D0EE25EC}">
+            <File Id="file_SORA_FILES_oscilloscope_RunInfo" Checksum="yes" Source="..\..\bintools\Oscilloscope_11b\ProtocolRunInfo\4DD5D17C-A5CD-4ca1-8804-EA0638735EE2_runinfo.conf" />
+          </Component>
+        </Directory>
+        <Directory Id="dir_release_bin_HWTest" Name="HWTest">
+          <Directory Id="dir_release_bin_HWTest_x86" Name="x86">
+            <Component Id="comp_SORA_FILES_HWTest_x86" DiskId="1" KeyPath="yes" Guid="{424DE63D-5728-4C55-9D8C-96FBE1C3432B}">
+              <File Id="file_SORA_FILES_2" Source="..\..\target\ke\fre_wxp_x86\i386\HWTest.inf" />
+              <File Id="file_SORA_FILES_3" Source="..\..\target\ke\fre_wxp_x86\i386\HWTest.sys" />
+              <File Id="file_SORA_FILES_3_pdb" Source="..\..\target\ke\fre_wxp_x86\i386\HWTest.pdb" />
+            </Component>
+          </Directory>
+          <Directory Id="dir_release_bin_HWTest_amd64" Name="amd64">
+            <Component Id="comp_SORA_FILES_HWTest_amd64" DiskId="1" KeyPath="yes" Guid="{9A688E3C-D9B2-4709-A254-B6E68700F64A}">
+              <File Id="file_SORA_FILES_2_amd64" Source="..\..\target\ke\fre_win7_amd64\amd64\HWTest.inf" />
+              <File Id="file_SORA_FILES_3_amd64" Source="..\..\target\ke\fre_win7_amd64\amd64\HWTest.sys" />
+              <File Id="file_SORA_FILES_3_pdb_amd64" Source="..\..\target\ke\fre_win7_amd64\amd64\HWTest.pdb" />
+            </Component>
+          </Directory>
+        </Directory>
+        <Directory Id="dir_release_bin_PCIE" Name="PCIE">
+          <Directory Id="dir_release_bin_PCIE_x86" Name="x86">
+            <Component Id="comp_SORA_FILES_PCIE_x86" DiskId="1" KeyPath="yes" Guid="{650CA052-875C-4011-8A33-27A007B09B41}">
+              <File Id="file_SORA_FILES_4" Source="..\..\target\ke\fre_wxp_x86\i386\PCIE.inf" />
+              <File Id="file_SORA_FILES_5" Source="..\..\target\ke\fre_wxp_x86\i386\PCIE.sys" />
+              <File Id="file_SORA_FILES_5_pdb" Source="..\..\target\ke\fre_wxp_x86\i386\PCIE.pdb" />
+              <File Id="file_SORA_FILES_WDF" Source="x86\WdfCoInstaller01009.dll" />
+              <File Id="file_SORA_FILES_WDF_CHK" Source="x86\WdfCoInstaller01009_chk.dll" />
+            </Component>
+          </Directory>
+          <Directory Id="dir_release_bin_PCIE_amd64" Name="amd64">
+            <Component Id="comp_SORA_FILES_PCIE_amd64" DiskId="1" KeyPath="yes" Guid="{C48D0201-D3CB-40D0-A515-E335BA118E14}">
+              <File Id="file_SORA_FILES_4_amd64" Source="..\..\target\ke\fre_win7_amd64\amd64\PCIE.inf" />
+              <File Id="file_SORA_FILES_5_amd64" Source="..\..\target\ke\fre_win7_amd64\amd64\PCIE.sys" />
+              <File Id="file_SORA_FILES_5_pdb_amd64" Source="..\..\target\ke\fre_win7_amd64\amd64\PCIE.pdb" />
+              <File Id="file_SORA_FILES_WDF_amd64" Source="x64\WdfCoInstaller01009.dll" />
+              <File Id="file_SORA_FILES_WDF_CHK_amd64" Source="x64\WdfCoInstaller01009_chk.dll" />
+            </Component>
+          </Directory>
+        </Directory>
+      </Directory>
+      <Directory Id="dir_release_inc" Name="inc">
+        <Component Id="comp_SORA_FILES_Header" DiskId="1" KeyPath="yes" Guid="{AB2943E5-8C3E-4568-A76C-FA24C0807194}">
+          <File Id="file_SORA_complex_h" Source="..\..\kernel\core\inc\complex.h" />
+          <File Id="file_SORA_const_h" Source="..\..\kernel\core\inc\const.h" />
+          <File Id="file_SORA_func_h" Source="..\..\kernel\core\inc\func.h" />
+          <File Id="file_SORA_sora_h" Source="..\..\kernel\core\inc\sora.h" />
+          <File Id="file_SORA_soradsp_h" Source="..\..\kernel\core\inc\soradsp.h" />
+          <File Id="file_SORA_soratypes_h" Source="..\..\kernel\core\inc\soratypes.h" />
+          <File Id="file_SORA_uwdm_h" Source="..\..\kernel\core\inc\uwdm.h" />
+          <File Id="file_SORA_vector128_h" Source="..\..\kernel\core\inc\vector128.h" />
+          <File Id="file_SORA_core_thread_h" Source="..\..\kernel\core\inc\_core_thread.h" />
+          <File Id="file_SORA_fsm_h" Source="..\..\kernel\core\inc\_fsm.h" />
+          <File Id="file_SORA_hw_op_h" Source="..\..\kernel\core\inc\_hw_op.h" />
+          <File Id="file_SORA_packet_base_h" Source="..\..\kernel\core\inc\_packet_base.h" />
+          <File Id="file_SORA_radio_manager_h" Source="..\..\kernel\core\inc\_radio_manager.h" />
+          <File Id="file_SORA_reg_conf_h" Source="..\..\kernel\core\inc\_reg_conf.h" />
+          <File Id="file_SORA_rx_manager_h" Source="..\..\kernel\core\inc\_rx_manager.h" />
+          <File Id="file_SORA_sora_clock_h" Source="..\..\kernel\core\inc\_sora_clock.h" />
+          <File Id="file_SORA_sora_regman_h" Source="..\..\kernel\core\inc\_sora_regman.h" />
+          <File Id="file_SORA_tx_manager2_h" Source="..\..\kernel\core\inc\_tx_manager2.h" />
+          <File Id="file_SORA_UExtK_h" Source="..\..\kernel\core\inc\_UExtK.h" />
+          <File Id="file_SORA_user_mode_ext_h" Source="..\..\kernel\core\inc\_user_mode_ext.h" />
+          <File Id="file_SORA_warp_control_h" Source="..\..\kernel\core\inc\_WARP_Control.h" />
+          <File Id="file_SORA_warp_regs_h" Source="..\..\kernel\core\inc\_WARP_Regs.h" />
+          <!--new files in sora1.5-->
+          <File Id="file_SORA__rxstream_h" Source="..\..\kernel\core\inc\_rx_stream.h" />
+          <File Id="file_SORA_signal_cache_h" Source="..\..\kernel\core\inc\_signal_cache.h" />
+          <File Id="file_SORA_thread_if_h" Source="..\..\kernel\core\inc\thread_if.h" />
+          <File Id="file_SORA_enlist_h" Source="..\..\kernel\core\inc\_enlist.h" />
+          <File Id="file_SORA_unroll_h" Source="..\..\kernel\core\inc\unroll.h" />
+          <File Id="file_SORA_resource_collection_h" Source="..\..\kernel\core\inc\resource_collection.h" />
+          <File Id="file_SORA_send_packet_data_h" Source="..\..\kernel\core\inc\send_packet_data.h" />
+          <File Id="file_SORA_soradsp_asm_h" Source="..\..\kernel\core\inc\soradsp_asm.h" />
+          <File Id="file_SORA_scheduler_h" Source="..\..\kernel\core\inc\_scheduler.h" />
+          <!--new files in sora1.6-->
+          <File Id="file_SORA_alinew_h" Source="..\..\kernel\core\inc\alinew.h" />
+          <File Id="file_SORA_complex_ext_h" Source="..\..\kernel\core\inc\complex_ext.h" />
+          <File Id="file_SORA_diagnostics_h" Source="..\..\kernel\core\inc\diagnostics.h" />
+          <File Id="file_SORA_soratime_h" Source="..\..\kernel\core\inc\soratime.h" />
+          <File Id="file_SORA_threadfunc_h" Source="..\..\kernel\core\inc\thread_func.h" />
+          <File Id="file_SORA_tpltrick_h" Source="..\..\kernel\core\inc\tpltrick.h" />
+          <File Id="file_SORA_typeof_h" Source="..\..\kernel\core\inc\typeof.h" />
+          <File Id="file_SORA_variadic_macro_h" Source="..\..\kernel\core\inc\variadic_macro.h" />
+          <File Id="file_SORA_CRC32_h" Source="..\..\kernel\core\inc\CRC32.h" />
+          <File Id="file_SORA_CRC16_h" Source="..\..\kernel\core\inc\CRC16.h" />
+          <File Id="file_SORA_DebugPlotU_h" Source="..\..\DebugTool\source\DebugPlotU\DebugPlotU.h" />
+          <!--moved here in sora1.7.1-->
+          <File Id="file_SORA_fft_h" Source="..\..\kernel\core\inc\fft.h" />
+          <File Id="file_SORA_fft_lut_bitreversal_h" Source="..\..\kernel\core\inc\fft_lut_bitreversal.h" />
+          <File Id="file_SORA_fft_lut_twiddle_h" Source="..\..\kernel\core\inc\fft_lut_twiddle.h" />
+          <File Id="file_SORA_fft_r4dif_h" Source="..\..\kernel\core\inc\fft_r4dif.h" />
+          <File Id="file_SORA_ifft_r4dif_h" Source="..\..\kernel\core\inc\ifft_r4dif.h" />
+          <File Id="file_SORA_intalg_h" Source="..\..\kernel\core\inc\intalg.h" />
+          <File Id="file_SORA_intalglut_h" Source="..\..\kernel\core\inc\intalglut.h" />
+          <File Id="file_SORA_rxstream_h" Source="..\..\kernel\core\inc\rxstream.h" />
+        </Component>
+        <Directory Id="dir_inc_brick" Name="brick">
+          <Component Id="comp_inc_brick" DiskId="1" KeyPath="yes" Guid="{F72BBE03-FC87-4DE4-9806-2126CC0DF458}">
+            <File Id="file_brick_brick_h" Source="..\..\kernel\brick\inc\brick.h" />
+            <File Id="file_brick_brickutil_h" Source="..\..\kernel\brick\inc\brickutil.h" />
+            <File Id="file_brick_demux_h" Source="..\..\kernel\brick\inc\demux.h" />
+            <File Id="file_brick_dspcomm_h" Source="..\..\kernel\brick\inc\dspcomm.h" />
+            <File Id="file_brick_pinqueue_h" Source="..\..\kernel\brick\inc\pinqueue.h" />
+            <File Id="file_brick_stdbrick_hpp" Source="..\..\kernel\brick\inc\stdbrick.hpp" />
+            <File Id="file_brick_stdfacade_h" Source="..\..\kernel\brick\inc\stdfacade.h" />
+            <File Id="file_brick_bb_debug_h" Source="..\..\kernel\brick\inc\bb_debug.h" />
+            <File Id="file_brick_dc_h" Source="..\..\kernel\brick\inc\dc.hpp" />
+            <File Id="file_brick_dspalg_h" Source="..\..\kernel\brick\inc\dspalg.hpp" />
+            <File Id="file_brick_energy_h" Source="..\..\kernel\brick\inc\energy.hpp" />
+            <File Id="file_brick_gdemux_h" Source="..\..\kernel\brick\inc\gdemux.hpp" />
+            <File Id="file_brick_memsource_h" Source="..\..\kernel\brick\inc\memsource.hpp" />
+            <File Id="file_brick_obsolete_facade_h" Source="..\..\kernel\brick\inc\obselete_facade.h" />
+            <File Id="file_brick_rxstream_h" Source="..\..\kernel\brick\inc\rxstream.hpp" />
+            <File Id="file_brick_sequence_h" Source="..\..\kernel\brick\inc\sequence.h" />
+          </Component>
+        </Directory>
+        <Directory Id="dir_inc_sdl" Name="sdl">
+          <Component Id="comp_inc_sdl" DiskId="1" KeyPath="yes" Guid="{DA0FB91F-51CB-4CE5-B5E7-FD3291089226}">
+            <File Id="file_sdl_firfilter_hpp" Source="..\..\kernel\sdl\inc\firfilter.hpp" />
+            <File Id="file_sdl_sdl_hpp" Source="..\..\kernel\sdl\inc\sdl.hpp" />
+            <File Id="file_sdl_sdlmeasure_hpp" Source="..\..\kernel\sdl\inc\sdlmeasure.hpp" />
+            <File Id="file_sdl_sdlplot_hpp" Source="..\..\kernel\sdl\inc\sdlplot.hpp" />
+            <File Id="file_sdl_sources_hpp" Source="..\..\kernel\sdl\inc\sources.hpp" />
+            <File Id="file_sdl_tee_hpp" Source="..\..\kernel\sdl\inc\tee.hpp" />
+            <File Id="file_sdl_wintaps_h" Source="..\..\kernel\sdl\inc\wintaps.h" />
+          </Component>
+        </Directory>
+      </Directory>
+      <Directory Id="dir_release_lib" Name="lib">
+        <Directory Id="dir_release_lib_checked" Name="chk_wxp_x86">
+          <Directory Id="dir_release_lib_checked_i386" Name="i386">
+            <Component Id="comp_SORA_FILES_LibChk" DiskId="1" KeyPath="yes" Guid="{1E902CA2-4C3D-49C1-A053-73CD0552A5AC}">
+              <File Id="file_SORA_FILES_26" Source="..\..\target\ke\chk_wxp_x86\i386\ksora.lib" />
+              <File Id="file_SORA_usora_lib_checked" Source="..\..\target\ke\chk_wxp_x86\i386\usora.lib" />
+              <!--new files in sora1.6-->
+              <File Id="file_SORA_DebugPlotU_lib_checked" Source="..\..\target\ke\chk_wxp_x86\i386\DebugPlotU.lib" />
+            </Component>
+          </Directory>
+        </Directory>
+        <Directory Id="dir_release_lib_retail" Name="fre_wxp_x86">
+          <Directory Id="dir_release_lib_free_i386" Name="i386">
+            <Component Id="comp_SORA_FILES_LibFre" DiskId="1" KeyPath="yes" Guid="{71F7F386-9725-458F-BBD7-02509F229C1F}">
+              <File Id="file_SORA_FILES_27" Source="..\..\target\ke\fre_wxp_x86\i386\ksora.lib" />
+              <File Id="file_SORA_usora_lib_free" Source="..\..\target\ke\fre_wxp_x86\i386\usora.lib" />
+              <!--new files in sora1.6-->
+              <File Id="file_SORA_DebugPlotU_lib_free" Source="..\..\target\ke\fre_wxp_x86\i386\DebugPlotU.lib" />
+            </Component>
+          </Directory>
+        </Directory>
+        <Directory Id="dir_release_lib_checked_win7" Name="chk_win7_amd64">
+          <Directory Id="dir_release_lib_checked_amd64" Name="amd64">
+            <Component Id="comp_SORA_FILES_LibChk_amd64" DiskId="1" KeyPath="yes" Guid="{A71A2B39-63FD-47C0-96CE-76C5FBB08D4A}">
+              <File Id="file_SORA_ksora_lib_checked_amd64" Source="..\..\target\ke\chk_win7_amd64\amd64\ksora.lib" />
+              <File Id="file_SORA_usora_lib_checked_amd64" Source="..\..\target\ke\chk_win7_amd64\amd64\usora.lib" />
+            </Component>
+          </Directory>
+        </Directory>
+        <Directory Id="dir_release_lib_fre_win7" Name="fre_win7_amd64">
+          <Directory Id="dir_release_lib_fre_amd64" Name="amd64">
+            <Component Id="comp_SORA_FILES_LibFre_amd64" DiskId="1" KeyPath="yes" Guid="{58D6FA78-755F-44E0-9440-127EDDAE5026}">
+              <File Id="file_SORA_ksora_lib_fre_amd64" Source="..\..\target\ke\fre_win7_amd64\amd64\ksora.lib" />
+              <File Id="file_SORA_usora_lib_fre_amd64" Source="..\..\target\ke\fre_win7_amd64\amd64\usora.lib" />
+            </Component>
+          </Directory>
+        </Directory>
+      </Directory>
+    </DirectoryRef>
+  </Fragment>
+</Wix>

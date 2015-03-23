@@ -1,0 +1,7 @@
+DIRS = \
+       MacConfig            \
+       IntAffinityConfig    \
+       LUT                  \
+       HwVeri               \
+#       Oscillograph         \
+#       Perf                 \

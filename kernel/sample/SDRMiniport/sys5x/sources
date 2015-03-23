@@ -1,0 +1,64 @@
+!include "$(SORA_ROOT)\build\sources_ke.inc"
+
+TARGETNAME      = SDRMiniport
+TARGETTYPE      = DRIVER
+
+TARGETLIBS      = $(TARGETLIBS) \
+                  $(DDK_LIB_PATH)\ndis.lib \
+                  $(TARGETPATH)\*\ksora.lib\
+                  $(TARGETPATH)\*\sora_utility.lib\
+                  $(TARGETPATH)\*\dot11bbbk.lib\
+                  $(TARGETPATH)\*\dot11bbak.lib\
+                  $(TARGETPATH)\*\libbba_lutstk.lib\
+                  $(TARGETPATH)\*\libbba_modk.lib\
+                  $(TARGETPATH)\*\sdr_mac.lib\
+                  $(TARGETPATH)\*\sdr_phy.lib \
+                  $(TARGETPATH)\*\sdr_ll.lib
+
+INCLUDES        = \
+                  ..\..\..\util\src;\
+                  ..\..\mac;\
+                  ..\..\..\bb\dot11b;\
+                  ..\;\
+                  $(SORA_ROOT)\build; \
+                  $(INCLUDES) \
+				  ..\..\..\core\src;
+ 
+C_DEFINES       = $(C_DEFINES) \
+                  -DNDIS_MINIPORT_DRIVER=1 \
+                  -DNDIS_WDM=1 \
+                  -DIOCTL_INTERFACE \
+                  -DEVENT_TRACING
+
+USER_C_FLAGS = $(USER_C_FLAGS) /TP
+
+
+!if !defined(DDK_TARGET_OS) || "$(DDK_TARGET_OS)"=="Win2K"
+#
+# The driver is built in the Win2K build environment
+#
+C_DEFINES=$(C_DEFINES) -DNDIS50_MINIPORT=1 
+!else 
+#
+# The driver is built in the XP or .NET build environment
+# So let us build NDIS 5.1 version.
+#
+C_DEFINES=$(C_DEFINES) -DNDIS51_MINIPORT=1 
+!endif
+
+INF_NAME        = sdr
+
+NTTARGETFILES   = $(TARGETPATH)\*\$(INF_NAME).inf
+MISCFILES       = $(NTTARGETFILES)
+
+SOURCES         = \
+                  miniport.c \
+                  request.c \
+                  sendrcv.c \
+                  ..\ioctrl.c \
+                  ..\init.c \
+                  sdr.rc
+
+RUN_WPP         = $(SOURCES)                            \
+                  -km                                   \
+                  -func:TraceEvents(LEVEL,FLAGS,MSG,...) 

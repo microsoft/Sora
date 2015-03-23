@@ -28,7 +28,7 @@ public:
 	FACADE_FIELD (CCAState, cca_state     );
 	FACADE_FIELD (uint,     cca_pwr_threshold ); // for energy-based cca
 	FACADE_FIELD (uint,     cca_pwr_reading   );	
-
+	FACADE_FIELD (uint,     cca_peak_index    ); // expose the exactly peak	
 public:
     CF_11CCA() {
 		cca_pwr_threshold() = 1000*1000;

@@ -34,54 +34,30 @@ struct dsp_demapper
 
   dsp_demapper(){}
 
-  __forceinline void demap_limit_bpsk(vcs* pvcs, int vcount)
+  __forceinline void demap_limit(const vcs* pvcs, vcs* pout, int vcount)
   {
     for (int i = 0; i < vcount; i++)
     {
-      pvcs[i] = smin(smax((vs&)pvcs[i], (vs&)DemapMin), (vs&)DemapMax);
+      pout[i] = smin(smax((vs&)pvcs[i], (vs&)DemapMin), (vs&)DemapMax);
     }
   }
 
-  __forceinline void demap_limit_qpsk(vcs* pvcs, int vcount)
-  {
-    for (int i = 0; i < vcount; i++)
-    {
-      pvcs[i] = smin(smax((vs&)pvcs[i], (vs&)DemapMin), (vs&)DemapMax);
-    }
-  }
-
-  __forceinline void demap_limit_16qam(vcs* pvcs, int vcount)
-  {
-    for (int i = 0; i < vcount; i++)
-    {
-      pvcs[i] = smin(smax((vs&)pvcs[i], (vs&)DemapMin), (vs&)DemapMax);
-    }
-  }
-
-  __forceinline void demap_limit_64qam(vcs* pvcs, int vcount)
-  {
-    for (int i = 0; i < vcount; i++)
-    {
-      pvcs[i] = smin(smax((vs&)pvcs[i], (vs&)Demap64qamMin), (vs&)Demap64qamMax);
-    }
-  }
-
-  __forceinline void demap_bpsk_i(COMPLEX16 &cinput, unsigned __int8* pOutput)
+  __forceinline void demap_bpsk_i(const COMPLEX16 &cinput, unsigned __int8* pOutput)
   {
     *pOutput = lookup_table_bpsk[(unsigned __int8)cinput.re];
   }
-  __forceinline void demap_bpsk_q(COMPLEX16 &cinput, unsigned __int8* pOutput)
+  __forceinline void demap_bpsk_q(const COMPLEX16 &cinput, unsigned __int8* pOutput)
   {
     *pOutput = lookup_table_bpsk[(unsigned __int8)cinput.im];
   }
 
-  __forceinline void demap_qpsk(COMPLEX16 &cinput, unsigned __int8* pOutput)
+  __forceinline void demap_qpsk(const COMPLEX16 &cinput, unsigned __int8* pOutput)
   {
     pOutput[0] = lookup_table_qpsk[(unsigned __int8)cinput.re];
     pOutput[1] = lookup_table_qpsk[(unsigned __int8)cinput.im];
   }
 
-  __forceinline void demap_16qam(COMPLEX16 &cinput, unsigned __int8* pOutput)
+  __forceinline void demap_16qam(const COMPLEX16 &cinput, unsigned __int8* pOutput)
   {
     pOutput[0] = lookup_table_16qam1[(unsigned __int8)cinput.re];
     pOutput[1] = lookup_table_16qam2[(unsigned __int8)cinput.re];
@@ -89,7 +65,7 @@ struct dsp_demapper
     pOutput[3] = lookup_table_16qam2[(unsigned __int8)cinput.im];
   }
 
-  __forceinline void demap_64qam(COMPLEX16 &cinput, unsigned __int8* pOutput)
+  __forceinline void demap_64qam(const COMPLEX16 &cinput, unsigned __int8* pOutput)
   {
     pOutput[0] = p_lookup_table_64qam1[cinput.re];
     pOutput[1] = p_lookup_table_64qam2[cinput.re];

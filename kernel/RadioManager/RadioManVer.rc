@@ -1,0 +1,28 @@
+#include <windows.h>
+
+#include <ntverp.h>
+#include "bldver.h"
+
+#undef VER_PRODUCTNAME_STR
+#define VER_PRODUCTNAME_STR         "MSR Software Radio Academic Kit"
+#undef VER_COMPANYNAME_STR
+#define VER_COMPANYNAME_STR         "Microsoft Research Asia"
+#define VER_LEGALCOPYRIGHT_STR      "Copyright (C) Microsoft Corporation 2009" 
+
+
+#define	VER_FILETYPE	VFT_DRV
+#define	VER_FILESUBTYPE	VFT2_DRV_SYSTEM
+
+#define VER_FILEDESCRIPTION_STR     "Radio Control Board Driver"
+#define VER_INTERNALNAME_STR        "pcie.sys"
+#define VER_ORIGINALFILENAME_STR    "pcie.sys"
+
+#undef  VER_PRODUCTVERSION
+#define VER_PRODUCTVERSION          VER_FILEVERSION
+
+#undef VER_PRODUCTVERSION_STR
+#define VER_PRODUCTVERSION_STR      VER_FILEVERSION_STR
+
+
+#include "common.ver"
+

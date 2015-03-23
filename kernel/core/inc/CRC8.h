@@ -25,7 +25,7 @@ SORA_EXTERN_C SELECTANY extern const UCHAR LUT_CRC8[256] =
 };
 
 SORA_EXTERN_C
-FINL UCHAR CalcCRC8(PUCHAR pData, UINT uiLength, UINT nTailBits = 0)
+FINL UCHAR CalcCRC8(const UCHAR *pData, UINT uiLength, UINT nTailBits = 0)
 {
     const unsigned char poly = 0xE0;
     UCHAR crc = 0xFF;

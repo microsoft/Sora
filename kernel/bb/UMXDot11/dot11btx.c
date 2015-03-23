@@ -64,7 +64,6 @@ static int Dot11BTxInit()
 	printf("[dot11b:tx] tx buffer size: %08x\n", SampleBufferSize);
 	if (SampleBuffer == NULL) return -1;
 
-	HRESULT hr;
 	if (SampleBufferSize < BB11B_MAX_SYMBOL_LENGTH)
 	{
 		printf("[dot11b:tx] Buffer size not enough.\n");

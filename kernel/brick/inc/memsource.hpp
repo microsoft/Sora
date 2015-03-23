@@ -1,5 +1,7 @@
 #pragma once
+
 #include "brick.h"
+#include <sbuf.h>
 
 //
 // 	TMemSamples:: Loads I/Q samples from a memory buffer and pushs them 
@@ -87,7 +89,7 @@ public:
 
 		if ( remain_sample > 28 ) {
 			COMPLEX16* po = opin().append ();
-			rep<7>::vmemcpy((vcs*)po, (vcs*) sample_pointer);
+			rep_memcpy<7>((vcs*)po, (vcs*) sample_pointer);
 			
 			sample_pointer += 28;
             sample_index   += 28;
@@ -218,7 +220,7 @@ public:
             COMPLEX16*  sample_pointer = mem_sample_buf[iss] + mem_sample_index[iss];
 
             if ( remain_sample > 28 ) {
-			    rep<7>::vmemcpy((vcs*)opin().write(iss), (vcs*) sample_pointer);
+			    rep_memcpy<7>((vcs*)opin().write(iss), (vcs*) sample_pointer);
                 mem_sample_index[iss] += 28;
 		    } else if (remain_sample == 0) {
                 ret = false;
@@ -286,4 +288,120 @@ public:
         }
         return offset;
     }
+};
+
+//
+// TBufSource -- flexible memeory source 
+//
+class CF_Buffer {
+	FACADE_FIELD(uchar*, buffer_pointer);
+	FACADE_FIELD(ulong , buffer_size   );
+	FACADE_FIELD(ulong , data_length   );
+	FACADE_FIELD(uchar*, read_pointer  );
+
+public:
+	CF_Buffer () {
+		read_pointer() = buffer_pointer() = NULL;
+		buffer_size() = data_length() = 0;
+	}
+	template<int SIZE>
+	void Init ( TSBuf<SIZE>& s) {
+		buffer_pointer () = s.GetBuffer ();
+		buffer_size()     = s.GetSize   ();
+		data_length()     = s.GetDataLength ();
+		read_pointer()    = buffer_pointer();
+	}
+
+	void Init ( TDBuf & s) {
+		buffer_pointer () = s.GetBuffer ();
+		buffer_size()     = s.GetSize   ();
+		data_length()     = s.GetDataLength ();
+		read_pointer()    = buffer_pointer();
+	}
+};
+
+DEFINE_LOCAL_CONTEXT(TBufSink, CF_Error);
+template<typename TData, int Burst>
+class TBufSink {
+public:
+template<TSINK_ARGS>
+class Sink: public CF_Buffer, public TSink<TSINK_PARAMS>
+{
+	CTX_VAR_RW (ulong,      error_code ); 
+
+public:
+	DEFINE_IPORT(TData, Burst);
+	
+public:
+    REFERENCE_LOCAL_CONTEXT(TBufSink);
+
+    STD_TSINK_CONSTRUCTOR(Sink)
+        BIND_CONTEXT(CF_Error::error_code, error_code)
+    {}
+
+	STD_TSINK_RESET()  {}
+
+	STD_TSINK_FLUSH() {}
+
+    BOOL_FUNC_PROCESS(ipin)
+    {
+        while (ipin.check_read())
+        {
+			int write_size = Burst * sizeof(TData);
+            const TData* input = ipin.peek();
+			assert ( data_length() + write_size <= buffer_size() );
+			memcpy ( buffer_pointer() + data_length(), input, write_size );
+			data_length() += write_size;
+
+			ipin.pop();
+        }
+        return true;
+    }
+};
+};
+
+DEFINE_LOCAL_CONTEXT(TBufSource, CF_Error);
+template<typename TData, int Burst>
+class TBufSource {
+public:
+template < TSOURCE_ARGS > 
+class Source : public TSource<TSOURCE_PARAMS>, public CF_Buffer
+{
+protected:
+	CTX_VAR_RW (ulong, 	    error_code );
+
+public:
+	DEFINE_OPORT(TData, Burst);
+
+protected:
+	
+public:
+	REFERENCE_LOCAL_CONTEXT(TBufSource);
+	
+	// brick interfaces
+    STD_TSOURCE_CONSTRUCTOR(Source)
+		BIND_CONTEXT (CF_Error::error_code, error_code)
+    {}
+	
+	STD_TSOURCE_RESET() {}
+	STD_TSOURCE_FLUSH() {}
+	
+    bool Process () {
+		bool ret = true;
+		if ( buffer_pointer () == NULL ) 
+			return false;
+
+		int  read_size = Burst* sizeof(TData);
+		while ( read_pointer() + read_size <= buffer_pointer() + data_length() )
+		{
+			TData* po = opin().append();
+			memcpy ( po, read_pointer(), read_size );
+
+			ret = Next()->Process(opin());
+			read_pointer() += read_size;
+		}
+
+		return false;
+    }
+};
 };

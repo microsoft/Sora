@@ -1,0 +1,5 @@
+DIRS = \
+		DebugTool \
+		kernel \
+		usr \
+        test \

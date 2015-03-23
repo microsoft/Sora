@@ -1,0 +1,6 @@
+#define VER_FILEDESCRIPTION_STR     "Hardware Test Driver"
+#define VER_INTERNALNAME_STR        "hwtest.sys"
+#define VER_ORIGINALFILENAME_STR    "hwtest.sys"
+
+#include "Version.rc"
+

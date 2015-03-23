@@ -31,7 +31,7 @@ public:
 	{
 		while (ipin.check_read())
 		{
-			vcs * pi = (vcs*) ipin.peek ();
+			const vcs * pi = (const vcs*) ipin.peek ();
 
 			// computer the power average
 			vi power = shift_right(SquaredNorm (*pi), 2);
@@ -42,7 +42,7 @@ public:
 			//
 			//  pass to downstream
 			COMPLEX16 * po = opin().append();
-			rep<1>::vmemcpy((vcs*)po, pi);
+            rep_memcpy<1>((vcs*)po, pi);
 			ipin.pop();
 			
 			Next()->Process(opin());

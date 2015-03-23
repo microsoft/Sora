@@ -40,7 +40,7 @@ extern "C" extern __m128i _mm_mullo_epi32(__m128i a, __m128i b);
 extern "C" extern __m128i _mm_shuffle_epi8 (__m128i a, __m128i b);
 extern "C" extern __m128i _mm_insert_epi32 (__m128i a, int b, const int ndx );
 extern "C" extern __m128i _mm_insert_epi16 (__m128i a, int b, const int ndx );
-
+extern "C" extern __m128 _mm_castsi128_ps( __m128i a);
 // Note: 
 // 1. Below declaration are orginal found in <smmintrin.h> in VS2008 include directory.
 //    However the header file is missing in WinDDK\7600.16385.0, so copy here to remove the dependency
@@ -64,6 +64,16 @@ extern "C" extern int _mm_extract_epi32(__m128i src, const int ndx);
 #if defined(_M_X64)
 extern "C" extern __int64 _mm_extract_epi64(__m128i src, const int ndx);
 #endif
+
+extern "C" extern __m128 _mm_addsub_ps(__m128 a, __m128 b);
+extern "C" extern __m128 _mm_hadd_ps(__m128 a, __m128 b);
+extern "C" extern __m128 _mm_hsub_ps(__m128 a, __m128 b);
+extern "C" extern __m128 _mm_movehdup_ps(__m128 a);
+extern "C" extern __m128 _mm_moveldup_ps(__m128 a);
+
+// Note: below declaration are orginal found in <tmmintrin.h> in VS2012 include directory.
+// However the header file is missing in WinDDK\7600.16385.0, so copy here to remove the dependency
+extern "C" extern __m128  _mm_castsi128_ps(__m128i);
 
 // Note: below declaration are orginal found in <intrin.h> in VS2008 include directory.
 #if defined(_M_X64)
@@ -208,6 +218,39 @@ public:
         t = shift_left(t, 32);
         return (T)t;
     }
+
+#ifdef USER_MODE
+    DSP_INLINE static const vf __VF_SIGN_MASK()
+    {
+        return (vf) _mm_set1_ps(-0.f); 
+    }
+
+	DSP_INLINE static const vcf __VCF_IMAGE_SIGN_MASK ()
+    {
+		const static vi::data_type value =
+        {
+            0x00000000,
+            0x80000000,
+            0x00000000,
+            0x80000000
+        };
+
+        return (vcf)_mm_castsi128_ps( (__m128i&)value );
+    }
+
+	DSP_INLINE static const vcf __VCF_REAL_SIGN_MASK ()
+    {
+		const static vi::data_type value =
+        {
+            0x80000000,
+            0x00000000,
+            0x80000000,
+			0x00000000
+        };
+
+        return (vcf)_mm_castsi128_ps( (__m128i&)value );
+    }
+#endif
 
     template<typename T>
     DSP_INLINE static const T __0xFFFFFFFFFFFFFFFF0000000000000000()
@@ -398,6 +441,13 @@ DSP_INLINE void set_zero(T& a, typename vector128::details::traits<T>::tag * = 0
     __m128 t = _mm_setzero_ps(); a = (typename T::raw_type&)t;
 }
 
+#ifdef USER_MODE
+DSP_INLINE vf set_one ( float a ) { return (vf) _mm_set1_ps(a); }
+DSP_INLINE vcf set_one (COMPLEXF c) {
+	vcf r; r[0] = r[1] = c; return r;
+}
+#endif
+
 template<typename T>
 DSP_INLINE bool equal(const T& a, const T& b, typename vector128::details::traits<T>::tag * = 0)
 {
@@ -504,7 +554,27 @@ DSP_INLINE T concat_extract(const T& a, const T& b) { return (T)_mm_alignr_epi8(
 // Bitwise OR
 DEFINE_TEMPLATE_OP_ARITHMETIC2(or, _mm_or_si128);
 // Bitwise XOR
-DEFINE_TEMPLATE_OP_ARITHMETIC2(xor, _mm_xor_si128);
+DEFINE_OP_ARITHMETIC2(xor, vb, _mm_xor_si128);
+DEFINE_OP_ARITHMETIC2(xor, vub, _mm_xor_si128);
+DEFINE_OP_ARITHMETIC2(xor, vs, _mm_xor_si128);
+DEFINE_OP_ARITHMETIC2(xor, vus, _mm_xor_si128);
+DEFINE_OP_ARITHMETIC2(xor, vi, _mm_xor_si128);
+DEFINE_OP_ARITHMETIC2(xor, vui, _mm_xor_si128);
+DEFINE_OP_ARITHMETIC2(xor, vq, _mm_xor_si128);
+DEFINE_OP_ARITHMETIC2(xor, vuq, _mm_xor_si128);
+DEFINE_OP_ARITHMETIC2(xor, vcb, _mm_xor_si128);
+DEFINE_OP_ARITHMETIC2(xor, vcub, _mm_xor_si128);
+DEFINE_OP_ARITHMETIC2(xor, vcs, _mm_xor_si128);
+DEFINE_OP_ARITHMETIC2(xor, vcus, _mm_xor_si128);
+DEFINE_OP_ARITHMETIC2(xor, vci, _mm_xor_si128);
+DEFINE_OP_ARITHMETIC2(xor, vcui, _mm_xor_si128);
+DEFINE_OP_ARITHMETIC2(xor, vcq, _mm_xor_si128);
+DEFINE_OP_ARITHMETIC2(xor, vcuq, _mm_xor_si128);
+#ifdef USER_MODE
+DEFINE_OP_ARITHMETIC2(xor, vf, _mm_xor_ps);
+DEFINE_OP_ARITHMETIC2(xor, vcf, _mm_xor_ps);
+#endif
+
 // Bitwise AND
 DEFINE_TEMPLATE_OP_ARITHMETIC2(and, _mm_and_si128);
 // Bitwise ANDNOT
@@ -528,9 +598,6 @@ DEFINE_OP_ARITHMETIC2(add, vi, _mm_add_epi32);
 DEFINE_OP_ARITHMETIC2(add, vui, _mm_add_epi32);
 DEFINE_OP_ARITHMETIC2(add, vq, _mm_add_epi64);
 DEFINE_OP_ARITHMETIC2(add, vuq, _mm_add_epi64);
-#ifdef USER_MODE
-DEFINE_OP_ARITHMETIC2(add, vf, _mm_add_ps);
-#endif
 DEFINE_OP_ARITHMETIC2(add, vcb, _mm_add_epi8);
 DEFINE_OP_ARITHMETIC2(add, vcub, _mm_add_epi8);
 DEFINE_OP_ARITHMETIC2(add, vcs, _mm_add_epi16);
@@ -539,7 +606,9 @@ DEFINE_OP_ARITHMETIC2(add, vci, _mm_add_epi32);
 DEFINE_OP_ARITHMETIC2(add, vcui, _mm_add_epi32);
 DEFINE_OP_ARITHMETIC2(add, vcq, _mm_add_epi64);
 DEFINE_OP_ARITHMETIC2(add, vcuq, _mm_add_epi64);
+
 #ifdef USER_MODE
+DEFINE_OP_ARITHMETIC2(add, vf, _mm_add_ps);
 DEFINE_OP_ARITHMETIC2(add, vcf, _mm_add_ps);
 #endif
 
@@ -552,9 +621,6 @@ DEFINE_OP_ARITHMETIC2(sub, vi, _mm_sub_epi32);
 DEFINE_OP_ARITHMETIC2(sub, vui, _mm_sub_epi32);
 DEFINE_OP_ARITHMETIC2(sub, vq, _mm_sub_epi64);
 DEFINE_OP_ARITHMETIC2(sub, vuq, _mm_sub_epi64);
-#ifdef USER_MODE
-DEFINE_OP_ARITHMETIC2(sub, vf, _mm_sub_ps);
-#endif
 DEFINE_OP_ARITHMETIC2(sub, vcb, _mm_sub_epi8);
 DEFINE_OP_ARITHMETIC2(sub, vcub, _mm_sub_epi8);
 DEFINE_OP_ARITHMETIC2(sub, vcs, _mm_sub_epi16);
@@ -564,6 +630,7 @@ DEFINE_OP_ARITHMETIC2(sub, vcui, _mm_sub_epi32);
 DEFINE_OP_ARITHMETIC2(sub, vcq, _mm_sub_epi64);
 DEFINE_OP_ARITHMETIC2(sub, vcuq, _mm_sub_epi64);
 #ifdef USER_MODE
+DEFINE_OP_ARITHMETIC2(sub, vf, _mm_sub_ps);
 DEFINE_OP_ARITHMETIC2(sub, vcf, _mm_sub_ps);
 #endif
 
@@ -622,6 +689,11 @@ DEFINE_OP_PERMUTATION4(permutate, vcs, _mm_shuffle_epi32);
 DEFINE_OP_PERMUTATION4(permutate, vi, _mm_shuffle_epi32);
 DEFINE_OP_PERMUTATION4(permutate, vui, _mm_shuffle_epi32);
 
+#ifdef USER_MODE
+template<int a0, int a1, int a2, int a3>         
+DSP_INLINE vf permutate(const vf& a) { return (vf) _mm_shuffle_ps (a, a, _MM_SHUFFLE(a3, a2, a1, a0)); } 
+#endif
+
 // Permutate 2 elements in a vector
 // Template parameter a0 ~ a1: selects the contents of one element location in the destination operand. ie.
 // r[0] := a[a0]
@@ -630,6 +702,11 @@ template<int a0, int a1>
 DSP_INLINE vci permutate(vci &a) { vci c; c = (vci&)_mm_shuffle_pd((__m128d&)a, (__m128d&)a, (a0 | (a1 << 1))); return c; }
 template<int a0, int a1>
 DSP_INLINE vq permutate(vq &a) { vq c; c = (vq&)_mm_shuffle_pd((__m128d&)a, (__m128d&)a, (a0 | (a1 << 1))); return c; }
+
+#ifdef USER_MODE
+template<int a0, int a1>
+DSP_INLINE vcf permutate(vcf &a) { vcf c; c = (vcf&)_mm_shuffle_pd((__m128d&)a, (__m128d&)a, (a0 | (a1 << 1))); return c; }
+#endif
 
 // Permutate 16 byte-element in a 128-bit vector
 // The return value can be expressed by the following equations:
@@ -818,20 +895,21 @@ void pack(vcs& r, const vi& re, const vi& im)
 // Unpack elements in source vector to 2 destination vectors
 // Note:
 //    1. each element will be unpacked to a double-length field, eg. __int8 --> __int16
-//    2. r1 got the unpacked elements in lower half of source vector, r2 got elements in high half
+//    2. low got the unpacked elements in lower half of source vector, high got elements in high half
 template<typename TO, typename T>
-DSP_INLINE void unpack(TO& r1, TO& r2, const T& a)
+DSP_INLINE void unpack(TO& low, TO& high, const T& a)
 {
 #ifdef __SSE4__
-    r1 = (TO)vector128::details::shift_unpack_low<0>(a);
-    r2 = (TO)vector128::details::shift_unpack_low<8>(a);
+    low = (TO)vector128::details::shift_unpack_low<0>(a);
+    high = (TO)vector128::details::shift_unpack_low<8>(a);
 #else
     typedef typename vector128::details::CrackComplexType<T>::type TC;
     TC s = vector128::details::signmask((TC&)a);
-    r1 = (TO)interleave_low((TC&)a, s);
-    r2 = (TO)interleave_high((TC&)a, s);
+    low = (TO)interleave_low((TC&)a, s);
+    high = (TO)interleave_high((TC&)a, s);
 #endif
 }
+
 
 // Add pair-wisely of element-wise multiplication product
 // ie. (vs, vs) --> vi
@@ -887,6 +965,16 @@ DSP_INLINE vcs conjre(const vcs& a)
 // This operation is used for better performance than the accurate one.
 DSP_INLINE vcs conj(const vcs& a) { return xor(a, vector128_consts::__0xFFFF0000FFFF0000FFFF0000FFFF0000<vcs>()); }
 
+#ifdef USER_MODE
+DSP_INLINE vcf conjre ( const vcf& a ) {
+	return (vcf) _mm_xor_ps ( a, vector128_consts::__VCF_REAL_SIGN_MASK());
+}
+
+DSP_INLINE vcf conj(const vcf& a) { 
+	return (vcf) _mm_xor_ps ( a, vector128_consts::__VCF_IMAGE_SIGN_MASK());
+}
+#endif
+
 // Compute accurate conjugate of each complex numbers in a vector
 DSP_INLINE vcs conj0(const vcs& a)
 {
@@ -914,6 +1002,32 @@ DSP_INLINE vci flip(const vci& a)
 {
     return (vci)permutate<1, 0, 3, 2>((vi&)a);
 }
+
+#ifdef USER_MODE
+DSP_INLINE vcf flip(const vcf& a)
+{
+    return (vcf)permutate<1, 0, 3, 2>((vf&)a);
+}
+
+DSP_INLINE vcs neg (const vcs & a) {
+    const static vub::data_type value =
+    {
+        0x00, 0x80,  0x00, 0x80,
+        0x00, 0x80,  0x00, 0x80,
+        0x00, 0x80,  0x00, 0x80,
+        0x00, 0x80,  0x00, 0x80,
+    };
+    return sign(a, (vcs&)value);
+}
+
+DSP_INLINE vf neg (const vf& a) {
+	return (vf) _mm_xor_ps ( a, (const __m128&) vector128_consts::__VF_SIGN_MASK() );
+}
+
+DSP_INLINE vcf neg (const vcf& a) {
+	return (vcf) neg ( (vf) a);
+}
+#endif
 
 // Multiply the first source vector by the conjugate of the second source vector
 // ie. re + j * im = a * conj(b)
@@ -980,6 +1094,105 @@ DSP_INLINE void mul(vq& low, vq& high, const vi& a, const vi& b)
     low = interleave_low(q13, q24); 
     high = interleave_high(q13, q24);
 }
+
+// vector float multiple
+#ifdef USER_MODE
+DSP_INLINE 
+vf mul (const vf & a, const vf & b) {
+	vf r = (vf) _mm_mul_ps (a, b);
+	return r;
+}
+
+DSP_INLINE 
+vcf mul (const vcf & a, const vcf & b) {
+	vf re = (vf) _mm_moveldup_ps (b);
+	vf im = (vf) _mm_movehdup_ps (b);
+
+	vf acbc = mul ((vf&) a, re );
+	vf adbd = mul ((vf&) a, im );
+	vcf bdad = flip ( (vcf&) adbd);
+	vcf r = (vcf) _mm_addsub_ps (acbc, bdad);
+	return r;
+}
+
+DSP_INLINE vf mul(const vf& a, float b)
+{
+    vf bb;
+    set_all(bb, b);
+    return mul(a, bb);
+}
+
+DSP_INLINE vcf mul(const vcf& a, float b)
+{
+    return (vcf)mul((const vf&)a, b);
+}
+
+// dot mul
+DSP_INLINE vcf mul(const vcf& a, const vf& b)
+{
+    return (vcf)mul((const vf&)a, b);
+}
+//
+// A0 = A1 = SquaredNorm (a[0])
+// A2 = A3 = SquaredNorm (a[1])
+DSP_INLINE vf SquaredNorm(const vcf & a ) { 
+	vf t  = mul ((vf)a, (vf)a);
+	vf t1 = permutate<1,0,3,2> (t);
+	vf r  = add (t,t1);
+	return r;
+}
+
+DSP_INLINE 
+vcf conjmul (const vcf & a, const vcf & b) {
+	vf cc = (vf) _mm_moveldup_ps (b);
+	vf dd = (vf) _mm_movehdup_ps (b);
+
+	vf acbc = mul ((vf&) a, cc );
+	vf adbd = mul ((vf&) a, dd );
+	vcf bcac = flip ((vcf)acbc);
+	vcf r = (vcf) _mm_addsub_ps (bcac, adbd);
+	vcf rr = flip(r);
+	return rr;
+}
+
+DSP_INLINE 
+vf sqrt ( const vf& a ) {
+	return (vf) _mm_sqrt_ps ((__m128&) a);
+}
+
+DSP_INLINE 
+vf rsqrt ( const vf& a ) {
+	return (vf) _mm_rsqrt_ps ((__m128&) a);
+}
+
+DSP_INLINE
+vf div ( const vf & a, const vf & b) {
+	vf r = (vf)_mm_div_ps (a, b);
+	return r;
+}
+
+DSP_INLINE vf div(const vf& a, float b)
+{
+    vf bb;
+    set_all(bb, b);
+    return div(a, bb);
+}
+
+DSP_INLINE
+vcf div ( const vcf & a, const vcf & b) {
+	vf n = SquaredNorm (b);
+	vcf u = conjmul (a, b);
+	vcf r = (vcf) div ( (vf) u, n );
+	return r;
+}
+
+// dot divid
+DSP_INLINE
+vcf div ( const vcf & a, const vf & b) {
+	vcf r = (vcf) div ( (vf&) a, b);
+	return r;
+}
+#endif
 
 //
 // mul - perform multiple of two complex vectors and return
@@ -1063,6 +1276,13 @@ DSP_INLINE T abs(const T& a, typename vector128::details::traits<T>::tag * = 0)
     return xor(a, shift_right(a, sizeof(a[0])*8-1));
 }
 
+#ifdef USER_MODE
+DSP_INLINE vf abs (const vf& a )
+{
+	return (vf) _mm_andnot_ps (vector128_consts::__VF_SIGN_MASK (), a );
+}
+#endif
+
 // Accurate element-wise absolute value of a vector
 DEFINE_OP_ARITHMETIC1(abs0, vb, _mm_abs_epi8);
 DEFINE_OP_ARITHMETIC1(abs0, vs, _mm_abs_epi16);
@@ -1131,12 +1351,19 @@ DEFINE_OP_DUPLICATION8_OPERATION(hmax, vus, smax);
 template <typename T> 
 void DSP_INLINE load (T& r, const void* p) { r = _mm_loadu_si128 ((const __m128i *)p); }
 
-
 // Stores 128-bit vector to the address p without polluting the caches
 template <typename T> void DSP_INLINE store_nt(T *p, const T& a) { _mm_stream_si128((__m128i *)p, a); }
+#ifdef USER_MODE
+template <> void DSP_INLINE store_nt<vf>(vf *p, const vf& a) { _mm_store_ps((float *)p, a); }
+template <> void DSP_INLINE store_nt<vcf>(vcf *p, const vcf& a) { _mm_store_ps((float *)p, a); }
+#endif
 
 // Stores 128-bit vector to the address p, which not necessarily 16-byte aligned
 template <typename T> void DSP_INLINE store(void *p, const T& a) { _mm_storeu_si128((__m128i *)p, a); }
+#ifdef USER_MODE
+template <> void DSP_INLINE store<vf>(void *p, const vf& a) { _mm_storeu_ps((float *)p, a); }
+template <> void DSP_INLINE store<vcf>(void *p, const vcf& a) { _mm_storeu_ps((float *)p, a); }
+#endif
 
 DSP_INLINE int move_mask (const vb& a) { return _mm_movemask_epi8 (a); }
 DSP_INLINE int move_mask ( const vs& a ) {
@@ -1160,6 +1387,57 @@ DSP_INLINE int move_mask ( const vi& a, const vi& b, const vi& c, const vi& d ) 
 	vs v1 = saturated_pack (c, d);
 	return move_mask ( v0, v1 );		
 }
+
+
+//
+// all about float
+//
+
+// Kun:
+// type converting functions
+#ifdef USER_MODE
+DSP_INLINE vf convert ( const vi& s ) {
+	return (vf) _mm_cvtepi32_ps ((__m128i)s );
+}
+
+DSP_INLINE vcf convert ( const vci& s ) {
+	return (vcf) _mm_cvtepi32_ps ((__m128i)s );
+}
+
+DSP_INLINE vci convert ( const vcf& s ) {
+	return (vci) _mm_cvtps_epi32 ((__m128)s );
+}
+
+DSP_INLINE vi convert ( const vf& s ) {
+	return (vi) _mm_cvtps_epi32 ((__m128)s );
+}
+
+
+DSP_INLINE void unpack(vcf& low, vcf& high, const vcs& a)
+{
+    vci low1, high1;
+    unpack(low1, high1, a);
+    low = convert(low1);
+    high = convert(high1);
+}
+
+DSP_INLINE vcs saturated_pack(const vcf& low, const vcf& high)
+{
+    vci low1, high1;
+    low1 = convert(low);
+    high1 = convert(high);
+    return saturated_pack(low1, high1);
+}
+
+DSP_INLINE vf SquaredNorm(const vf& re, const vf& im) { 
+	vf r1 = mul (re, re); 
+	vf r2 = mul (im, im);
+	vf r  = add (r1, r2);
+	return r;
+}
+#endif
+
+
 
 // some utilities
 template<typename T>
@@ -1190,21 +1468,55 @@ DEFINE_OP_INSERT(insert, vi,  _mm_insert_epi32, int)
 DEFINE_OP_INSERT(insert, vs,  _mm_insert_epi16, short)
 
 // opeartors
+#define DEFINE_OPERATOR_OVERLOAD0(OP,TYPE,ACTION) \
+	__forceinline TYPE operator OP (const TYPE& o1) {\
+	return ACTION(o1); }
+
+#ifdef USER_MODE
+DEFINE_OPERATOR_OVERLOAD0(-, vf,  neg)
+DEFINE_OPERATOR_OVERLOAD0(-, vcf, neg)
+#endif
+
 #define DEFINE_OPERATOR_OVERLOAD(OP,TYPE,ACTION) \
 	__forceinline TYPE operator OP (const TYPE& o1, const TYPE& o2) {\
 	return ACTION(o1,o2); }
 
 DEFINE_OPERATOR_OVERLOAD(+, vcs, add)
-DEFINE_OPERATOR_OVERLOAD(+, vs, add)	
-DEFINE_OPERATOR_OVERLOAD(+, vi, add)
+DEFINE_OPERATOR_OVERLOAD(+, vs,  add)	
+DEFINE_OPERATOR_OVERLOAD(+, vi,  add)
+#ifdef USER_MODE
+DEFINE_OPERATOR_OVERLOAD(+, vf,  add)	
+DEFINE_OPERATOR_OVERLOAD(+, vcf, add)
+#endif
 
 DEFINE_OPERATOR_OVERLOAD(-, vcs, sub)
 DEFINE_OPERATOR_OVERLOAD(-, vs, sub)	
 DEFINE_OPERATOR_OVERLOAD(-, vi, sub)
+#ifdef USER_MODE
+DEFINE_OPERATOR_OVERLOAD(-, vf,  sub)	
+DEFINE_OPERATOR_OVERLOAD(-, vcf, sub)
+#endif
 
 DEFINE_OPERATOR_OVERLOAD(*, vcs, mul)
 DEFINE_OPERATOR_OVERLOAD(*, vs,  mul_low)	
 DEFINE_OPERATOR_OVERLOAD(*, vi,  mul_low)
+#ifdef USER_MODE
+DEFINE_OPERATOR_OVERLOAD(*, vf,  mul)
+DEFINE_OPERATOR_OVERLOAD(*, vcf, mul)
+
+DEFINE_OPERATOR_OVERLOAD(/, vf,  div)
+DEFINE_OPERATOR_OVERLOAD(/, vcf, div)
+
+DSP_INLINE
+vcf operator/ ( const vcf& a, const vf& b) {
+	return div (a,b);
+}
+
+DSP_INLINE
+vcf operator* ( const vcf& a, const vf& b) {
+	return mul (a,b);
+}
+#endif
 
 #define DEFINE_OPERATOR_OVERLOAD2(OP,TYPE,ACTION) \
 	__forceinline TYPE& operator OP (TYPE& o1, const TYPE& o2) {\
@@ -1214,15 +1526,28 @@ DEFINE_OPERATOR_OVERLOAD2(+=, vcs, add)
 DEFINE_OPERATOR_OVERLOAD2(+=, vci, add)
 DEFINE_OPERATOR_OVERLOAD2(+=, vs, add)	
 DEFINE_OPERATOR_OVERLOAD2(+=, vi, add)
+#ifdef USER_MODE
+DEFINE_OPERATOR_OVERLOAD2(+=, vf, add)	
+DEFINE_OPERATOR_OVERLOAD2(+=, vcf, add)
+#endif
 
 DEFINE_OPERATOR_OVERLOAD2(-=, vcs, sub)
 DEFINE_OPERATOR_OVERLOAD2(-=, vci, sub)
 DEFINE_OPERATOR_OVERLOAD2(-=, vs, sub)	
 DEFINE_OPERATOR_OVERLOAD2(-=, vi, sub)
 
+#ifdef USER_MODE
+DEFINE_OPERATOR_OVERLOAD2(-=, vf, sub)	
+DEFINE_OPERATOR_OVERLOAD2(-=, vcf, sub)
+#endif
+
 DEFINE_OPERATOR_OVERLOAD2(*=, vcs, mul)
 DEFINE_OPERATOR_OVERLOAD2(*=, vs, mul_low)	
 DEFINE_OPERATOR_OVERLOAD2(*=, vi, mul_low)
+#ifdef USER_MODE
+DEFINE_OPERATOR_OVERLOAD2(*=, vf, mul)
+DEFINE_OPERATOR_OVERLOAD2(*=, vcf, mul)
+#endif
 
 #define DEFINE_OPERATOR_OVERLOAD3(OP,TYPE,ACTION) \
 	__forceinline TYPE& operator OP (TYPE& o1, int o2) {\
@@ -1236,278 +1561,6 @@ DEFINE_OPERATOR_OVERLOAD3(<<=, vcs, shift_left)
 DEFINE_OPERATOR_OVERLOAD3(<<=, vs,  shift_left)	
 DEFINE_OPERATOR_OVERLOAD3(<<=, vi,  shift_left)
 
-
-template<typename T>
-DSP_INLINE 
-void vmemcpynt (T * pdst, const T * psrc, int vlen ) {
-	while ( vlen>0 ) {
-		* pdst = * psrc;
-		store_nt<T> (pdst, *psrc);
-		pdst++; psrc++; vlen --;
-	}
-}
-
-template<bool = true> struct true_wrapper;
-
-// Rep utility
-template<int N, typename = true_wrapper<> >
-class rep {
-public:
-   // Copy consequent N elements in psrc buffer to pdst buffer
-	template<typename T>
-	static DSP_INLINE 
-	void vmemcpy (T * pdst, const T * psrc ) {
-		* pdst = * psrc;
-		 pdst ++; psrc ++;
-		 rep<N-1>::vmemcpy (pdst, psrc);
-	};
-
-	template<typename T>
-	static DSP_INLINE 
-	void vmemzero (T * pdst ) {
-		 set_zero (*pdst);
-		 pdst ++; 
-		 rep<N-1>::vmemzero (pdst);
-	};
-
-	// mul consequent N elements in psrc and in coeff, and store the results to pdst
-	template<typename T>	
-	static DSP_INLINE 
-	void vmul (T* pdst, const T * psrc, const T * pcoeffs ) {
-		 *pdst = (*psrc) * (*pcoeffs); 
-		 psrc ++; pdst ++; pcoeffs++;
-		 rep<N-1>::vmul (pdst, psrc, pcoeffs);
-	}
-
-	static DSP_INLINE
-	void vor (unsigned long* pdst, const unsigned long* psrc) {
-		* pdst |= * psrc;
-		 pdst ++; psrc ++;
-		 rep<N-1>::vor (pdst, psrc);
-	}
-	
-    // Shift consequent N elements in psrc buffer to the right by "nbits" bits, and store to original buffer separately
-	template<typename T>	
-	static DSP_INLINE 
-	void vshift_right (T * psrc, int nbits ) {
-		 *psrc = (*psrc) >> nbits; 
-		 psrc ++;
-		 rep<N-1>::vshift_right (psrc, nbits);
-	}
-
-    // Shift consequent N elements in psrc buffer to the left by "nbits" bits, and store to original buffer separately
-	template<typename T>	
-	static DSP_INLINE 
-	void vshift_left (T * psrc, int nbits ) {
-		 *psrc = (*psrc) << nbits; 
-		 psrc ++;
-		 rep<N-1>::vshift_left (psrc, nbits);
-	}
-
-	// Compute the squre norm of consequent N elements in psrc buffer, and store to pdst buffer separately
-	static DSP_INLINE
-	void vsqrnorm (vi * pdst, const vcs * psrc ) {
-		* pdst = SquaredNorm (* psrc);
-		 pdst ++; psrc ++;
-		 rep<N-1>::vsqrnorm (pdst, psrc);
-	};
-
-	// substract consequent N elements in psrc buffer by val, and store to pdst buffer
-	template<typename T>	
-	static DSP_INLINE 
-	void vsub (T* pdst, const T * psrc, const T& val ) {
-		 *pdst = (*psrc) - val; 
-		 psrc ++; pdst ++;
-		 rep<N-1>::vsub (pdst, psrc, val);
-	}
-
-    // Compute the sum of consequent N elements in psrc buffer, and store to the variable r
-	template<typename T>	
-	static DSP_INLINE 
-	void vsum (T& r, const T * psrc ) {
-		 r += (*psrc); 
-		 psrc ++;
-		 rep<N-1>::vsum (r, psrc);
-	}
-
-	static DSP_INLINE 
-	void vdiv (int * pdst, const int* psrc, const int* pdiv ) {
-		*pdst = (*psrc) / (*pdiv);
-		pdst ++; psrc++; pdiv++;
-		rep<N-1>::vdiv (pdst, psrc, pdiv);
-	}
-};
-
-// Template partial specialization for large N instances,
-// use loop-unrolling on a burst of operations instead of recursive unrolling,
-// in order to speed up compilation.
-const int REP_BURST = 16;
-template<int N>
-class rep<N, true_wrapper< (N>REP_BURST) > > {
-public:
-    // Copy consequent N elements in psrc buffer to pdst buffer
-	template<typename T>
-	static DSP_INLINE 
-	void vmemcpy (T * pdst, const T * psrc ) {
-        const int imax = N / REP_BURST * REP_BURST;
-        int i;
-        for (i = 0; i < imax; i += REP_BURST)
-            rep<REP_BURST>::vmemcpy(&pdst[i], &psrc[i]);
-        rep<N - imax>::vmemcpy(&pdst[i], &psrc[i]);
-	};
-
-	template<typename T>
-	static DSP_INLINE 
-	void vmemzero (T * pdst ) {
-        const int imax = N / REP_BURST * REP_BURST;
-        int i;
-        for (i = 0; i < imax; i += REP_BURST)
-            rep<REP_BURST>::vmemzero(&pdst[i]);
-        rep<N - imax>::vmemzero(&pdst[i]);
-	};
-
-	// mul consequent N elements in psrc and in coeff, and store the results to pdst
-	template<typename T>	
-	static DSP_INLINE 
-	void vmul (T* pdst, const T * psrc, const T * pcoeffs ) {
-        const int imax = N / REP_BURST * REP_BURST;
-        int i;
-        for (i = 0; i < imax; i += REP_BURST)
-            rep<REP_BURST>::vmul(&pdst[i], &psrc[i], &pcoeffs[i]);
-        rep<N - imax>::vmul(&pdst[i], &psrc[i], &pcoeffs[i]);
-	}
-
-	static DSP_INLINE
-	void vor (unsigned long* pdst, const unsigned long* psrc) {
-        const int imax = N / REP_BURST * REP_BURST;
-        int i;
-        for (i = 0; i < imax; i += REP_BURST)
-            rep<REP_BURST>::vor(&pdst[i], &psrc[i]);
-        rep<N - imax>::vor(&pdst[i], &psrc[i]);
-	}
-	
-    // Shift consequent N elements in psrc buffer to the right by "nbits" bits, and store to original buffer separately
-	template<typename T>	
-	static DSP_INLINE 
-	void vshift_right (T * psrc, int nbits ) {
-        const int imax = N / REP_BURST * REP_BURST;
-        int i;
-        for (i = 0; i < imax; i += REP_BURST)
-            rep<REP_BURST>::vshift_right(&psrc[i], nbits);
-        rep<N - imax>::vshift_right(&psrc[i], nbits);
-	}
-
-    // Shift consequent N elements in psrc buffer to the left by "nbits" bits, and store to original buffer separately
-	template<typename T>	
-	static DSP_INLINE 
-	void vshift_left (T * psrc, int nbits ) {
-        const int imax = N / REP_BURST * REP_BURST;
-        int i;
-        for (i = 0; i < imax; i += REP_BURST)
-            rep<REP_BURST>::vshift_left(&psrc[i], nbits);
-        rep<N - imax>::vshift_left(&psrc[i], nbits);
-	}
-
-	// Compute the squre norm of consequent N elements in psrc buffer, and store to pdst buffer separately
-	static DSP_INLINE
-	void vsqrnorm (vi * pdst, const vcs * psrc ) {
-        const int imax = N / REP_BURST * REP_BURST;
-        int i;
-        for (i = 0; i < imax; i += REP_BURST)
-            rep<REP_BURST>::vsqrnorm(&pdst[i], &psrc[i]);
-        rep<N - imax>::vsqrnorm(&pdst[i], &psrc[i]);
-	};
-
-	// substract consequent N elements in psrc buffer by val, and store to pdst buffer
-	template<typename T>	
-	static DSP_INLINE 
-	void vsub (T* pdst, const T * psrc, const T& val ) {
-        const int imax = N / REP_BURST * REP_BURST;
-        int i;
-        for (i = 0; i < imax; i += REP_BURST)
-            rep<REP_BURST>::vsub(&pdst[i], &psrc[i], val);
-        rep<N - imax>::vsub(&pdst[i], &psrc[i], val);
-	}
-
-    // Compute the sum of consequent N elements in psrc buffer, and store to the variable r
-	template<typename T>	
-	static DSP_INLINE 
-	void vsum (T& r, const T * psrc ) {
-        const int imax = N / REP_BURST * REP_BURST;
-        int i;
-        for (i = 0; i < imax; i += REP_BURST)
-            rep<REP_BURST>::vsum(r, &psrc[i]);
-        rep<N - imax>::vsum(r, &psrc[i]);
-	}
-
-	static DSP_INLINE 
-	void vdiv (int * pdst, const int* psrc, const int* pdiv ) {
-        const int imax = N / REP_BURST * REP_BURST;
-        int i;
-        for (i = 0; i < imax; i += REP_BURST)
-            rep<REP_BURST>::vdiv(&pdst[i], &psrc[i], &pdiv[i]);
-        rep<N - imax>::vdiv(&pdst[i], &psrc[i], &pdiv[i]);
-	}
-};
-
-template<>
-class rep<0> {
-public:
-	template<typename T>
-	static DSP_INLINE 
-	void vmemcpy (T * pdst, const T * psrc ) { }
-
-	template<typename T>
-	static DSP_INLINE 
-	void vmemzero (T * pdst ) { };
-
-	template<typename T>	
-	static DSP_INLINE 
-	void vmul (T* pdst, const T * psrc, const T * pcoeffs ) { }
-
-	static DSP_INLINE
-	void vor (unsigned long* pdst, const unsigned long* psrc) { }
-
-	template<typename T>	
-	static DSP_INLINE 
-	void vshift_right (T * psrc, int nbits ) { }
-
-	template<typename T>	
-	static DSP_INLINE 
-	void vshift_left (T * psrc, int nbits ) { }
-	
-	static DSP_INLINE 
-	void vsqrnorm (vi * pdst, const vcs * psrc ) { }
-
-	template<typename T>	
-	static DSP_INLINE 
-	void vsub (T* pdst, const T * psrc, const T& val ) { }
-
-	template<typename T>	
-	static DSP_INLINE 
-	void vsum (T& r, const T * psrc ) { }
-
-	static DSP_INLINE 
-	void vdiv (int * pdst, const int* psrc, const int* pdiv ) { }
-};
-
-template<typename T, size_t N, typename = true_wrapper<> >
-struct repex
-{
-    DSP_INLINE static void vmemcpy(T *dst, const T *src)
-    {
-        memcpy(dst, src, sizeof(T) * N);
-    }
-};
-
-template<size_t N>
-struct repex<COMPLEX16, N, true_wrapper<N % 4 == 0> >
-{
-    DSP_INLINE static void vmemcpy(COMPLEX16 *dst, const COMPLEX16 *src)
-    {
-        rep<N/4>::vmemcpy ((vcs *)dst, (vcs *)src);
-    }
-};
 
 //////////////////////////////////////////////////////////////////////////////
 // Public APIs

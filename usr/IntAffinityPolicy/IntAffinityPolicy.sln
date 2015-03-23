@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "IntAffinityPolicy", "IntAffinityPolicy.vcproj", "{6E68A1F2-48FA-4F45-ACA1-AADCB25D03AC}"
+EndProject
+Global
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 2
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = http://msra-ttg001:8080/
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = IntAffinityPolicy.vcproj
+		SccLocalPath1 = .
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6E68A1F2-48FA-4F45-ACA1-AADCB25D03AC}.Debug|Win32.ActiveCfg = Debug|Win32
+		{6E68A1F2-48FA-4F45-ACA1-AADCB25D03AC}.Debug|Win32.Build.0 = Debug|Win32
+		{6E68A1F2-48FA-4F45-ACA1-AADCB25D03AC}.Release|Win32.ActiveCfg = Release|Win32
+		{6E68A1F2-48FA-4F45-ACA1-AADCB25D03AC}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

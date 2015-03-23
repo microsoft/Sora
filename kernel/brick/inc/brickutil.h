@@ -35,7 +35,6 @@ int LoadSoraDumpFile ( const char* fname, COMPLEX16 * pbuf, int size )
 	fseek (fin, 0, SEEK_END);
 	int fsize = ftell (fin );
 
-	const int nSamples = fsize / sizeof(COMPLEX16);
 	int nExpSamples = size / sora_sample_size;
 
     // If the output buffer is not specified, just return the expected buffer size

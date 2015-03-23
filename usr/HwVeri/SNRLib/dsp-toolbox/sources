@@ -1,0 +1,13 @@
+!include "$(SORA_ROOT)\build\sources_usr.inc"
+
+TARGETNAME  = dsptoolbox
+TARGETTYPE	= LIBRARY
+UMTYPE      = windows
+
+USE_STL     = 1
+USE_MSVCR  = 1
+
+SOURCES     = \
+              dsplib.cpp \
+              simplewnd.cpp
+			  

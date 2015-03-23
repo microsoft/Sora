@@ -1,0 +1,9 @@
+!include "$(SORA_ROOT)\build\sources_usr.inc"
+
+TARGETNAME	= FFTAllIn1
+TARGETTYPE	= LIBRARY
+UMTYPE		= windows
+
+SOURCES		= \
+		  FFTAllIn1.cpp
+			  

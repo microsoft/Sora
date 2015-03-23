@@ -1,0 +1,557 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Channel">
+      <UniqueIdentifier>{84ea9dc0-2a83-43d8-9f31-32f09ce26c53}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Channel\FixedLengthType">
+      <UniqueIdentifier>{96b0edce-51de-4647-964d-7dec2840f263}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Channel\TextType">
+      <UniqueIdentifier>{e8c1b073-1901-4209-b9a8-fb7b3994dec2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Process">
+      <UniqueIdentifier>{e0a75ac0-57c9-41d1-a3b6-2319cbe7c4af}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PlotWindow">
+      <UniqueIdentifier>{b5141139-6321-4974-ac17-f940494e03ff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PlotWindow\BitmapType">
+      <UniqueIdentifier>{a431852e-fa96-4baf-b2eb-a959be2f0ad7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PlotWindow\BitmapType\LineType">
+      <UniqueIdentifier>{18ab9fc2-a678-47be-a699-d6764a68fe25}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PlotWindow\BitmapType\LineType\Line">
+      <UniqueIdentifier>{323a45e0-12af-4377-b7b5-4cbe350591b0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PlotWindow\BitmapType\LineType\Spectrum">
+      <UniqueIdentifier>{4e37f1df-3de6-4a36-b8ce-7baff148f224}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PlotWindow\BitmapType\Dots">
+      <UniqueIdentifier>{42763aea-254f-48cb-9279-0f1f71b405d2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PlotWindow\TextType">
+      <UniqueIdentifier>{96b6c27f-aeb4-4289-8603-40b72df1f28e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PlotWindow\TextType\Text">
+      <UniqueIdentifier>{0a856a82-b00e-451c-afa6-ce36613d07cc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object">
+      <UniqueIdentifier>{9e762dda-fba3-4d2c-a211-346355de2df2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CWndDerived">
+      <UniqueIdentifier>{93ed985e-93e9-4a78-b48f-bf8735dfb19a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="HelperFunc">
+      <UniqueIdentifier>{a106cf00-2d06-4b63-a77d-70097582f976}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CWndDerived\BitmapType">
+      <UniqueIdentifier>{1cfdc5ab-c1e7-49bd-b3d7-4442b2008a9b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DockPanel">
+      <UniqueIdentifier>{97ab0ce5-329f-4783-843f-00d53bd4ab9c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DockPanel\ChannelExplorer">
+      <UniqueIdentifier>{693609a5-a995-405a-9344-42cc9f34049a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="AppFrameDocViewResource">
+      <UniqueIdentifier>{b6e9dede-2501-4533-85e2-fb4513bc79b6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CWndDerived\Container">
+      <UniqueIdentifier>{8146d363-3ca6-47a1-a856-93969434c792}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DockPanel\AutoLayout">
+      <UniqueIdentifier>{a623b187-32ba-4353-b168-8f25cbc0d762}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="AppLevelController">
+      <UniqueIdentifier>{a75785fc-b57f-416a-baf4-67aaa8040547}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Constant">
+      <UniqueIdentifier>{a20441ce-8b5e-43bd-a186-39554d8a6dfa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Properties">
+      <UniqueIdentifier>{65d50f76-34af-411d-b113-7bbfd63f9af5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Properties\PlotWnd">
+      <UniqueIdentifier>{f412cc4f-58e0-483b-8ad9-f4be0ecf67f2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Properties\Channel">
+      <UniqueIdentifier>{356f11b5-8ec8-4955-a0c8-c3fe9cff8600}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Properties\Other">
+      <UniqueIdentifier>{83035880-133d-48fb-8e9a-6b4c478cac75}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PlotWindow\TextType\Log">
+      <UniqueIdentifier>{887c96f1-2f8a-449c-91eb-25653ca89476}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CWndDerived\TextType">
+      <UniqueIdentifier>{c6af2d13-c6e1-47ec-8bf0-b99cf46b69d8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CWndDerived\ControlPanel">
+      <UniqueIdentifier>{b568b0c9-a363-4728-9694-b606f14e0312}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Serialize">
+      <UniqueIdentifier>{8e259ddf-4b47-4d1d-a365-b53148a83192}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ReadMe.txt" />
+    <None Include="res\menuimages.bmp">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="res\menuimages_hc.bmp">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="UserImages.bmp">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="res\DbgPlotViewer.rc2">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="res\DbgPlotViewerDoc.ico">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="res\DbgPlotViewer.ico">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="res\Toolbar.bmp">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="res\Toolbar256.bmp">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="ClassDiagram.cd" />
+    <None Include="res\channel_bmp.bmp">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="ClassDiagram1.cd" />
+    <None Include="res\toolbar1.bmp">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="res\bitmap1.bmp">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="res\bmp00001.bmp">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="res\channelExplorer.ico">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="res\autolayout.ico">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="res\controlPanel.ico">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="res\properties.ico">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="res\run32.bmp">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="res\pause32.bmp">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="res\singlestep32.bmp">
+      <Filter>Resource Files</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="ChannelOpened.h">
+      <Filter>Channel</Filter>
+    </ClInclude>
+    <ClInclude Include="ChannelOpenedTextType.h">
+      <Filter>Channel\TextType</Filter>
+    </ClInclude>
+    <ClInclude Include="ChannelOpenedFixedLengthType.h">
+      <Filter>Channel\FixedLengthType</Filter>
+    </ClInclude>
+    <ClInclude Include="GlobalObjLookup.h">
+      <Filter>AppLevelController</Filter>
+    </ClInclude>
+    <ClInclude Include="PlotWindowOpened.h">
+      <Filter>PlotWindow</Filter>
+    </ClInclude>
+    <ClInclude Include="PlotWindowOpenedBitmapType.h">
+      <Filter>PlotWindow\BitmapType</Filter>
+    </ClInclude>
+    <ClInclude Include="PlotWindowOpenedDots.h">
+      <Filter>PlotWindow\BitmapType\Dots</Filter>
+    </ClInclude>
+    <ClInclude Include="PlotWindowOpenedLineType.h">
+      <Filter>PlotWindow\BitmapType\LineType</Filter>
+    </ClInclude>
+    <ClInclude Include="PlotWindowOpenedLine.h">
+      <Filter>PlotWindow\BitmapType\LineType\Line</Filter>
+    </ClInclude>
+    <ClInclude Include="ProcessOpened.h">
+      <Filter>Process</Filter>
+    </ClInclude>
+    <ClInclude Include="SubPlotWnd.h">
+      <Filter>CWndDerived</Filter>
+    </ClInclude>
+    <ClInclude Include="Invokable.h">
+      <Filter>CWndDerived</Filter>
+    </ClInclude>
+    <ClInclude Include="PlotWnd.h">
+      <Filter>CWndDerived</Filter>
+    </ClInclude>
+    <ClInclude Include="HelperFunc.h">
+      <Filter>HelperFunc</Filter>
+    </ClInclude>
+    <ClInclude Include="BitmapPlotWnd.h">
+      <Filter>CWndDerived\BitmapType</Filter>
+    </ClInclude>
+    <ClInclude Include="SubBitmapPlotWnd.h">
+      <Filter>CWndDerived\BitmapType</Filter>
+    </ClInclude>
+    <ClInclude Include="ReplayBufferTrackBar.h">
+      <Filter>CWndDerived</Filter>
+    </ClInclude>
+    <ClInclude Include="ChannelOpenedText.h">
+      <Filter>Channel\TextType</Filter>
+    </ClInclude>
+    <ClInclude Include="ChannelOpenedLineType.h">
+      <Filter>Channel\FixedLengthType</Filter>
+    </ClInclude>
+    <ClInclude Include="ChannelOpenedLine.h">
+      <Filter>Channel\FixedLengthType</Filter>
+    </ClInclude>
+    <ClInclude Include="DbgPlotViewer.h">
+      <Filter>AppFrameDocViewResource</Filter>
+    </ClInclude>
+    <ClInclude Include="DbgPlotViewerDoc.h">
+      <Filter>AppFrameDocViewResource</Filter>
+    </ClInclude>
+    <ClInclude Include="DbgPlotViewerView.h">
+      <Filter>AppFrameDocViewResource</Filter>
+    </ClInclude>
+    <ClInclude Include="MainFrm.h">
+      <Filter>AppFrameDocViewResource</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource.h">
+      <Filter>AppFrameDocViewResource</Filter>
+    </ClInclude>
+    <ClInclude Include="stdafx.h">
+      <Filter>AppFrameDocViewResource</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>AppFrameDocViewResource</Filter>
+    </ClInclude>
+    <ClInclude Include="ChannelTreeCtrl.h">
+      <Filter>DockPanel\ChannelExplorer</Filter>
+    </ClInclude>
+    <ClInclude Include="PassiveTaskQueue.h">
+      <Filter>CWndDerived</Filter>
+    </ClInclude>
+    <ClInclude Include="DockableWndContainer.h">
+      <Filter>DockPanel</Filter>
+    </ClInclude>
+    <ClInclude Include="PlotWndContainer.h">
+      <Filter>CWndDerived\Container</Filter>
+    </ClInclude>
+    <ClInclude Include=".\PlotWindowOpenedContainer.h">
+      <Filter>AppLevelController</Filter>
+    </ClInclude>
+    <ClInclude Include="AutoLayoutSlider.h">
+      <Filter>DockPanel\AutoLayout</Filter>
+    </ClInclude>
+    <ClInclude Include="PlotOperationDriver.h">
+      <Filter>AppLevelController</Filter>
+    </ClInclude>
+    <ClInclude Include="PlotWindowOpenedSpectrum.h">
+      <Filter>PlotWindow\BitmapType\LineType\Spectrum</Filter>
+    </ClInclude>
+    <ClInclude Include="ChannelOpenedSpectrum.h">
+      <Filter>Channel\FixedLengthType</Filter>
+    </ClInclude>
+    <ClInclude Include="ChannelOpenedDots.h">
+      <Filter>Channel\FixedLengthType</Filter>
+    </ClInclude>
+    <ClInclude Include=".\ViewerAppConst.h">
+      <Filter>Constant</Filter>
+    </ClInclude>
+    <ClInclude Include="ChannelAddable.h">
+      <Filter>PlotWindow</Filter>
+    </ClInclude>
+    <ClInclude Include=".\Targetable.h">
+      <Filter>CWndDerived</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseProperty.h">
+      <Filter>Properties</Filter>
+    </ClInclude>
+    <ClInclude Include="TemplateProperty.h">
+      <Filter>Properties</Filter>
+    </ClInclude>
+    <ClInclude Include=".\ChannelProperty.h">
+      <Filter>Properties\Channel</Filter>
+    </ClInclude>
+    <ClInclude Include=".\PlotWindowLineTypeProperty.h">
+      <Filter>Properties\PlotWnd</Filter>
+    </ClInclude>
+    <ClInclude Include="PlotWindowDotsProperty.h">
+      <Filter>Properties\PlotWnd</Filter>
+    </ClInclude>
+    <ClInclude Include="PlotWindowOpenedText.h">
+      <Filter>PlotWindow\TextType\Text</Filter>
+    </ClInclude>
+    <ClInclude Include="PlotWindowOpenedTextType.h">
+      <Filter>PlotWindow\TextType</Filter>
+    </ClInclude>
+    <ClInclude Include="TextTypePlotWnd.h">
+      <Filter>CWndDerived\TextType</Filter>
+    </ClInclude>
+    <ClInclude Include="SubTextTypePlotWnd.h">
+      <Filter>CWndDerived\TextType</Filter>
+    </ClInclude>
+    <ClInclude Include="ChannelOpenedLog.h">
+      <Filter>Channel\TextType</Filter>
+    </ClInclude>
+    <ClInclude Include="PlotWindowOpenedLog.h">
+      <Filter>PlotWindow\TextType\Log</Filter>
+    </ClInclude>
+    <ClInclude Include="PlotWndPlayPauseController.h">
+      <Filter>AppLevelController</Filter>
+    </ClInclude>
+    <ClInclude Include="AsyncObject.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include=".\PropObject.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="ControlPanelDriver.h">
+      <Filter>AppLevelController</Filter>
+    </ClInclude>
+    <ClInclude Include="ControlPanelList.h">
+      <Filter>CWndDerived\ControlPanel</Filter>
+    </ClInclude>
+    <ClInclude Include="ControlPanelWnd.h">
+      <Filter>CWndDerived\ControlPanel</Filter>
+    </ClInclude>
+    <ClInclude Include="CustomButton.h">
+      <Filter>CWndDerived\ControlPanel</Filter>
+    </ClInclude>
+    <ClInclude Include="Serializable.h">
+      <Filter>Serialize</Filter>
+    </ClInclude>
+    <ClInclude Include="PlotWindowTextTypeProperty.h">
+      <Filter>Properties\PlotWnd</Filter>
+    </ClInclude>
+    <ClInclude Include="GridAlg.h">
+      <Filter>PlotWindow\BitmapType\LineType</Filter>
+    </ClInclude>
+    <ClInclude Include="CrashDump.h">
+      <Filter>AppFrameDocViewResource</Filter>
+    </ClInclude>
+    <ClInclude Include="BitmapTypeSettings.h">
+      <Filter>PlotWindow\BitmapType\LineType</Filter>
+    </ClInclude>
+    <ClInclude Include="SettingsPlotWindow.h">
+      <Filter>PlotWindow</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayControlWnd.h">
+      <Filter>CWndDerived\BitmapType</Filter>
+    </ClInclude>
+    <ClInclude Include="TextPlayControlWnd.h">
+      <Filter>CWndDerived\TextType</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="ChannelOpened.cpp">
+      <Filter>Channel</Filter>
+    </ClCompile>
+    <ClCompile Include="ChannelOpenedFixedLengthType.cpp">
+      <Filter>Channel\FixedLengthType</Filter>
+    </ClCompile>
+    <ClCompile Include="GlobalObjLookup.cpp">
+      <Filter>AppLevelController</Filter>
+    </ClCompile>
+    <ClCompile Include="PlotWindowOpened.cpp">
+      <Filter>PlotWindow</Filter>
+    </ClCompile>
+    <ClCompile Include="PlotWindowOpenedBitmapType.cpp">
+      <Filter>PlotWindow\BitmapType</Filter>
+    </ClCompile>
+    <ClCompile Include="PlotWindowOpenedDots.cpp">
+      <Filter>PlotWindow\BitmapType\Dots</Filter>
+    </ClCompile>
+    <ClCompile Include="PlotWindowOpenedLineType.cpp">
+      <Filter>PlotWindow\BitmapType\LineType</Filter>
+    </ClCompile>
+    <ClCompile Include="ProcessOpened.cpp">
+      <Filter>Process</Filter>
+    </ClCompile>
+    <ClCompile Include="SubPlotWnd.cpp">
+      <Filter>CWndDerived</Filter>
+    </ClCompile>
+    <ClCompile Include="Invokable.cpp">
+      <Filter>CWndDerived</Filter>
+    </ClCompile>
+    <ClCompile Include="PlotWnd.cpp">
+      <Filter>CWndDerived</Filter>
+    </ClCompile>
+    <ClCompile Include="HelperFunc.cpp">
+      <Filter>HelperFunc</Filter>
+    </ClCompile>
+    <ClCompile Include="BitmapPlotWnd.cpp">
+      <Filter>CWndDerived\BitmapType</Filter>
+    </ClCompile>
+    <ClCompile Include="SubBitmapPlotWnd.cpp">
+      <Filter>CWndDerived\BitmapType</Filter>
+    </ClCompile>
+    <ClCompile Include="ReplayBufferTrackBar.cpp">
+      <Filter>CWndDerived</Filter>
+    </ClCompile>
+    <ClCompile Include="ChannelOpenedText.cpp">
+      <Filter>Channel\TextType</Filter>
+    </ClCompile>
+    <ClCompile Include="ChannelOpenedLine.cpp">
+      <Filter>Channel\FixedLengthType</Filter>
+    </ClCompile>
+    <ClCompile Include="ChannelOpenedLineType.cpp">
+      <Filter>Channel\FixedLengthType</Filter>
+    </ClCompile>
+    <ClCompile Include="MainFrm.cpp">
+      <Filter>AppFrameDocViewResource</Filter>
+    </ClCompile>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>AppFrameDocViewResource</Filter>
+    </ClCompile>
+    <ClCompile Include="DbgPlotViewerDoc.cpp">
+      <Filter>AppFrameDocViewResource</Filter>
+    </ClCompile>
+    <ClCompile Include="DbgPlotViewerView.cpp">
+      <Filter>AppFrameDocViewResource</Filter>
+    </ClCompile>
+    <ClCompile Include="DbgPlotViewer.cpp">
+      <Filter>AppFrameDocViewResource</Filter>
+    </ClCompile>
+    <ClCompile Include="Vld.cpp">
+      <Filter>AppFrameDocViewResource</Filter>
+    </ClCompile>
+    <ClCompile Include="ChannelTreeCtrl.cpp">
+      <Filter>DockPanel\ChannelExplorer</Filter>
+    </ClCompile>
+    <ClCompile Include="DockableWndContainer.cpp">
+      <Filter>DockPanel</Filter>
+    </ClCompile>
+    <ClCompile Include="PlotWindowOpenedLine.cpp">
+      <Filter>PlotWindow\BitmapType\LineType\Line</Filter>
+    </ClCompile>
+    <ClCompile Include="PlotWndContainer.cpp">
+      <Filter>CWndDerived\Container</Filter>
+    </ClCompile>
+    <ClCompile Include=".\PlotWindowOpenedContainer.cpp">
+      <Filter>AppLevelController</Filter>
+    </ClCompile>
+    <ClCompile Include="AutoLayoutSlider.cpp">
+      <Filter>DockPanel\AutoLayout</Filter>
+    </ClCompile>
+    <ClCompile Include="PlotOperationDriver.cpp">
+      <Filter>AppLevelController</Filter>
+    </ClCompile>
+    <ClCompile Include="PlotWindowOpenedSpectrum.cpp">
+      <Filter>PlotWindow\BitmapType\LineType\Spectrum</Filter>
+    </ClCompile>
+    <ClCompile Include="ChannelOpenedSpectrum.cpp">
+      <Filter>Channel\FixedLengthType</Filter>
+    </ClCompile>
+    <ClCompile Include="ChannelOpenedDots.cpp">
+      <Filter>Channel\FixedLengthType</Filter>
+    </ClCompile>
+    <ClCompile Include=".\ViewerAppConst.cpp">
+      <Filter>Constant</Filter>
+    </ClCompile>
+    <ClCompile Include="BaseProperty.cpp">
+      <Filter>Properties</Filter>
+    </ClCompile>
+    <ClCompile Include="TemplateProperty.cpp">
+      <Filter>Properties</Filter>
+    </ClCompile>
+    <ClCompile Include=".\ChannelProperty.cpp">
+      <Filter>Properties\Channel</Filter>
+    </ClCompile>
+    <ClCompile Include=".\PlotWindowLineTypeProperty.cpp">
+      <Filter>Properties\PlotWnd</Filter>
+    </ClCompile>
+    <ClCompile Include="PlotWindowDotsProperty.cpp">
+      <Filter>Properties\PlotWnd</Filter>
+    </ClCompile>
+    <ClCompile Include="PlotWindowOpenedTextType.cpp">
+      <Filter>PlotWindow\TextType</Filter>
+    </ClCompile>
+    <ClCompile Include="PlotWindowOpenedText.cpp">
+      <Filter>PlotWindow\TextType\Text</Filter>
+    </ClCompile>
+    <ClCompile Include="TextTypePlotWnd.cpp">
+      <Filter>CWndDerived\TextType</Filter>
+    </ClCompile>
+    <ClCompile Include="SubTextTypePlotWnd.cpp">
+      <Filter>CWndDerived\TextType</Filter>
+    </ClCompile>
+    <ClCompile Include="ChannelOpenedTextType.cpp">
+      <Filter>Channel\TextType</Filter>
+    </ClCompile>
+    <ClCompile Include="ChannelOpenedLog.cpp">
+      <Filter>Channel\TextType</Filter>
+    </ClCompile>
+    <ClCompile Include="PlotWindowOpenedLog.cpp">
+      <Filter>PlotWindow\TextType\Log</Filter>
+    </ClCompile>
+    <ClCompile Include="PlotWndPlayPauseController.cpp">
+      <Filter>AppLevelController</Filter>
+    </ClCompile>
+    <ClCompile Include="AsyncObject.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include=".\PropObject.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="ControlPanelDriver.cpp">
+      <Filter>AppLevelController</Filter>
+    </ClCompile>
+    <ClCompile Include="ControlPanelList.cpp">
+      <Filter>CWndDerived\ControlPanel</Filter>
+    </ClCompile>
+    <ClCompile Include="ControlPanelWnd.cpp">
+      <Filter>CWndDerived\ControlPanel</Filter>
+    </ClCompile>
+    <ClCompile Include="CustomButton.cpp">
+      <Filter>CWndDerived\ControlPanel</Filter>
+    </ClCompile>
+    <ClCompile Include="ChannelAddable.cpp">
+      <Filter>PlotWindow</Filter>
+    </ClCompile>
+    <ClCompile Include="PlotWindowTextTypeProperty.cpp">
+      <Filter>Properties\PlotWnd</Filter>
+    </ClCompile>
+    <ClCompile Include="GridAlg.cpp">
+      <Filter>PlotWindow\BitmapType\LineType</Filter>
+    </ClCompile>
+    <ClCompile Include="CrashDump.cpp">
+      <Filter>AppFrameDocViewResource</Filter>
+    </ClCompile>
+    <ClCompile Include="BitmapTypeSettings.cpp">
+      <Filter>PlotWindow\BitmapType\LineType</Filter>
+    </ClCompile>
+    <ClCompile Include="SettingsPlotWindow.cpp">
+      <Filter>PlotWindow</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayControlWnd.cpp">
+      <Filter>CWndDerived\BitmapType</Filter>
+    </ClCompile>
+    <ClCompile Include="TextPlayControlWnd.cpp">
+      <Filter>CWndDerived\TextType</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="DbgPlotViewer.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+</Project>

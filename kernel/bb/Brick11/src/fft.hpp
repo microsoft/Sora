@@ -28,7 +28,7 @@ public:
             oversampled_ifft (in, out+8);
 			
 			// add GI
-			rep<8>::vmemcpy (out, out+32);
+			rep_memcpy<8>(out, out+32);
 
 			// Windowing here
 			COMPLEX16* pout = (COMPLEX16*) out;
@@ -49,13 +49,13 @@ public:
 	{
 		vcs temp[128 / vcs::size];
 		
-		rep<8>::vmemcpy   (temp, pcInput );
-		rep<8>::vmemcpy   (&temp[24], &pcInput[8]);
-		rep<16>::vmemzero (&temp[8]);
+		rep_memcpy<8> (temp, pcInput );
+		rep_memcpy<8> (&temp[24], &pcInput[8]);
+		rep_memzero<16> (&temp[8]);
 
 		IFFT<128> (temp, pcOutput );
 
-		rep<32>::vshift_right (pcOutput, 4);	
+		rep_shift_right<32>(pcOutput, pcOutput, 4);	
 	}
 	
 };
@@ -94,9 +94,9 @@ public:
 	{
 		vcs temp[128 / vcs::size];
 		
-		rep<8>::vmemcpy   (temp, pcInput );
-		rep<8>::vmemcpy   (&temp[24], &pcInput[8]);
-		rep<16>::vmemzero (&temp[8]);
+		rep_memcpy<8> (temp, pcInput );
+		rep_memcpy<8> (&temp[24], &pcInput[8]);
+		rep_memzero<16> (&temp[8]);
 
 		IFFT<128> (temp, pcOutput );
 	}

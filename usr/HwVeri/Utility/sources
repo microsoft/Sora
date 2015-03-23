@@ -1,0 +1,20 @@
+!include "$(SORA_ROOT)\build\sources_usr.inc"
+
+TARGETNAME  = HwVeriUtil
+TARGETTYPE	= LIBRARY
+UMTYPE      = windows
+
+USE_STL     = 1
+USE_MSVCR  = 1
+
+INCLUDES    = $(INCLUDES) \
+              ..\SNRLib\dsp-toolbox; \
+              ..\Dialog;
+
+SOURCES     = \
+              Logger.cpp \
+              Plot.cpp \
+              SoraThread.cpp \
+              Sync.cpp \
+			  ShortSleep.cpp
+			  

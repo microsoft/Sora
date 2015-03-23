@@ -1,0 +1,1 @@
+xcopy %sora_root%\build\x64\soramain\* %sora_root%\* /S /R /Y

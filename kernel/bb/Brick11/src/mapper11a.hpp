@@ -57,12 +57,12 @@ public:
     FINL void MapBPSK(uchar c, COMPLEX16 out[8])
     {
         COMPLEX16 *po = m_lut_i[c];
-        rep<2>::vmemcpy((vcs*)out, (vcs*)po);  
+        rep_memcpy<2>((vcs*)out, (vcs*)po);  
     }
     FINL void MapQBPSK(uchar c, COMPLEX16 out[8])
     {
         COMPLEX16 *po = m_lut_q[c];
-        rep<2>::vmemcpy((vcs*)out, (vcs*)po);  
+        rep_memcpy<2>((vcs*)out, (vcs*)po);  
     }
 
 private:

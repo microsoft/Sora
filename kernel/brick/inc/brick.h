@@ -23,15 +23,6 @@ SELECTANY CF_VOID VoidInstance;
 //		Process: operating on the input pin
 //
 
-// return a unique id for a brick instance
-// Note: DONNOT use static inline function, which makes the function-scope static variable
-//      have multiple instances in multiple compilation units (.cpp/.c)
-FINL int GenerateBrickID ()
-{
-    static volatile int id_cnt = 0;
-    return id_cnt++;
-}
-
 struct ISource;
 class IReferenceCounting
 {
@@ -169,7 +160,7 @@ protected:
 	int __brk_marker[4];
 
 public:
-    TBrick (T_CTX & ctx ) : __ctx_(ctx), __id_(GenerateBrickID()) { };
+    TBrick (T_CTX & ctx ) : __ctx_(ctx) { }
     FINL int bid () { return __id_; }
     T_CTX & ctx() { return __ctx_; }
 };
@@ -474,6 +465,14 @@ public:
 #define FACADE_FIELD(TYPE, NAME, DIMENSIONS)                                                \
     private: TYPE __##NAME##__ DIMENSIONS;                                                  \
     public:  TYPE (&NAME()) DIMENSIONS { return __##NAME##__; }
+
+// Macros to define/reference/bind shared variables
+// Note:
+//   DIMENSIONS is optional, used to define array, eg. [2] or [10][101]
+#define REFERENCE_SHARED_VAR(TYPE, NAME, DIMENSIONS)  shared_var_reference<TYPE DIMENSIONS> NAME;
+#define DEFINE_SHARED_VAR(TYPE, NAME, DIMENSIONS)  TYPE NAME DIMENSIONS;
+#define BIND_SHARED_VAR(REF, VAR)  REF.bind(VAR)
+
 
 class DummyBrick : public TSink<CF_VOID>
 {

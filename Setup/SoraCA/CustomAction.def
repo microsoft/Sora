@@ -1,0 +1,6 @@
+LIBRARY "SoraCA"
+
+EXPORTS
+
+CheckDepends
+VerifyInstallDir

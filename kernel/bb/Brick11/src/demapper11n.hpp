@@ -24,55 +24,55 @@ public:
     {
         while (ipin.check_read())
         {
-            COMPLEX16* cip = ipin.peek();
-            vcs *ip = (vcs *)cip;
+            const COMPLEX16* cip = ipin.peek();
+            const vcs *ip = (const vcs *)cip;
             unsigned __int8 *op = opin().append();
 
             int i;
             int j = 0;
 
-            demapper.demap_limit_bpsk(ip, 16);
+            demapper.demap_limit(ip, (vcs *)limited, 16);
             for (i = 64 + low; i < 64; i++)
             {
                 if (i == 64 - 21 || i == 64 - 7)
                     continue;
-                demapper.demap_bpsk_i(cip[i], &op[j++]);
+                demapper.demap_bpsk_i(limited[i], &op[j++]);
             }
             for (i = 1; i <= high; i++)
             {
                 if (i == 7 || i == 21)
                     continue;
-                demapper.demap_bpsk_i(cip[i], &op[j++]);
+                demapper.demap_bpsk_i(limited[i], &op[j++]);
             }
 
-            ip += 16; cip += 64;
-            demapper.demap_limit_bpsk(ip, 16);
+            ip += 16;
+            demapper.demap_limit(ip, (vcs *)limited, 16);
             for (i = 64 + low; i < 64; i++)
             {
                 if (i == 64 - 21 || i == 64 - 7)
                     continue;
-                demapper.demap_bpsk_q(cip[i], &op[j++]);
+                demapper.demap_bpsk_q(limited[i], &op[j++]);
             }
             for (i = 1; i <= high; i++)
             {
                 if (i == 7 || i == 21)
                     continue;
-                demapper.demap_bpsk_q(cip[i], &op[j++]);
+                demapper.demap_bpsk_q(limited[i], &op[j++]);
             }
 
-            ip += 16; cip += 64;
-            demapper.demap_limit_bpsk(ip, 16);
+            ip += 16;
+            demapper.demap_limit(ip, (vcs *)limited, 16);
             for (i = 64 + low; i < 64; i++)
             {
                 if (i == 64 - 21 || i == 64 - 7)
                     continue;
-                demapper.demap_bpsk_q(cip[i], &op[j++]);
+                demapper.demap_bpsk_q(limited[i], &op[j++]);
             }
             for (i = 1; i <= high; i++)
             {
                 if (i == 7 || i == 21)
                     continue;
-                demapper.demap_bpsk_q(cip[i], &op[j++]);
+                demapper.demap_bpsk_q(limited[i], &op[j++]);
             }
 
             ipin.pop();
@@ -83,6 +83,7 @@ public:
 
 private:
     dsp_demapper demapper;
+    A16 COMPLEX16 limited[64];
 };
 
 DEFINE_LOCAL_CONTEXT(T11nDemapBPSK, CF_VOID);
@@ -104,11 +105,11 @@ public:
     {
         while (ipin.check_read())
         {
-            COMPLEX16* cip = ipin.peek();
-            vcs *ip = (vcs *)cip;
+            const COMPLEX16* cip = ipin.peek();
+            const vcs *ip = (const vcs *)cip;
             unsigned __int8 *op = opin().append();
 
-            demapper.demap_limit_bpsk(ip, 16);
+            demapper.demap_limit(ip, (vcs *)limited, 16);
 
             int i;
             int j = 0;
@@ -117,7 +118,7 @@ public:
             {
                 if (i == 64 - 21 || i == 64 - 7)
                     continue;
-                demapper.demap_bpsk_i(cip[i], &op[j++]);
+                demapper.demap_bpsk_i(limited[i], &op[j++]);
             }
 
             for (i = 1; i <= high; i++)
@@ -125,7 +126,7 @@ public:
                 if (i == 7 || i == 21)
                     continue;
 
-                demapper.demap_bpsk_i(cip[i], &op[j++]);
+                demapper.demap_bpsk_i(limited[i], &op[j++]);
             }
 
             ipin.pop();
@@ -136,6 +137,7 @@ public:
 
 private:
     dsp_demapper demapper;
+    A16 COMPLEX16 limited[64];
 };
 
 DEFINE_LOCAL_CONTEXT(T11nDemapQPSK, CF_VOID);
@@ -157,11 +159,11 @@ public:
     {
         while (ipin.check_read())
         {
-            COMPLEX16* cip = ipin.peek();
+            const COMPLEX16* cip = ipin.peek();
             vcs *ip = (vcs *)cip;
             unsigned __int8 *op = opin().append();
 
-            demapper.demap_limit_qpsk(ip, 16);
+            demapper.demap_limit(ip, (vcs *)limited, 16);
 
             int i;
             int j = 0;
@@ -170,7 +172,7 @@ public:
             {
                 if (i == 64 - 21 || i == 64 - 7)
                     continue;
-                demapper.demap_qpsk(cip[i], &op[j]);
+                demapper.demap_qpsk(limited[i], &op[j]);
                 j += 2;
             }
 
@@ -179,7 +181,7 @@ public:
                 if (i == 7 || i == 21)
                     continue;
 
-                demapper.demap_qpsk(cip[i], &op[j]);
+                demapper.demap_qpsk(limited[i], &op[j]);
                 j += 2;
             }
 
@@ -191,6 +193,7 @@ public:
 
 private:
     dsp_demapper demapper;
+    A16 COMPLEX16 limited[64];
 };
 
 DEFINE_LOCAL_CONTEXT(T11nDemapQAM16, CF_VOID);
@@ -212,11 +215,11 @@ public:
     {
         while (ipin.check_read())
         {
-            COMPLEX16* cip = ipin.peek();
+            const COMPLEX16* cip = ipin.peek();
             vcs *ip = (vcs *)cip;
             unsigned __int8 *op = opin().append();
 
-            demapper.demap_limit_16qam(ip, 16);
+            demapper.demap_limit(ip, (vcs *)limited, 16);
 
             int i;
             int j = 0;
@@ -225,7 +228,7 @@ public:
             {
                 if (i == 64 - 21 || i == 64 - 7)
                     continue;
-                demapper.demap_16qam(cip[i], &op[j]);
+                demapper.demap_16qam(limited[i], &op[j]);
                 j += 4;
             }
 
@@ -234,7 +237,7 @@ public:
                 if (i == 7 || i == 21)
                     continue;
 
-                demapper.demap_16qam(cip[i], &op[j]);
+                demapper.demap_16qam(limited[i], &op[j]);
                 j += 4;
             }
 
@@ -246,6 +249,7 @@ public:
 
 private:
     dsp_demapper demapper;
+    A16 COMPLEX16 limited[64];
 };
 
 DEFINE_LOCAL_CONTEXT(T11nDemapQAM64, CF_VOID);
@@ -267,11 +271,11 @@ public:
     {
         while (ipin.check_read())
         {
-            COMPLEX16* cip = ipin.peek();
+            const COMPLEX16* cip = ipin.peek();
             vcs *ip = (vcs *)cip;
             unsigned __int8 *op = opin().append();
 
-            demapper.demap_limit_64qam(ip, 16);
+            demapper.demap_limit(ip, (vcs *)limited, 16);
 
             int i;
             int j = 0;
@@ -280,7 +284,7 @@ public:
             {
                 if (i == 64 - 21 || i == 64 - 7)
                     continue;
-                demapper.demap_64qam(cip[i], &op[j]);
+                demapper.demap_64qam(limited[i], &op[j]);
                 j += 6;
             }
 
@@ -289,7 +293,7 @@ public:
                 if (i == 7 || i == 21)
                     continue;
 
-                demapper.demap_64qam(cip[i], &op[j]);
+                demapper.demap_64qam(limited[i], &op[j]);
                 j += 6;
             }
 
@@ -301,4 +305,5 @@ public:
 
 private:
     dsp_demapper demapper;
+    A16 COMPLEX16 limited[64];
 };

@@ -9,7 +9,6 @@
 #include <dspcomm.h>
 
 #include <stdfacade.h>
-// #include "soradsp.h"	// to do: remove it later
 
 #define PORT_0 0
 #define PORT_1 1
@@ -266,7 +265,11 @@ public:
     // Force function not inlined, in order to optimize WDK compilation time and running speed.
     template<class T_IPIN> __declspec(noinline) bool Process (T_IPIN & ipin)
     {
-        return Next()->Process(ipin);
+        if (ipin.check_read())
+        {
+            Next()->Process(ipin);
+        }
+        return true;
     }
 };
 
@@ -543,13 +546,15 @@ DEFINE_LOCAL_CONTEXT(TTeeEx, CF_VOID);
 template<TDEMUX2_ARGS>
 class TTeeEx : public TDemux<TDEMUX2_PARAMS>
 {
+public: // inport and outport
     typedef typename T_NEXT0::iport_traits::type TYPE;
     static const size_t BURST = T_NEXT0::iport_traits::burst;
-
-public: // inport and outport
     DEFINE_IPORT (TYPE, BURST);
     DEFINE_OPORTS(0, TYPE, BURST);
     DEFINE_OPORTS(1, TYPE, BURST);
+
+private:
+    CCASSERT(BURST == T_NEXT1::iport_traits::burst); // Add this connection requirement, to enable reusing pinqueue
 
 public:
     REFERENCE_LOCAL_CONTEXT(TTeeEx);
@@ -560,18 +565,11 @@ public:
 
     BOOL_FUNC_PROCESS(ipin)
     {
-        while (ipin.check_read())
+        if (ipin.check_read())
         {
             const TYPE *input = ipin.peek();
-            TYPE* output0 = opin0().append();
-            TYPE* output1 = opin1().append();
-
-            memcpy(output0, input, sizeof(TYPE) * BURST);
-            memcpy(output1, input, sizeof(TYPE) * BURST);
-            
-            ipin.pop();
-            Next0()->Process(opin0());
-            Next1()->Process(opin1());
+            Next0()->Process(ipin.clone());
+            Next1()->Process(ipin);
         }
         return true;
     }
@@ -585,10 +583,9 @@ public:
 template<TDEMUX10_ARGS>
 class Filter : public TDemux<TDEMUX10_PARAMS>
 {
+public: // inport and outport
     typedef typename T_NEXT0::iport_traits::type TYPE;
     static const size_t BURST = T_NEXT0::iport_traits::burst;
-
-public: // inport and outport
     DEFINE_IPORT (TYPE, BURST, NSTREAM);
     DEFINE_OPORTS(0, TYPE, BURST);
     DEFINE_OPORTS(1, TYPE, BURST);

@@ -2,33 +2,39 @@
 
 #include "tpltrick.h"
 #include "const.h"
-#include <vector128.h>
 
-//
-// Light-weight input/output queue
-//
-template<class T, size_t N, size_t M, size_t SIZE = lcm<N,M>::value, size_t NSTREAM = 1> // input burst N, output burst M, buffer size SIZE, streams number NSTREAM
-class TPinQueue {
+template<class T, size_t N, size_t M, size_t NSTREAM = 1> // input burst N, output burst M, streams number NSTREAM
+class PinBase {
 public:
     typedef T DataType;
     static const size_t rsize = M;
     static const size_t wsize = N;
-    static const size_t qsize = SIZE;
+    static const size_t qsize = lcm<N,M>::value;
     static const size_t nstream = NSTREAM;
+    CCASSERT (N > 0);
+    CCASSERT (M > 0);
+    CCASSERT (NSTREAM > 0);
+};
 
-private:
-    A16 T buf_ [NSTREAM][SIZE];
+template<class T, size_t N, size_t M, size_t NSTREAM = 1> // input burst N, output burst M, streams number NSTREAM
+class PinReader : public PinBase<T, N, M, NSTREAM> {
+protected:
+    const T (&buf_) [nstream][qsize];
     unsigned int w_cnt;
     unsigned int r_cnt;
 
 public:
-    TPinQueue () {
-        // compilation-time check: the buffer size is at least LCM of M and N
-        CCASSERT ((SIZE >= lcm<M,N>::value));
-        CCASSERT (NSTREAM > 0);
-        w_cnt = r_cnt = 0;
-    };
+    PinReader (const T (&buf) [nstream][qsize], unsigned int wcnt, unsigned int rcnt)
+        : buf_(buf)
+        , w_cnt(wcnt)
+        , r_cnt(rcnt)
+    {
+    }
     
+    FINL PinReader clone () const {
+        return *this;
+    }
+
     FINL bool check_read () const {
         return (w_cnt - r_cnt >= M);
     }
@@ -42,24 +48,80 @@ public:
         }
     }
 
-    FINL const T *peek (size_t iss = 0) const { return (const_cast<TPinQueue <T, N, M, SIZE, NSTREAM> *>(this))->peek(iss); }
-
-    FINL T *peek (size_t iss = 0)
+    FINL const T *peek (size_t iss = 0) const
     {
         return buf_[iss] + r_cnt;
     }
     
+    FINL void clear () {
+        w_cnt = r_cnt = 0;
+    }
+
+    size_t count() const {
+        return w_cnt - r_cnt;
+    }
+};
+
+template<class T, size_t N, size_t NSTREAM> // input/output burst N
+class PinReader <T, N, N, NSTREAM> : public PinBase<T, N, N, NSTREAM> {
+protected:
+    const T (&buf_)[NSTREAM][N];
+    int cnt_;
+    
+public:
+    PinReader (const T (&buf) [nstream][qsize], unsigned int cnt)
+        : cnt_(cnt)
+        , buf_(buf)
+    { }
+
+    FINL PinReader clone () const {
+        return *this;
+    }
+
+    FINL bool check_read () const { return (cnt_>0); }
+	
+    FINL void pop () {
+        cnt_ = 0;
+    }
+
+    FINL const T *peek (size_t iss = 0) const
+    {
+        return buf_[iss];
+    }
+    
+    FINL void clear () {
+        cnt_ = 0;
+    }
+    
+    size_t count() const {
+        return cnt_;
+    }
+};
+
+//
+// Light-weight input/output queue
+//
+template<class T, size_t N, size_t M, size_t NSTREAM = 1> // input burst N, output burst M, streams number NSTREAM
+class TPinQueue : public PinReader<T, N, M, NSTREAM> {
+private:
+    A16 T buf_ [nstream][qsize];
+
+public:
+    TPinQueue ()
+        : PinReader(buf_, 0, 0)
+    { }
+    
     FINL T *write (size_t iss = 0)
     {
-		assert(w_cnt < SIZE);
+		assert(w_cnt < qsize);
         return buf_[iss] + w_cnt;
     }
 
 	FINL T *append () {
-		assert(w_cnt < SIZE);
+		assert(w_cnt < qsize);
         T *pi = buf_[0] + w_cnt;
         w_cnt += N;
-        assert(w_cnt <= SIZE);
+        assert(w_cnt <= qsize);
         return pi;
 	}
 
@@ -82,49 +144,22 @@ public:
         return true;
     }
 
-    FINL void clear () {
-        w_cnt = r_cnt = 0;
-    }
-
     FINL void zerobuf() {
         memset(buf_, 0, sizeof(buf_));
-    }
-
-    size_t count() const {
-        return w_cnt - r_cnt;
     }
 };
 
 // specialize the N:N
 template<class T, size_t N, size_t NSTREAM> // input/output burst N
-class TPinQueue <T, N, N, N, NSTREAM> {
-public:
-    typedef T DataType;
-    static const size_t rsize = N;
-    static const size_t wsize = N;
-    static const size_t qsize = N;
-    static const size_t nstream = NSTREAM;
-
+class TPinQueue <T, N, N, NSTREAM> : public PinReader<T, N, N, NSTREAM> {
 private:
     A16 T buf_[NSTREAM][N];
-    int cnt_;
     
 public:
-    TPinQueue () : cnt_(0) { }
+    TPinQueue ()
+        : PinReader(buf_, 0)
+    { }
 
-    FINL bool check_read () const { return (cnt_>0); }
-	
-    FINL void pop () {
-        cnt_ = 0;
-    }
-
-    FINL const T *peek (size_t iss = 0) const { return (const_cast<TPinQueue <T, N, N, N, NSTREAM> *>(this))->peek(iss); }
-
-    FINL T *peek (size_t iss = 0)
-    {
-        return buf_[iss];
-    }
-    
     FINL T *write (size_t iss = 0)
     {
         assert(cnt_ == 0);
@@ -142,16 +177,8 @@ public:
         return false;
     }
 
-    FINL void clear () {
-        cnt_ = 0;
-    }
-    
     FINL void zerobuf() {
         memset(buf_, 0, sizeof(buf_));
-    }
-
-    size_t count() const {
-        return cnt_;
     }
 };
 
@@ -183,7 +210,6 @@ public:
     typedef typename TPinQueue<typename OPORT_TRAITS::type // use upstream port type
         , OPORT_TRAITS::burst
         , IPORT_TRAITS::burst
-        , lcm<OPORT_TRAITS::burst, IPORT_TRAITS::burst>::value
         , OPORT_TRAITS::nstream // use upstream port NSTREAM
     > type;
 };
@@ -195,7 +221,6 @@ struct DeducedPinQueue<OPORT_TRAITS, iport_traits<void> >
     typedef typename TPinQueue<typename OPORT_TRAITS::type
         , OPORT_TRAITS::burst
         , OPORT_TRAITS::burst
-        , OPORT_TRAITS::burst
         , OPORT_TRAITS::nstream
     > type;
 };
@@ -205,7 +230,6 @@ template<class IPORT_TRAITS>
 struct DeducedPinQueue<oport_traits<void>, IPORT_TRAITS>
 {
     typedef typename TPinQueue<typename IPORT_TRAITS::type
-        , IPORT_TRAITS::burst
         , IPORT_TRAITS::burst
         , IPORT_TRAITS::burst
         , IPORT_TRAITS::nstream

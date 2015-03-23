@@ -1,0 +1,19 @@
+!include "$(SORA_ROOT)\build\sources_ke.inc"
+
+USE_LIBCMT  = 1
+
+TARGETNAME      = DpViewerExtU
+TARGETTYPE      = LIBRARY
+
+SOURCES         = \
+                  ViewLibExt.cpp
+
+USER_C_FLAGS    = $(USER_C_FLAGS) \
+                  /DUSER_MODE \
+                  /DUNICODE	\
+				  /EHsc
+
+INCLUDES        = $(INCLUDES) \
+                        ..\ViewerLib; \
+                        ..\..\..\..\kernel\core\inc; \
+					..

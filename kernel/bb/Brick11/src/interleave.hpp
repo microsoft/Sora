@@ -3,6 +3,7 @@
 #include "tpltrick.h"
 #include "ieee80211a_cmn.h"
 #include "ieee80211facade.hpp"
+#include "operator_repeater.h"
 
 //
 // Generate interleave template for 802.11
@@ -90,11 +91,11 @@ public:
     FINL void B11aInterleave (const uchar * pbInput, ulong * pbOutput)
     {
 	    ulong j;
-	    rep<N_seg>::vmemcpy<ulong> (pbOutput, m_lut[0][pbInput[0]]);
+	    rep_memcpy<N_seg>(pbOutput, m_lut[0][pbInput[0]]);
 
 	    for (j = 1; j < N_b; j++)
 	    {
-		    rep<N_seg>::vor (pbOutput, m_lut[j][pbInput[j]]);
+            rep_or<N_seg>(pbOutput, pbOutput, m_lut[j][pbInput[j]]);
 	    }
 
         //printf ( "Interleave \n" );

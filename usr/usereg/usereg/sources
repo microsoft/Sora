@@ -1,0 +1,16 @@
+TARGETNAME		= usereg
+TARGETTYPE		= LIBRARY
+UMTYPE			= windows
+
+USE_MSVCRT		= 1
+USE_STL			= 1
+
+INCLUDES		= ../../../kernel/core/inc; \
+				  ../../../kernel/core/src;
+
+SOURCES			= usereg.cpp \
+				  usereg_evt.cpp \
+				  usereg_imp.cpp
+
+USER_C_FLAGS	= /EHsc \
+				  /DUSER_MODE

@@ -135,8 +135,8 @@ private:
 protected:	
     FINL 
     void _rotate ( vcs * dst, vcs * src, vcs * coeffs ) {
-        rep<7>::vmul (dst, src, coeffs );
-        rep<7>::vmul (dst+9, src+9, coeffs+9 );
+        rep_mul<7> (dst, src, coeffs );
+        rep_mul<7> (dst+9, src+9, coeffs+9 );
     }
 
     FINL 

@@ -33,7 +33,7 @@ typedef struct _tagBB11nDemodContext :
     , LOCAL_CONTEXT(T11nSigParser)	  		  		  		  		  	
     , LOCAL_CONTEXT(TSisoChannelEst)
     , LOCAL_CONTEXT(TFFT64)  		
-	, LOCAL_CONTEXT(TRxStream2)
+	, LOCAL_CONTEXT(TRxMIMOStream)
     , LOCAL_CONTEXT(TCCA11n)
     , LOCAL_CONTEXT(TFreqEstimator_11n)
     , LOCAL_CONTEXT(T11nDataSymbol)
@@ -62,6 +62,7 @@ typedef struct _tagBB11nDemodContext :
 	{
 		// CF_RxFrameBuffer
 		CF_RxFrameBuffer::Init(output, out_size);
+
 		Reset();
 	}
 
@@ -117,7 +118,7 @@ struct rate_selector {
         }
     }
 };
-typedef TGDemux<4, COMPLEX16, 64, rate_selector> T11nRxRateSel;
+typedef TQDemux<4, rate_selector> T11nRxRateSel;
 typedef TStreamJoin<2, 64> Mimo64Join;
 
 /*************************************************************************
@@ -211,7 +212,7 @@ void CreateDemodGraph11n (ISource*& srcAll, ISource*& srcViterbi, IControlPoint*
     CREATE_BRICK_DEMUX3 (rxswt, RxSwitch::Filter, BB11nDemodCtx,
         cca, freqest, freqcomp);
 	CREATE_BRICK_FILTER (ds2, TDownSample2, BB11nDemodCtx, rxswt );
-    CREATE_BRICK_SOURCE (ssrc, TRxStream2, BB11nDemodCtx, ds2);
+    CREATE_BRICK_SOURCE (ssrc, TRxMIMOStream<2>::Filter, BB11nDemodCtx, ds2);
 
     srcAll = ssrc;
 	srcViterbi = vit0;
@@ -219,4 +220,3 @@ void CreateDemodGraph11n (ISource*& srcAll, ISource*& srcViterbi, IControlPoint*
 
 SELECTANY ISource * pBB11nRxSource = NULL, * pBB11nViterbi = NULL;
 SELECTANY IControlPoint * pBB11nCarrierSense = NULL;
-SELECTANY RxStreams * pRxStreams = NULL;

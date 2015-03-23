@@ -1,0 +1,10 @@
+DIRS = \
+		core \
+		bb \
+		util \
+		RadioManager \
+		sample \
+		samples \
+		hwtest \
+		SoraAppExtSample \
+		SDL 

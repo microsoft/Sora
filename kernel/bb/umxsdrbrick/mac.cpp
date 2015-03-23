@@ -7,8 +7,7 @@
 #include "fb11ndemod_config.hpp"
 #include "diagnostics.h"
 
-SoraStopwatch swatch  (false);
-
+SoraStopwatch swTransfer(false), swTX(false);
 
 bool ProcessDot11Frame(UCHAR *frameBuf, ULONG frameBufSize );
 
@@ -234,6 +233,9 @@ BOOLEAN MAC11a_Receive (void*) {
 
             }
 
+            // Flush the brick graph, make related brick threads safe to reset
+            pBB11aRxSource->Flush();
+        
             //
             // Reset context
             BB11aDemodCtx.Reset ();
@@ -287,8 +289,6 @@ void MACCompletePacket ( PACKET_HANDLE pkt, HRESULT status )
 }
 
 
-SPINLOCK TxTransferLock = 0;
-
 // Returns:
 //   true  - if any frame is TX-ed
 //   false - otherwise
@@ -319,9 +319,11 @@ BOOLEAN MAC11_Send (void*) {
                     break;
                 }
                 
-                acquire_lock(&TxTransferLock);
+                swTX.Restart();
                 HRESULT hr = SoraURadioMimoTx(ptid->m_tid.m_radiono, ptid->m_tid.m_txid, ptid->m_tid.m_count);
-                release_lock(&TxTransferLock);
+                swTX.Stop();
+                ULONGLONG t = swTX.GetElapsedNanoseconds() / 1000;
+                if ((t > 1000)) TraceOutput("[WARNING] SoraURadioMimoTx time: %d us", t);
 
                 int nMove;
                 if ( gPHYMode == PHY_802_11A )
@@ -329,18 +331,13 @@ BOOLEAN MAC11_Send (void*) {
                 else if ( gPHYMode == PHY_802_11B )
                     nMove = pBB11bRxSource->Seek(ISource::END_POS);
                 else
-                {
                     nMove = pBB11nRxSource->Seek(ISource::END_POS);
-                    //if (BB11nDemodCtx.CF_Error::error_code() == BK_ERROR_HARDWARE_FAILED)
-                    //{
-                    //    BB11nDemodCtx.Reset();
-                    //}
-                }
 
                 ptid->m_retry++;
                 
                 if (hr != S_OK) {
                     split_printf("SoraURadioTx hr: [0x%08x]\n", hr);
+                    TraceOutput("SoraURadioTx hr: [0x%08x]\n", hr);
                     current_state = MAC_STATE_RX;
                     
                     MACCompletePacket (ptid->m_packet, STATUS_UNSUCCESSFUL);
@@ -589,9 +586,12 @@ BOOLEAN Dot11nSendProc (void*) {
 
         if ( bRet ) {
             // Frame is modulated
-            acquire_lock(&TxTransferLock);
+            swTransfer.Restart();
             hr = TransferBuffers(ptid, SampleBuffer, 2, sample_size);
-            release_lock(&TxTransferLock);
+            swTransfer.Stop();
+            ULONGLONG t = swTransfer.GetElapsedNanoseconds() / 1000;
+            if ((t > 1000)) TraceOutput("[WARNING] TransferBuffers time: %d us", t);
+
             if (SUCCEEDED(hr)) {
                 insert_list_tail(&SendListHead, 
                     &ptid->m_entry, 
@@ -1020,12 +1020,9 @@ BOOLEAN MAC11n_Receive (void*) {
             err_stat[2] ++;
         } else if ( err == E_ERROR_PLCP_HEADER_FAIL) {
             err_stat[1] ++;
-        } else if ( err == BK_ERROR_TIMESTAMP_DROP) {
-            err_stat[3] ++;
-            pRxStreams->SeekEnd();
         } else if ( err == BK_ERROR_TIMESTAMP_DROPS) {
             err_stat[3] ++;
-            pRxStreams->EstablishSync();
+            pBB11nRxSource->Seek(ISource::END_POS);
         } else if ( err == E_ERROR_CS_TIMEOUT ) {
             // Channel clean
             BB11nDemodCtx.ResetCarrierSense();
@@ -1049,6 +1046,9 @@ BOOLEAN MAC11n_Receive (void*) {
 
         }
 
+        // Flush the brick graph, make related brick threads safe to reset
+        pBB11nRxSource->Flush();
+        
         //
         // Reset context
         BB11nDemodCtx.Reset();
@@ -1062,7 +1062,7 @@ BOOLEAN MAC11n_Receive (void*) {
             int nMove = pBB11nRxSource->Seek(ISource::END_POS);
             if (BB11nDemodCtx.CF_Error::error_code() == BK_ERROR_HARDWARE_FAILED)
             {
-                TraceOutput("ERROR: Failed to seek, hardware not in good condition!\n");
+                TraceOutput("[ERROR] Failed to seek, hardware not in good condition!\n");
                 BB11nDemodCtx.Reset();
                 return TRUE;
             }

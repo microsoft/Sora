@@ -81,7 +81,7 @@ public:
     }
 }; };
 
-__forceinline short dot11_pilot_tracking(COMPLEX16* pc)
+__forceinline short dot11_pilot_tracking(const COMPLEX16* pc)
 {
     static const dsp_math& dm = dsp_math::singleton();
     short th1 = dm.atan(pc[64 - 21].re, pc[64 - 21].im);
@@ -117,8 +117,8 @@ public:
     {
         while (ipin.check_read())
         {
-            COMPLEX16 *ipc1 = ipin.peek(0);
-            COMPLEX16 *ipc2 = ipin.peek(1);
+            const COMPLEX16 *ipc1 = ipin.peek(0);
+            const COMPLEX16 *ipc2 = ipin.peek(1);
             COMPLEX16 *opc1 = opin().write(0);
             COMPLEX16 *opc2 = opin().write(1);
 

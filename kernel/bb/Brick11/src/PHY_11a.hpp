@@ -394,7 +394,7 @@ private:
 				pi += skip_cp/4; // skip CP
 
 				vcs* po = (vcs*) opin().append();
-				rep<16>::vmemcpy (po, pi);
+				rep_memcpy<16> (po, pi);
 
 				_dump_symbol<64> ( "OFDM symbol", (COMPLEX16*) po );
 				
@@ -404,8 +404,6 @@ private:
 
                 remain_symbols --;
 				if ( remain_symbols == 0 ) {
-//					printf ( "remaining symbol %d\n", remain_symbols );
-
                     //
 					// this is compatible for multi-thread pipeline processing.
 					// a second thread maybe still processing the data, while
@@ -570,7 +568,7 @@ public:
 		code_rate = BB11aGetCodingRateFromDataRate (data_rate_kbps);
 
     	frame_length = (uiSignal >> 5) & 0xFFF;
-        if (frame_length > 1500) // MTU = 1500
+        if (frame_length > 2500) // MTU = 2500
             return false;
 		
         int Nsym  = B11aGetSymbolCount(data_rate_kbps, frame_length);
@@ -660,7 +658,7 @@ public:
 
     BOOL_FUNC_PROCESS (ipin)
     {
-        assert(frame_length <= 1500); // MTU = 1500
+        assert(frame_length <= 2500); // MTU = 2500
         while (ipin.check_read())
         {
         	uchar b = *ipin.peek();
@@ -710,12 +708,20 @@ class TBB11aRxRateSel : public TDemux<TDEMUX5_PARAMS>
     CTX_VAR_RO (CF_11RxPLCPSwitch::PLCPState, plcp_state );
     CTX_VAR_RO (ulong,  data_rate_kbps );  // data rate in kbps		
 public:
-	DEFINE_IPORT(COMPLEX16, 64);
-    DEFINE_OPORTS(0, COMPLEX16, 64); // plsc header
-    DEFINE_OPORTS(1, COMPLEX16, 64); // 6M
-    DEFINE_OPORTS(2, COMPLEX16, 64); // 12M
-    DEFINE_OPORTS(3, COMPLEX16, 64); // 24M
-    DEFINE_OPORTS(4, COMPLEX16, 64); // 48M
+    static const size_t BURST = T_NEXT0::iport_traits::burst;
+	DEFINE_IPORT (   COMPLEX16, BURST);
+    DEFINE_OPORTS(0, COMPLEX16, BURST); // plsc header
+    DEFINE_OPORTS(1, COMPLEX16, BURST); // BPSK
+    DEFINE_OPORTS(2, COMPLEX16, BURST); // QPSK
+    DEFINE_OPORTS(3, COMPLEX16, BURST); // 16QAM
+    DEFINE_OPORTS(4, COMPLEX16, BURST); // 64QAM
+
+private:
+    // Add these connection requirements, to enable reusing pinqueue
+    CCASSERT(!NON_DUMMYBRICK(1) || BURST == T_NEXT1::iport_traits::burst);
+    CCASSERT(!NON_DUMMYBRICK(2) || BURST == T_NEXT2::iport_traits::burst);
+    CCASSERT(!NON_DUMMYBRICK(3) || BURST == T_NEXT3::iport_traits::burst);
+    CCASSERT(!NON_DUMMYBRICK(4) || BURST == T_NEXT4::iport_traits::burst);
 
 public:
     REFERENCE_LOCAL_CONTEXT(TBB11aRxRateSel);
@@ -778,44 +784,30 @@ public:
 
 	BOOL_FUNC_PROCESS (ipin)
     {
-        while(ipin.check_read())
+        if (ipin.check_read())
         {
-			vcs * pi = (vcs*) ipin.peek();
-			vcs * po;
             if (plcp_state == CF_11RxPLCPSwitch::plcp_header) {
-				po = (vcs*) opin0().append ();
-				rep<64/vcs::size>::vmemcpy ( po, pi );
-			    Next0()->Process(opin0());
+			    Next0()->Process(ipin);
             } else {
 			    switch (data_rate_kbps) {
 			    case 6000:
 			    case 9000:
-					po = (vcs*) opin1().append ();
-					rep<64/vcs::size>::vmemcpy ( po, pi );
-			        Next1()->Process(opin1());
+			        Next1()->Process(ipin);
 				    break;
 			    case 12000:
 			    case 18000:
-					po = (vcs*) opin2().append ();
-					rep<64/vcs::size>::vmemcpy ( po, pi );
-			        Next2()->Process(opin2());
+			        Next2()->Process(ipin);
 				    break;
 			    case 24000:
 			    case 36000:
-					po = (vcs*) opin3().append ();
-					rep<64/vcs::size>::vmemcpy ( po, pi );
-			        Next3()->Process(opin3());
+			        Next3()->Process(ipin);
 				    break;
 			    case 48000:
 			    case 54000:
-					po = (vcs*) opin4().append ();
-					rep<64/vcs::size>::vmemcpy ( po, pi );
-			        Next4()->Process(opin4());
+			        Next4()->Process(ipin);
 				    break;
 			    }
             }
-
-			ipin.pop();
         }
         return true;
     }

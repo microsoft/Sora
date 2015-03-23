@@ -152,8 +152,8 @@ public:
             set_zero(vfo_theta_i);
 
             // Passthrough to downstream
-            repex<COMPLEX16, BURST>::vmemcpy(opin().write(0), (const COMPLEX16 *)ip1);
-            repex<COMPLEX16, BURST>::vmemcpy(opin().write(1), (const COMPLEX16 *)ip2);
+            rep_memcpy<BURST, COMPLEX16>(opin().write(0), (const COMPLEX16 *)ip1);
+            rep_memcpy<BURST, COMPLEX16>(opin().write(1), (const COMPLEX16 *)ip2);
             opin().append();
             ipin.pop();
             Next()->Process(opin());

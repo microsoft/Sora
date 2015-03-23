@@ -1,0 +1,18 @@
+!include "$(SORA_ROOT)\build\sources_usr.inc"
+
+TARGETNAME  = soraview
+TARGETTYPE	= LIBRARY
+UMTYPE      = windows
+
+USE_STL     = 1
+
+INCLUDES    = $(INCLUDES) \
+              ..\dsp-toolbox; \
+              ..\..\Utility; \
+              ..\..\Dialog;
+
+SOURCES     = \
+              demap.cpp \
+              sora-stream.cpp \
+              viterbi-decode.cpp
+			  

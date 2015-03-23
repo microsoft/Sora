@@ -213,7 +213,7 @@ public:
             _dump_text ( "dc <%d,%d>\n", direct_current[0].re, direct_current[0].im );
             _dump_symbol<128> ("LTS", (COMPLEX16*) pvi );
 
-            rep<64/vcs::size>::vshift_right(pvi, 1);
+            rep_shift_right<64/vcs::size>(pvi, pvi, 1);
 			_fine_grained_frequency_estimation ( pvi );
 			_channel_estimation ( pvi );	
             _dump_symbol<64> ("Channel", (COMPLEX16*) ChannelCoeffs );
@@ -368,7 +368,7 @@ private:
 				vcs* po = (vcs*) opin().append();
 				
 				// passthru
-				rep<16>::vmemcpy (po, pi);
+				rep_memcpy<16>(po, pi);
 
 				// only estimate channel on the first LTS
 				// N.B. We need to copy samples downstream first, as
@@ -426,7 +426,7 @@ protected:
 			delta += CFO_est;
 		}
 
-		rep<32>::vmul ( input, input, compCoeffs );	
+		rep_mul<32> ( input, input, compCoeffs );	
 	}
 
 	FINL
@@ -514,7 +514,7 @@ public:
 			_fine_cfo_est ( pi );
 			vcs* po = (vcs*) opin().append();
 
-			rep<32>::vmemcpy (po, pi);
+			rep_memcpy<32> (po, pi);
 			Next()->Process(opin());
 			ipin.pop();
 		}
@@ -640,7 +640,7 @@ public:
 			vcs* pi = (vcs*)ipin.peek ();
 			vcs* po = (vcs*) opin().append();
 
-            rep<64/vcs::size>::vshift_right(pi, 1);
+            rep_shift_right<64/vcs::size>(pi, pi, 1);
 			FrequencyShift<64/vcs::size> ( po, pi, FreqCoeffs );
 //			_dump_symbol<64>("freq comp coeffs", (COMPLEX16*) FreqCoeffs );			
 			_dump_symbol<64> ("After freq compensation", (COMPLEX16*) po);

@@ -1,0 +1,6 @@
+#define VER_FILEDESCRIPTION_STR     "DebugPlot Viewer"
+#define VER_INTERNALNAME_STR        "DbgPlot.exe"
+#define VER_ORIGINALFILENAME_STR    "DbgPlot.exe"
+
+#include "Version.rc"
+

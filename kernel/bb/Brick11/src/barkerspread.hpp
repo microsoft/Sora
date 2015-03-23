@@ -2,6 +2,7 @@
 
 #include "const.h"
 #include "dspcomm.h"
+#include "operator_repeater.h"
 
 SELECTANY extern const int Barker11[] = { 1, -1, 1, 1, -1, 1, 1, 1, -1, -1, -1 };
 
@@ -102,7 +103,7 @@ public:
 			vcb * pSpreadSig = (vcb*) &m_Spreading_LUT[code][0];
 			vcb * pbuf = (vcb*) opin().append ();
 
-			rep<11>::vmemcpy(pbuf, pSpreadSig );
+			rep_memcpy<11>(pbuf, pSpreadSig );
             Next()->Process(opin());
 		}
         return true;
@@ -216,7 +217,7 @@ public:
 			// spreaded waveform
 			COMPLEX8 * pSig = &m_Spreading_LUT[code][0];
 			COMPLEX8 * pOut = opin().append();
-			rep<44>::vmemcpy(pOut, pSig );
+			rep_memcpy<44>(pOut, pSig );
             Next()->Process(opin());
 		}
         return true;

@@ -1,6 +1,7 @@
 #pragma once
 
-#include <fft.h>
+#include "fft.h"
+#include "operator_repeater.h"
 
 //
 // This brick can be optimized and removed
@@ -42,14 +43,14 @@ private:
 		    temp[124].re = temp[124].im = sts_mod ;
 
 		    IFFTSSEEx<128>((vcs*)temp);
-		    rep<32>::vshift_right ((vcs*)temp, 4);
+		    rep_shift_right<32>((vcs*)temp, (const vcs*)temp, 4);
 
 		    for (i = 0; i < 128; i++) {
 			    lut[i] = temp[FFTLUTMapTable<128>(i)];
 		    }
 
 		    // this is an explicit overflow
-		    rep<48>::vmemcpy ( (vcs*) (lut+32*sizeof(COMPLEX16)), (vcs*) lut );
+		    rep_memcpy<48> ( (vcs*) (lut+128), (vcs*) lut );
 		    // Windowing
 		    lut[0].re >>= 1; lut[0].im >>= 1;
 		    lut[1].re >>= 1; lut[1].im >>= 1;
@@ -76,14 +77,14 @@ private:
 
 		
 		    IFFTSSEEx<128>((vcs*)temp);
-		    rep<32>::vshift_right ((vcs*)temp, 4);
+		    rep_shift_right<32>((vcs*)temp, (const vcs*)temp, 4);
 
 		    for (i = 0; i < 128; i++) {
 			    lut[i+320+64] = temp[FFTLUTMapTable<128>(i)];
 		    }
-		    rep<32>::vmemcpy ( (vcs*) (lut+320+64+128), (vcs*) (lut+320+64) );
+		    rep_memcpy<32> ( (vcs*) (lut+320+64+128), (vcs*) (lut+320+64) );
 		    // GI2
-		    rep<16>::vmemcpy ( (vcs*) (lut+320), (vcs*) (lut+640-64) );
+		    rep_memcpy<16> ( (vcs*) (lut+320), (vcs*) (lut+640-64) );
 		    // Windowing
 		    lut[320].re >>= 1; lut[320].im >>= 1;
 		    lut[321].re >>= 1; lut[321].im >>= 1;
@@ -91,9 +92,10 @@ private:
 		    lut[638].re >>= 1; lut[638].im >>= 1;
 		    lut[639].re >>= 1; lut[639].im >>= 1;
 
-    /*
+#if 0
+			printf ( "sts\n" );
 		    int lcnt = 8;
-		    for (i=0; i<640; i++) {
+		    for (i=0; i<320; i++) {
 			    if (lcnt == 0 ) {
 				    lcnt = 8; printf ( "\n" );
 			    }
@@ -101,7 +103,18 @@ private:
 			    lcnt --;
 		    }
 		    printf ( "\n" );
-     */		
+
+			printf ( "lts\n" );
+		    lcnt = 8;
+		    for (i=320; i<640; i++) {
+			    if (lcnt == 0 ) {
+				    lcnt = 8; printf ( "\n" );
+			    }
+			    printf ( "<%d, %d> ", lut[i].re, lut[i].im );
+			    lcnt --;
+		    }
+		    printf ( "\n" );
+#endif     		
         }
 	};
     const static_wrapper<COMPLEX16 [640], _init_lut> m_lut;
@@ -124,7 +137,7 @@ public:
     {
        	COMPLEX16* po;
 		po = opin().append();
-		rep<160>::vmemcpy ( (vcs*) po, (vcs*) m_lut.get() );
+		rep_memcpy<160> ( (vcs*) po, (vcs*) m_lut.get() );
 
 		Next()->Process(opin());
 

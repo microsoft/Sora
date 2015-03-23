@@ -17,6 +17,7 @@ class Filter : public TFilter<TFILTER_PARAMS>
 static const int NbPC = N_BPSC;	// number of bits per subcarrier
 static const int NbPS = NbPC * 48;  // number of bits per symbol
 
+    A16 COMPLEX16 limited[64];
 	FINL void demap ( const COMPLEX16 * input, uchar* output ) {
 	    int i;
 	    
@@ -49,19 +50,19 @@ public:
     {
         while (ipin.check_read())
         {
-            COMPLEX16 *input = ipin.peek();
+            const COMPLEX16 *input = ipin.peek();
             uchar*    output = opin().append();
 
-			demap_limit<64>(input);
-            demap(input, output);
+			demap_limit<64>(input, limited);
+            demap(limited, output);
 
-//debug
 #if 0
-printf ( "demapper\n" );
-for (int i=0; i<48; i++ ) {
-	printf ( "%d ", output[i] );
-}
-printf ( "\n" );
+            //debug
+            printf ( "demapper\n" );
+            for (int i=0; i<48; i++ ) {
+	            printf ( "%d ", output[i] );
+            }
+            printf ( "\n" );
 #endif
             ipin.pop();
 

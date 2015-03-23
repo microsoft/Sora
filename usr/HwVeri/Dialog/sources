@@ -1,0 +1,45 @@
+!include "$(SORA_ROOT)\build\sources_usr.inc"
+
+TARGETNAME  = HwVeri
+TARGETTYPE  = PROGRAM
+UMTYPE      = windows
+UMENTRY     = winmain
+
+USE_STL     = 1
+USE_MSVCR  = 1
+LINK_LIB_IGNORE = $(LINK_LIB_IGNORE),4217
+
+INCLUDES    = $(INCLUDES) \
+              $(SORA_ROOT)\build; \
+              ..\Utility; \
+              ..\TaskQueue; \
+              ..\UMX2; \
+              ..\HwVeriAlgorithm; \
+              ..\SNRLib\dsp-toolbox;
+
+USER_C_FLAGS  = $(USER_C_FLAGS) \
+                /D"_UNICODE" \
+                /D"UNICODE"
+
+TARGETLIBS  = $(TARGETLIBS) \
+              $(DDK_LIB_PATH)\Setupapi.lib \
+              $(SDK_LIB_PATH)\rpcrt4.lib \
+              $(SDK_LIB_PATH)\shlwapi.lib \
+              $(SDK_LIB_PATH)\shell32.lib \
+              $(SDK_LIB_PATH)\Comdlg32.lib \
+              $(TARGETPATH)\*\dsptoolbox.lib \
+              $(TARGETPATH)\*\FFTAllIn1.lib \
+              $(TARGETPATH)\*\HwVeriAlgorithm.lib \
+              $(TARGETPATH)\*\HwVeriUtil.lib \
+              $(TARGETPATH)\*\soraview.lib \
+              $(TARGETPATH)\*\TaskQueue.lib \
+              $(TARGETPATH)\*\UMX2.lib
+
+SOURCES     = \
+              dialog.cpp \
+              HwApp.cpp \
+              HwVeriTask.cpp \
+              LoggerImpl.cpp \
+              Dialog.rc
+
+NTTARGETFILE2 = PostBuild

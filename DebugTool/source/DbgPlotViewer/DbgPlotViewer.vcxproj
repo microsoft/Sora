@@ -1,0 +1,302 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{19D199A8-1BF1-49E4-97F6-B4CB51F6F58B}</ProjectGuid>
+    <SccProjectName>
+    </SccProjectName>
+    <SccAuxPath>
+    </SccAuxPath>
+    <SccLocalPath>
+    </SccLocalPath>
+    <SccProvider>
+    </SccProvider>
+    <RootNamespace>DbgPlotViewer</RootNamespace>
+    <Keyword>MFCProj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>Unicode</CharacterSet>
+    <UseOfMfc>Dynamic</UseOfMfc>
+    <PlatformToolset>v110</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+    <UseOfMfc>Dynamic</UseOfMfc>
+    <PlatformToolset>v110</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+    <IncludePath>C:\Program Files %28x86%29\Visual Leak Detector\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Program Files %28x86%29\Visual Leak Detector\lib\Win32;$(LibraryPath)</LibraryPath>
+    <TargetName>DbgPlot</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+    <TargetName>DbgPlot</TargetName>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;_DEBUG;USER_MODE;DEBUG_INTERNAL_DATAFILTER;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\DebugPlotU;..\..\..\kernel\core\inc;..\Common;..\LibViewer</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <TreatWChar_tAsBuiltInType>false</TreatWChar_tAsBuiltInType>
+      <CallingConvention>StdCall</CallingConvention>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>msxml6.lib;usora.lib;LibViewer.lib;Psapi.lib;Common.lib;DebugPlotU_Viewer.lib;DbgHelp.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\Debug;..\..\..\target\ke\chk_wxp_x86\i386</AdditionalLibraryDirectories>
+      <UACExecutionLevel>RequireAdministrator</UACExecutionLevel>
+    </Link>
+    <Midl>
+      <MkTypLibCompatible>false</MkTypLibCompatible>
+      <ValidateAllParameters>true</ValidateAllParameters>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </Midl>
+    <ResourceCompile>
+      <Culture>0x0409</Culture>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(IntDir);..\..\..\build;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;USER_MODE;ENABLE_CRASH_DUMP;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\DebugPlotU;..\..\..\kernel\core\inc;..\Common;..\LibViewer</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <TreatWChar_tAsBuiltInType>false</TreatWChar_tAsBuiltInType>
+      <CallingConvention>StdCall</CallingConvention>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>msxml6.lib;usora.lib;DebugPlotU_Viewer.lib;LibViewer.lib;Psapi.lib;DbgHelp.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\Release;..\..\..\target\ke\fre_wxp_x86\i386</AdditionalLibraryDirectories>
+      <UACExecutionLevel>RequireAdministrator</UACExecutionLevel>
+    </Link>
+    <Midl>
+      <MkTypLibCompatible>false</MkTypLibCompatible>
+      <ValidateAllParameters>true</ValidateAllParameters>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </Midl>
+    <ResourceCompile>
+      <Culture>0x0409</Culture>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(IntDir);..\..\..\build;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
+    <None Include="ClassDiagram1.cd" />
+    <None Include="ReadMe.txt" />
+    <None Include="res\autolayout.ico" />
+    <None Include="res\bitmap1.bmp" />
+    <None Include="res\bmp00001.bmp" />
+    <None Include="res\channelExplorer.ico" />
+    <None Include="res\channel_bmp.bmp" />
+    <None Include="res\controlPanel.ico" />
+    <None Include="res\DbgPlotViewer.ico" />
+    <None Include="res\DbgPlotViewer.rc2" />
+    <None Include="res\DbgPlotViewerDoc.ico" />
+    <None Include="res\menuimages.bmp" />
+    <None Include="res\menuimages_hc.bmp" />
+    <None Include="res\pause32.bmp" />
+    <None Include="res\properties.ico" />
+    <None Include="res\run32.bmp" />
+    <None Include="res\singlestep32.bmp" />
+    <None Include="res\Toolbar.bmp" />
+    <None Include="res\toolbar1.bmp" />
+    <None Include="res\Toolbar256.bmp" />
+    <None Include="UserImages.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="AsyncObject.h" />
+    <ClInclude Include="AutoLayoutSlider.h" />
+    <ClInclude Include="BaseProperty.h" />
+    <ClInclude Include="BitmapPlotWnd.h" />
+    <ClInclude Include="ChannelAddable.h" />
+    <ClInclude Include=".\ChannelProperty.h" />
+    <ClInclude Include="ChannelOpened.h" />
+    <ClInclude Include="ChannelOpenedDots.h" />
+    <ClInclude Include="ChannelOpenedFixedLengthType.h" />
+    <ClInclude Include="ChannelOpenedLine.h" />
+    <ClInclude Include="ChannelOpenedLineType.h" />
+    <ClInclude Include="ChannelOpenedLog.h" />
+    <ClInclude Include="ChannelOpenedSpectrum.h" />
+    <ClInclude Include="ChannelOpenedText.h" />
+    <ClInclude Include="ChannelOpenedTextType.h" />
+    <ClInclude Include="ChannelTreeCtrl.h" />
+    <ClInclude Include=".\ViewerAppConst.h" />
+    <ClInclude Include="ControlPanelDriver.h" />
+    <ClInclude Include="ControlPanelList.h" />
+    <ClInclude Include="ControlPanelWnd.h" />
+    <ClInclude Include="CrashDump.h" />
+    <ClInclude Include="CustomButton.h" />
+    <ClInclude Include="DbgPlotViewer.h" />
+    <ClInclude Include="DbgPlotViewerDoc.h" />
+    <ClInclude Include="DbgPlotViewerView.h" />
+    <ClInclude Include="DockableWndContainer.h" />
+    <ClInclude Include="GlobalObjLookup.h" />
+    <ClInclude Include=".\Targetable.h" />
+    <ClInclude Include="GridAlg.h" />
+    <ClInclude Include="HelperFunc.h" />
+    <ClInclude Include="Invokable.h" />
+    <ClInclude Include="BitmapTypeSettings.h" />
+    <ClInclude Include="MainFrm.h" />
+    <ClInclude Include=".\PropObject.h" />
+    <ClInclude Include="PassiveTaskQueue.h" />
+    <ClInclude Include="PlayControlWnd.h" />
+    <ClInclude Include=".\PlotWindowOpenedContainer.h" />
+    <ClInclude Include="PlotOperationDriver.h" />
+    <ClInclude Include=".\PlotWindowLineTypeProperty.h" />
+    <ClInclude Include="PlotWindowDotsProperty.h" />
+    <ClInclude Include="PlotWindowOpened.h" />
+    <ClInclude Include="PlotWindowOpenedBitmapType.h" />
+    <ClInclude Include="PlotWindowOpenedDots.h" />
+    <ClInclude Include="PlotWindowOpenedLine.h" />
+    <ClInclude Include="PlotWindowOpenedLineType.h" />
+    <ClInclude Include="PlotWindowOpenedLog.h" />
+    <ClInclude Include="PlotWindowOpenedSpectrum.h" />
+    <ClInclude Include="PlotWindowOpenedText.h" />
+    <ClInclude Include="PlotWindowOpenedTextType.h" />
+    <ClInclude Include="PlotWindowTextTypeProperty.h" />
+    <ClInclude Include="PlotWnd.h" />
+    <ClInclude Include="PlotWndContainer.h" />
+    <ClInclude Include="PlotWndPlayPauseController.h" />
+    <ClInclude Include="ProcessOpened.h" />
+    <ClInclude Include="ReplayBufferTrackBar.h" />
+    <ClInclude Include="Resource.h" />
+    <ClInclude Include="Serializable.h" />
+    <ClInclude Include="SettingsPlotWindow.h" />
+    <ClInclude Include="stdafx.h" />
+    <ClInclude Include="SubBitmapPlotWnd.h" />
+    <ClInclude Include="SubPlotWnd.h" />
+    <ClInclude Include="SubTextTypePlotWnd.h" />
+    <ClInclude Include="targetver.h" />
+    <ClInclude Include="TemplateProperty.h" />
+    <ClInclude Include="TextPlayControlWnd.h" />
+    <ClInclude Include="TextTypePlotWnd.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="AsyncObject.cpp" />
+    <ClCompile Include="AutoLayoutSlider.cpp" />
+    <ClCompile Include="BaseProperty.cpp" />
+    <ClCompile Include="BitmapPlotWnd.cpp" />
+    <ClCompile Include=".\ChannelProperty.cpp" />
+    <ClCompile Include="ChannelAddable.cpp" />
+    <ClCompile Include="ChannelOpened.cpp" />
+    <ClCompile Include="ChannelOpenedDots.cpp" />
+    <ClCompile Include="ChannelOpenedFixedLengthType.cpp" />
+    <ClCompile Include="ChannelOpenedLine.cpp" />
+    <ClCompile Include="ChannelOpenedLineType.cpp" />
+    <ClCompile Include="ChannelOpenedLog.cpp" />
+    <ClCompile Include="ChannelOpenedSpectrum.cpp" />
+    <ClCompile Include="ChannelOpenedText.cpp" />
+    <ClCompile Include="ChannelOpenedTextType.cpp" />
+    <ClCompile Include="ChannelTreeCtrl.cpp" />
+    <ClCompile Include=".\ViewerAppConst.cpp" />
+    <ClCompile Include="ControlPanelDriver.cpp" />
+    <ClCompile Include="ControlPanelList.cpp" />
+    <ClCompile Include="ControlPanelWnd.cpp" />
+    <ClCompile Include="CrashDump.cpp" />
+    <ClCompile Include="CustomButton.cpp" />
+    <ClCompile Include="DbgPlotViewer.cpp" />
+    <ClCompile Include="DbgPlotViewerDoc.cpp" />
+    <ClCompile Include="DbgPlotViewerView.cpp" />
+    <ClCompile Include="DockableWndContainer.cpp" />
+    <ClCompile Include="GlobalObjLookup.cpp" />
+    <ClCompile Include="GridAlg.cpp" />
+    <ClCompile Include="HelperFunc.cpp" />
+    <ClCompile Include="Invokable.cpp" />
+    <ClCompile Include="BitmapTypeSettings.cpp" />
+    <ClCompile Include="MainFrm.cpp" />
+    <ClCompile Include=".\PropObject.cpp" />
+    <ClCompile Include="PlayControlWnd.cpp" />
+    <ClCompile Include=".\PlotWindowOpenedContainer.cpp" />
+    <ClCompile Include="PlotOperationDriver.cpp" />
+    <ClCompile Include=".\PlotWindowLineTypeProperty.cpp" />
+    <ClCompile Include="PlotWindowDotsProperty.cpp" />
+    <ClCompile Include="PlotWindowOpened.cpp" />
+    <ClCompile Include="PlotWindowOpenedBitmapType.cpp" />
+    <ClCompile Include="PlotWindowOpenedDots.cpp" />
+    <ClCompile Include="PlotWindowOpenedLine.cpp" />
+    <ClCompile Include="PlotWindowOpenedLineType.cpp" />
+    <ClCompile Include="PlotWindowOpenedLog.cpp" />
+    <ClCompile Include="PlotWindowOpenedSpectrum.cpp" />
+    <ClCompile Include="PlotWindowOpenedText.cpp" />
+    <ClCompile Include="PlotWindowOpenedTextType.cpp" />
+    <ClCompile Include="PlotWindowTextTypeProperty.cpp" />
+    <ClCompile Include="PlotWnd.cpp" />
+    <ClCompile Include="PlotWndContainer.cpp" />
+    <ClCompile Include="PlotWndPlayPauseController.cpp" />
+    <ClCompile Include="ProcessOpened.cpp" />
+    <ClCompile Include="ReplayBufferTrackBar.cpp" />
+    <ClCompile Include="SettingsPlotWindow.cpp" />
+    <ClCompile Include="stdafx.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="SubBitmapPlotWnd.cpp" />
+    <ClCompile Include="SubPlotWnd.cpp" />
+    <ClCompile Include="SubTextTypePlotWnd.cpp" />
+    <ClCompile Include="TemplateProperty.cpp" />
+    <ClCompile Include="TextPlayControlWnd.cpp" />
+    <ClCompile Include="TextTypePlotWnd.cpp" />
+    <ClCompile Include="Vld.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="DbgPlotViewer.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Common\Common.vcxproj">
+      <Project>{54730ad7-5b11-493b-adcc-8e4ec3c0204a}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\LibViewer\LibViewer.vcxproj">
+      <Project>{6ae0ea97-eb5a-40e1-92d8-54532e208be1}</Project>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties RESOURCE_FILE="DbgPlotViewer.rc" />
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>

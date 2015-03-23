@@ -2,6 +2,7 @@
 #include "brick.h"
 #include "vector128.h"
 #include "ieee80211facade.hpp"
+#include "sora_matrix.h"
 
 __declspec(selectany) A16 vui::data_type _80211_LLTFMask[16] =
 {
@@ -324,8 +325,6 @@ SELECTANY A16 vui::data_type _80211n_HTLTFMask[16] =
 };
 #pragma endregion dot11n HT LTF Mask
 
-__forceinline vci v_convert2ci_lo(vcq &a, vcq &b){ vci c; c = (vci&)_mm_shuffle_ps((__m128&)a, (__m128&)b, _MM_SHUFFLE(2, 0, 2, 0)); return c; }
-
 
 DEFINE_LOCAL_CONTEXT(TMimoChannelEst, CF_ChannelMimo, CF_11nSymState);
 template<TSINK_ARGS>
@@ -365,8 +364,8 @@ public:
 
             const COMPLEX16* pHTLTFMask = (const COMPLEX16*)&_80211n_HTLTFMask[0][0];
 
-            COMPLEX16 *ipc1 = ipin.peek(0);
-            COMPLEX16 *ipc2 = ipin.peek(1);
+            const COMPLEX16 *ipc1 = ipin.peek(0);
+            const COMPLEX16 *ipc2 = ipin.peek(1);
 
             MIMO_2x2_H& mimo_channel_2x2_inv = dot11n_2x2_channel_inv;
 
@@ -376,10 +375,10 @@ public:
             {
                 vcs& vhtmsk = (vcs&)pHTLTFMask[i];
 
-                vcs& v11    = (vcs&)ipc1[i];
-                vcs& v12    = (vcs&)ipc1[i + 64];
-                vcs& v21    = (vcs&)ipc2[i];
-                vcs& v22    = (vcs&)ipc2[i + 64];
+                const vcs& v11    = (const vcs&)ipc1[i];
+                const vcs& v12    = (const vcs&)ipc1[i + 64];
+                const vcs& v21    = (const vcs&)ipc2[i];
+                const vcs& v22    = (const vcs&)ipc2[i + 64];
 
                 vcs& vh11   = (vcs&)dot11n_2x2_channel[0][i];
                 vcs& vh12   = (vcs&)dot11n_2x2_channel[0][i + 64];
@@ -416,124 +415,24 @@ public:
                 vcs& vh21   = (vcs&)dot11n_2x2_channel[1][i];
                 vcs& vh22   = (vcs&)dot11n_2x2_channel[1][i + 64];
 
-                mul(vtemp[0], vtemp[1], vh11, vh22);
-                mul(vtemp[2], vtemp[3], vh12, vh21);
-
-                vstar[0] = sub(vtemp[0], vtemp[2]);
-                vstar[1] = sub(vtemp[1], vtemp[3]);
-
-                vstarsqr[0] = SquaredNorm(vstar[0]);
-                vstarsqr[1] = SquaredNorm(vstar[1]);
-
-                // Add 1 to avoid divided by 0 exception
-                vstarsqr[0] = sub(vstarsqr[0], (vq&)vNegMask);
-                vstarsqr[1] = sub(vstarsqr[1], (vq&)vNegMask);
-                //
                 vcs &vinvh11 = (vcs&)mimo_channel_2x2_inv[0][i];
                 vcs &vinvh12 = (vcs&)mimo_channel_2x2_inv[0][i + 64];
                 vcs &vinvh21 = (vcs&)mimo_channel_2x2_inv[1][i];
                 vcs &vinvh22 = (vcs&)mimo_channel_2x2_inv[1][i + 64];
 
-                vcq &vres1 = (vcq&)vtemp[0];
-                vcq &vres2 = (vcq&)vtemp[1];
-                vcq &vres3 = (vcq&)vtemp[2];
-                vcq &vres4 = (vcq&)vtemp[3];
+	            CSoraMatrix<vcf, 2, 2> vh_low, vh_high, vinvh_low, vinvh_high;
+                unpack(vh_low[0][0], vh_high[0][0], vh11);
+                unpack(vh_low[0][1], vh_high[0][1], vh12);
+                unpack(vh_low[1][0], vh_high[1][0], vh21);
+                unpack(vh_low[1][1], vh_high[1][1], vh22);
+                inverse_scale(vinvh_low,  vh_low,  float(1<<16));
+                inverse_scale(vinvh_high, vh_high, float(1<<16));
+                vinvh11 = saturated_pack(vinvh_low[0][0], vinvh_high[0][0]);
+                vinvh12 = saturated_pack(vinvh_low[0][1], vinvh_high[0][1]);
+                vinvh21 = saturated_pack(vinvh_low[1][0], vinvh_high[1][0]);
+                vinvh22 = saturated_pack(vinvh_low[1][1], vinvh_high[1][1]);
 
-                // - invh11
-                unpack(vcih1, vcih2, vh22);
-
-                conj_mul(vres1, vres2, vcih1, vstar[0]);
-                conj_mul(vres3, vres4, vcih2, vstar[1]);
-
-                vres1 = shift_left(vres1, 16);
-                vres2 = shift_left(vres2, 16);
-                vres3 = shift_left(vres3, 16);
-                vres4 = shift_left(vres4, 16);
-
-                vres1[0].re /= vstarsqr[0][0]; vres1[0].im /= vstarsqr[0][0];
-                vres2[0].re /= vstarsqr[0][1]; vres2[0].im /= vstarsqr[0][1];
-                vres3[0].re /= vstarsqr[1][0]; vres3[0].im /= vstarsqr[1][0];
-                vres4[0].re /= vstarsqr[1][1]; vres4[0].im /= vstarsqr[1][1];
-
-                ((vci&)vres1) = v_convert2ci_lo(vres1, vres2);
-                ((vci&)vres3) = v_convert2ci_lo(vres3, vres4);
-
-                vcs &vout11 = (vcs&)vres2;
-                vout11       = saturated_pack((vci&)vres1, (vci&)vres3);
-                vinvh11      = vout11;
-
-                // - invh12
-                unpack(vcih1, vcih2, vh12);
-
-                conj_mul(vres1, vres2, vcih1, vstar[0]);
-                conj_mul(vres3, vres4, vcih2, vstar[1]);
-
-                vres1 = shift_left(vres1, 16);
-                vres2 = shift_left(vres2, 16);
-                vres3 = shift_left(vres3, 16);
-                vres4 = shift_left(vres4, 16);
-
-                vres1[0].re /= vstarsqr[0][0]; vres1[0].im /= vstarsqr[0][0];
-                vres2[0].re /= vstarsqr[0][1]; vres2[0].im /= vstarsqr[0][1];
-                vres3[0].re /= vstarsqr[1][0]; vres3[0].im /= vstarsqr[1][0];
-                vres4[0].re /= vstarsqr[1][1]; vres4[0].im /= vstarsqr[1][1];
-
-                ((vci&)vres1) = v_convert2ci_lo(vres1, vres2);
-                ((vci&)vres3) = v_convert2ci_lo(vres3, vres4);
-
-                vcs &vout12 = (vcs&)vres2;
-                vout12       = saturated_pack((vci&)vres1, (vci&)vres3);
-                vout12       = xor(vout12, vNegMask);
-                vout12       = sub((vcs&)vout12, (vcs&)vNegMask);
-                vinvh12      = vout12;
-
-                // - invh21
-                unpack(vcih1, vcih2, vh21);
-
-                conj_mul(vres1, vres2, vcih1, vstar[0]);
-                conj_mul(vres3, vres4, vcih2, vstar[1]);
-
-                vres1 = shift_left(vres1, 16);
-                vres2 = shift_left(vres2, 16);
-                vres3 = shift_left(vres3, 16);
-                vres4 = shift_left(vres4, 16);
-
-                vres1[0].re /= vstarsqr[0][0]; vres1[0].im /= vstarsqr[0][0];
-                vres2[0].re /= vstarsqr[0][1]; vres2[0].im /= vstarsqr[0][1];
-                vres3[0].re /= vstarsqr[1][0]; vres3[0].im /= vstarsqr[1][0];
-                vres4[0].re /= vstarsqr[1][1]; vres4[0].im /= vstarsqr[1][1];
-
-                ((vci&)vres1) = v_convert2ci_lo(vres1, vres2);
-                ((vci&)vres3) = v_convert2ci_lo(vres3, vres4);
-
-                vcs &vout21 = (vcs&)vres2;
-                vout21       = saturated_pack((vci&)vres1, (vci&)vres3);
-                vout21       = xor(vout21, vNegMask);
-                vout21       = sub((vcs&)vout21, (vcs&)vNegMask);
-                vinvh21      = vout21;
-
-                // - invh22
-                unpack(vcih1, vcih2, vh11);
-
-                conj_mul(vres1, vres2, vcih1, vstar[0]);
-                conj_mul(vres3, vres4, vcih2, vstar[1]);
-
-                vres1 = shift_left(vres1, 16);
-                vres2 = shift_left(vres2, 16);
-                vres3 = shift_left(vres3, 16);
-                vres4 = shift_left(vres4, 16);
-
-                vres1[0].re /= vstarsqr[0][0]; vres1[0].im /= vstarsqr[0][0];
-                vres2[0].re /= vstarsqr[0][1]; vres2[0].im /= vstarsqr[0][1];
-                vres3[0].re /= vstarsqr[1][0]; vres3[0].im /= vstarsqr[1][0];
-                vres4[0].re /= vstarsqr[1][1]; vres4[0].im /= vstarsqr[1][1];
-
-                ((vci&)vres1) = v_convert2ci_lo(vres1, vres2);
-                ((vci&)vres3) = v_convert2ci_lo(vres3, vres4);
-
-                vcs &vout22 = (vcs&)vres2;
-                vout22       = saturated_pack((vci&)vres1, (vci&)vres3);
-                vinvh22      = vout22;
+                //Inv_ref(vh11, vh12, vh21, vh22, vinvh11, vinvh12, vinvh21, vinvh22);
             }
             ipin.pop();
             symbol_type = CF_11nSymState::SYMBOL_OFDM_DATA;
@@ -565,8 +464,8 @@ public:
     {
         while (ipin.check_read())
         {
-            COMPLEX16 *ipc1 = ipin.peek(0);
-            COMPLEX16 *ipc2 = ipin.peek(1);
+            const COMPLEX16 *ipc1 = ipin.peek(0);
+            const COMPLEX16 *ipc2 = ipin.peek(1);
             COMPLEX16 *opc1 = opin().write(0);
             COMPLEX16 *opc2 = opin().write(1);
 

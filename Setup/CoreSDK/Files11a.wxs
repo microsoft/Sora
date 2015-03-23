@@ -1,0 +1,561 @@
+<?xml version="1.0" encoding="Windows-1252"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <Fragment Id="FragmentUsr">
+    <ComponentGroup Id="group_SORA_sample">
+      <ComponentRef Id="comp_build" />
+      <ComponentRef Id="comp_src" />
+      <ComponentRef Id="comp_inc" />
+      <ComponentRef Id="comp_inc_bb" />
+      <ComponentRef Id="comp_bb" />
+      <ComponentRef Id="comp_bb_demod11" />
+      <ComponentRef Id="comp_bb_umxdot11" />
+      <ComponentRef Id="comp_bb_brick11_src" />
+      <ComponentRef Id="comp_bb_dot11a" />
+      <ComponentRef Id="comp_bb_dot11a_dot11" />
+      <ComponentRef Id="comp_bb_dot11a_dot11_kernel" />
+      <ComponentRef Id="comp_bb_dot11a_dot11_user" />
+      <ComponentRef Id="comp_bb_dot11a_inc" />
+      <ComponentRef Id="comp_bb_dot11a_inc_bb" />
+      <ComponentRef Id="comp_bb_dot11a_inc_bb_mod" />
+      <ComponentRef Id="comp_bb_dot11a_lutst" />
+      <ComponentRef Id="comp_bb_dot11a_lutst_kernel" />
+      <ComponentRef Id="comp_bb_dot11a_lutst_user" />
+      <ComponentRef Id="comp_bb_dot11a_mod" />
+      <ComponentRef Id="comp_bb_dot11a_mod_kernel" />
+      <ComponentRef Id="comp_bb_dot11a_mod_user" />
+      <ComponentRef Id="comp_bb_dot11b" />
+      <ComponentRef Id="comp_bb_dot11b_klib" />
+      <ComponentRef Id="comp_bb_dot11b_ulib" />
+      <ComponentRef Id="comp_umxsdr" />
+      <ComponentRef Id="comp_umxsdr_brick" />
+      <ComponentRef Id="comp_kmsdr" />
+      <ComponentRef Id="comp_driver_ll" />
+      <ComponentRef Id="comp_driver_ll_5x" />
+      <ComponentRef Id="comp_driver_ll_6x" />
+      <ComponentRef Id="comp_driver_mac" />
+      <ComponentRef Id="comp_driver_phy" />
+      <ComponentRef Id="comp_driver_sdrminiport" />
+      <ComponentRef Id="comp_driver_sdrminiport_exe" />
+      <ComponentRef Id="comp_driver_sdrminiport_sys5x" />
+      <ComponentRef Id="comp_driver_sdrminiport_sys6x" />
+      <ComponentRef Id="comp_util" />
+      <ComponentRef Id="comp_util_args" />
+      <ComponentRef Id="comp_util_src" />
+      <ComponentRef Id="comp_dbgplot_sample" />
+      <ComponentRef Id="comp_dbgplot_sample_tut1" />
+      <ComponentRef Id="comp_dbgplot_sample_tut2" />
+      <ComponentRef Id="comp_samples" />
+      <ComponentRef Id="comp_samples_AppExt" />
+      <ComponentRef Id="comp_samples_Simple" />
+      <ComponentRef Id="comp_samples_SpecAnalyzer" />
+    </ComponentGroup>
+    <DirectoryRef Id="APPLICATIONFOLDER">
+      <Directory Id="dir_build" Name="build">
+        <Component Id="comp_build" Guid="93698121-2bb7-49f9-a364-3ca7a86d1618" KeyPath="yes">
+          <File Id="idFile_254" Name="sources_ke.inc" DiskId="1" Source="..\..\build\publish\sources_ke.inc" />
+          <File Id="idFile_255" Name="setenv.bat" DiskId="1" Source="..\..\build\setenv_publish.bat" />
+          <File Id="idFile_256" Name="ChkBldEnv.cmd" DiskId="1" Source="..\..\build\ChkBldEnv.cmd" />
+          <File Id="idFile_257" Name="FreBldEnv.cmd" DiskId="1" Source="..\..\build\FreBldEnv.cmd" />
+          <File Id="idFile_258" Name="ChkBldEnv_amd64.cmd" DiskId="1" Source="..\..\build\ChkBldEnv_amd64.cmd" />
+          <File Id="idFile_259" Name="FreBldEnv_amd64.cmd" DiskId="1" Source="..\..\build\FreBldEnv_amd64.cmd" />
+          <File Id="idFile_260" Name="Version.rc" DiskId="1" Source="..\..\build\Version.rc" />
+          <File Id="idFile_261" Name="bldver.h" DiskId="1" Source="..\..\build\bldver.h" />
+          <File Id="idFile_262" Name="makefile.inx" DiskId="1" Source="..\..\build\makefile.inx" />
+        </Component>
+      </Directory>
+      <Directory Id="dir_src" Name="src">
+        <Component Id="comp_src" Guid="1ffa4c11-d8b4-41f4-8e60-1d2040001b72" KeyPath="yes">
+          <File Id="idFile_263" Name="dirs_x86" DiskId="1" Source="..\..\kernel\dirs_x86.publish" />
+          <File Id="idFile_264" Name="dirs_x64" DiskId="1" Source="..\..\kernel\dirs_x64.publish" />
+          <File Id="idFile_265" Name="set_dirs_x86.cmd" DiskId="1" Source="..\..\kernel\set_dirs_x86.cmd" />
+          <File Id="idFile_266" Name="set_dirs_x64.cmd" DiskId="1" Source="..\..\kernel\set_dirs_x64.cmd" />
+        </Component>
+        <Directory Id="dir_inc" Name="inc">
+          <Component Id="comp_inc" Guid="b4c0eb38-0afa-4340-a6db-2b4a17821f45" KeyPath="yes">
+            <File Id="idFile_0" Name="args.h" DiskId="1" Source="..\..\kernel\inc\args.h" />
+            <File Id="idFile_1" Name="dot11_pkt.h" DiskId="1" Source="..\..\kernel\inc\dot11_pkt.h" />
+            <File Id="idFile_2" Name="dot11_plcp.h" DiskId="1" Source="..\..\kernel\inc\dot11_plcp.h" />
+            <File Id="idFile_3" Name="Dumper.h" DiskId="1" Source="..\..\kernel\inc\Dumper.h" />
+            <File Id="idFile_4" Name="sdr_config.h" DiskId="1" Source="..\..\kernel\inc\sdr_config.h" />
+            <File Id="idFile_5" Name="sdr_ll.h" DiskId="1" Source="..\..\kernel\inc\sdr_ll.h" />
+            <File Id="idFile_6" Name="sdr_mac.h" DiskId="1" Source="..\..\kernel\inc\sdr_mac.h" />
+            <File Id="idFile_7" Name="sdr_mac_timer.h" DiskId="1" Source="..\..\kernel\inc\sdr_mac_timer.h" />
+            <File Id="idFile_8" Name="sdr_phy.h" DiskId="1" Source="..\..\kernel\inc\sdr_phy.h" />
+            <File Id="idFile_9" Name="sdr_phy_register_manager.h" DiskId="1" Source="..\..\kernel\inc\sdr_phy_register_manager.h" />
+            <File Id="idFile_10" Name="timing.h" DiskId="1" Source="..\..\kernel\inc\timing.h" />
+          </Component>
+          <Directory Id="dir_inc_bb" Name="bb">
+            <Component Id="comp_inc_bb" Guid="3e5b9764-3f1b-40ac-8be0-6ca0931dd818" KeyPath="yes">
+              <File Id="idFile_11" Name="bba.h" DiskId="1" Source="..\..\kernel\inc\bb\bba.h" />
+              <File Id="idFile_12" Name="bbb.h" DiskId="1" Source="..\..\kernel\inc\bb\bbb.h" />
+              <File Id="idFile_13" Name="DataRate.h" DiskId="1" Source="..\..\kernel\inc\bb\DataRate.h" />
+            </Component>
+          </Directory>
+        </Directory>
+        <Directory Id="dir_bb" Name="bb">
+          <Component Id="comp_bb" Guid="966d0c83-e2e1-483f-81a5-4508406e1233" KeyPath="yes">
+            <File Id="idFile_267" Name="dirs_x86" DiskId="1" Source="..\..\kernel\bb\dirs_x86.publish" />
+            <File Id="idFile_268" Name="dirs_x64" DiskId="1" Source="..\..\kernel\bb\dirs_x64.publish" />
+          </Component>
+          <Directory Id="dir_bb_demod11" Name="demod11">
+            <Component Id="comp_bb_demod11" Guid="327ae88c-09aa-4455-8400-6adafe347ba4" KeyPath="yes">
+              <File Id="idFile_14" Name="bb_test.h" DiskId="1" Source="..\..\kernel\bb\demod11\bb_test.h" />
+              <File Id="idFile_15" Name="MACStopwatch.h" DiskId="1" Source="..\..\kernel\bb\demod11\MACStopwatch.h" />
+              <File Id="idFile_16" Name="fb11ademod_config.hpp" DiskId="1" Source="..\..\kernel\bb\demod11\fb11ademod_config.hpp" />
+              <File Id="idFile_17" Name="fb11amod_config.hpp" DiskId="1" Source="..\..\kernel\bb\demod11\fb11amod_config.hpp" />
+              <File Id="idFile_18" Name="fb11bdemod_config.hpp" DiskId="1" Source="..\..\kernel\bb\demod11\fb11bdemod_config.hpp" />
+              <File Id="idFile_19" Name="fb11bmod_config.hpp" DiskId="1" Source="..\..\kernel\bb\demod11\fb11bmod_config.hpp" />
+              <File Id="idFile_20" Name="demod11a.cpp" DiskId="1" Source="..\..\kernel\bb\demod11\demod11a.cpp" />
+              <File Id="idFile_21" Name="demod11b.cpp" DiskId="1" Source="..\..\kernel\bb\demod11\demod11b.cpp" />
+              <File Id="idFile_22" Name="fb11a_demod.cpp" DiskId="1" Source="..\..\kernel\bb\demod11\fb11a_demod.cpp" />
+              <File Id="idFile_23" Name="fb11a_mod.cpp" DiskId="1" Source="..\..\kernel\bb\demod11\fb11a_mod.cpp" />
+              <File Id="idFile_24" Name="fb11b_demod.cpp" DiskId="1" Source="..\..\kernel\bb\demod11\fb11b_demod.cpp" />
+              <File Id="idFile_25" Name="fb11b_mod.cpp" DiskId="1" Source="..\..\kernel\bb\demod11\fb11b_mod.cpp" />
+              <File Id="idFile_26" Name="main.cpp" DiskId="1" Source="..\..\kernel\bb\demod11\main.cpp" />
+              <File Id="idFile_27" Name="modulate11a.cpp" DiskId="1" Source="..\..\kernel\bb\demod11\modulate11a.cpp" />
+              <File Id="idFile_28" Name="modulate11b.cpp" DiskId="1" Source="..\..\kernel\bb\demod11\modulate11b.cpp" />
+              <File Id="idFile_29" Name="demod11.rc" DiskId="1" Source="..\..\kernel\bb\demod11\demod11.rc" />
+              <File Id="idFile_269" Name="sources" DiskId="1" Source="..\..\kernel\bb\demod11\sources.publish" />
+            </Component>
+          </Directory>
+          <Directory Id="dir_bb_dot11a" Name="dot11a">
+            <Component Id="comp_bb_dot11a" Guid="94c6396e-8797-447e-aab1-71ad82cda26e" KeyPath="yes">
+              <File Id="idFile_270" Name="dirs" DiskId="1" Source="..\..\kernel\bb\dot11a\dirs" />
+            </Component>
+            <Directory Id="dir_bb_dot11a_dot11" Name="dot11">
+              <Component Id="comp_bb_dot11a_dot11" Guid="b944cbef-eee7-4312-8742-b32105a1556f" KeyPath="yes">
+                <File Id="idFile_30" Name="44MTo40M.h" DiskId="1" Source="..\..\kernel\bb\dot11a\dot11\44MTo40M.h" />
+                <File Id="idFile_31" Name="arx_vdc.h" DiskId="1" Source="..\..\kernel\bb\dot11a\dot11\arx_vdc.h" />
+                <File Id="idFile_32" Name="atx.h" DiskId="1" Source="..\..\kernel\bb\dot11a\dot11\atx.h" />
+                <File Id="idFile_33" Name="atx_tpl.h" DiskId="1" Source="..\..\kernel\bb\dot11a\dot11\atx_tpl.h" />
+                <File Id="idFile_34" Name="atx_tpl_imp.h" DiskId="1" Source="..\..\kernel\bb\dot11a\dot11\atx_tpl_imp.h" />
+                <File Id="idFile_35" Name="44MTo40M.c" DiskId="1" Source="..\..\kernel\bb\dot11a\dot11\44MTo40M.c" />
+                <File Id="idFile_36" Name="arx_bg1.c" DiskId="1" Source="..\..\kernel\bb\dot11a\dot11\arx_bg1.c" />
+                <File Id="idFile_37" Name="arx_cs.c" DiskId="1" Source="..\..\kernel\bb\dot11a\dot11\arx_cs.c" />
+                <File Id="idFile_38" Name="arx_fd.c" DiskId="1" Source="..\..\kernel\bb\dot11a\dot11\arx_fd.c" />
+                <File Id="idFile_39" Name="arx_vdc12.c" DiskId="1" Source="..\..\kernel\bb\dot11a\dot11\arx_vdc12.c" />
+                <File Id="idFile_40" Name="arx_vdc18.c" DiskId="1" Source="..\..\kernel\bb\dot11a\dot11\arx_vdc18.c" />
+                <File Id="idFile_41" Name="arx_vdc24.c" DiskId="1" Source="..\..\kernel\bb\dot11a\dot11\arx_vdc24.c" />
+                <File Id="idFile_42" Name="arx_vdc36.c" DiskId="1" Source="..\..\kernel\bb\dot11a\dot11\arx_vdc36.c" />
+                <File Id="idFile_43" Name="arx_vdc48.c" DiskId="1" Source="..\..\kernel\bb\dot11a\dot11\arx_vdc48.c" />
+                <File Id="idFile_44" Name="arx_vdc54.c" DiskId="1" Source="..\..\kernel\bb\dot11a\dot11\arx_vdc54.c" />
+                <File Id="idFile_45" Name="arx_vdc6.c" DiskId="1" Source="..\..\kernel\bb\dot11a\dot11\arx_vdc6.c" />
+                <File Id="idFile_46" Name="arx_vdc9.c" DiskId="1" Source="..\..\kernel\bb\dot11a\dot11\arx_vdc9.c" />
+                <File Id="idFile_47" Name="atx_12.c" DiskId="1" Source="..\..\kernel\bb\dot11a\dot11\atx_12.c" />
+                <File Id="idFile_48" Name="atx_18.c" DiskId="1" Source="..\..\kernel\bb\dot11a\dot11\atx_18.c" />
+                <File Id="idFile_49" Name="atx_24.c" DiskId="1" Source="..\..\kernel\bb\dot11a\dot11\atx_24.c" />
+                <File Id="idFile_50" Name="atx_36.c" DiskId="1" Source="..\..\kernel\bb\dot11a\dot11\atx_36.c" />
+                <File Id="idFile_51" Name="atx_48.c" DiskId="1" Source="..\..\kernel\bb\dot11a\dot11\atx_48.c" />
+                <File Id="idFile_52" Name="atx_54.c" DiskId="1" Source="..\..\kernel\bb\dot11a\dot11\atx_54.c" />
+                <File Id="idFile_53" Name="atx_6.c" DiskId="1" Source="..\..\kernel\bb\dot11a\dot11\atx_6.c" />
+                <File Id="idFile_54" Name="atx_9.c" DiskId="1" Source="..\..\kernel\bb\dot11a\dot11\atx_9.c" />
+                <File Id="idFile_55" Name="atx_fe.c" DiskId="1" Source="..\..\kernel\bb\dot11a\dot11\atx_fe.c" />
+                <File Id="idFile_56" Name="a_init.c" DiskId="1" Source="..\..\kernel\bb\dot11a\dot11\a_init.c" />
+                <File Id="idFile_271" Name="dirs" DiskId="1" Source="..\..\kernel\bb\dot11a\dot11\dirs" />
+              </Component>
+              <Directory Id="dir_bb_dot11a_dot11_kernel" Name="kernel">
+                <Component Id="comp_bb_dot11a_dot11_kernel" Guid="edae1d40-dce7-4a37-83e9-34f43224637b" KeyPath="yes">
+                  <File Id="idFile_272" Name="sources" DiskId="1" Source="..\..\kernel\bb\dot11a\dot11\kernel\sources" />
+                </Component>
+              </Directory>
+              <Directory Id="dir_bb_dot11a_dot11_user" Name="user">
+                <Component Id="comp_bb_dot11a_dot11_user" Guid="51fd535a-398c-4e99-ad58-8ea36d577132" KeyPath="yes">
+                  <File Id="idFile_273" Name="sources" DiskId="1" Source="..\..\kernel\bb\dot11a\dot11\user\sources" />
+                </Component>
+              </Directory>
+            </Directory>
+            <Directory Id="dir_bb_dot11a_inc" Name="inc">
+              <Component Id="comp_bb_dot11a_inc" Guid="d6a0cb1b-99c9-47f6-8b98-9ca00987a441" KeyPath="yes">
+                <File Id="idFile_274" Name="lut.h" DiskId="1" Source="..\..\kernel\bb\dot11a\inc\lut.h" />
+              </Component>
+              <Directory Id="dir_bb_dot11a_inc_bb" Name="bb">
+                <Component Id="comp_bb_dot11a_inc_bb" Guid="157b1398-134c-427e-b051-9b35ae944001" KeyPath="yes">
+                  <File Id="idFile_275" Name="mod.h" DiskId="1" Source="..\..\kernel\bb\dot11a\inc\bb\mod.h" />
+                </Component>
+                <Directory Id="dir_bb_dot11a_inc_bb_mod" Name="mod">
+                  <Component Id="comp_bb_dot11a_inc_bb_mod" Guid="93ed5466-1343-4958-8fb5-6838a24f51a2" KeyPath="yes">
+                    <File Id="idFile_57" Name="achannel.h" DiskId="1" Source="..\..\kernel\bb\dot11a\inc\bb\mod\achannel.h" />
+                    <File Id="idFile_58" Name="acorrel.h" DiskId="1" Source="..\..\kernel\bb\dot11a\inc\bb\mod\acorrel.h" />
+                    <File Id="idFile_59" Name="addpilot.h" DiskId="1" Source="..\..\kernel\bb\dot11a\inc\bb\mod\addpilot.h" />
+                    <File Id="idFile_60" Name="adeinterleave.h" DiskId="1" Source="..\..\kernel\bb\dot11a\inc\bb\mod\adeinterleave.h" />
+                    <File Id="idFile_61" Name="ademap.h" DiskId="1" Source="..\..\kernel\bb\dot11a\inc\bb\mod\ademap.h" />
+                    <File Id="idFile_62" Name="adjustsb.h" DiskId="1" Source="..\..\kernel\bb\dot11a\inc\bb\mod\adjustsb.h" />
+                    <File Id="idFile_63" Name="afifos.h" DiskId="1" Source="..\..\kernel\bb\dot11a\inc\bb\mod\afifos.h" />
+                    <File Id="idFile_64" Name="afreq.h" DiskId="1" Source="..\..\kernel\bb\dot11a\inc\bb\mod\afreq.h" />
+                    <File Id="idFile_65" Name="ainterleave.h" DiskId="1" Source="..\..\kernel\bb\dot11a\inc\bb\mod\ainterleave.h" />
+                    <File Id="idFile_66" Name="amap.h" DiskId="1" Source="..\..\kernel\bb\dot11a\inc\bb\mod\amap.h" />
+                    <File Id="idFile_67" Name="apilot.h" DiskId="1" Source="..\..\kernel\bb\dot11a\inc\bb\mod\apilot.h" />
+                    <File Id="idFile_68" Name="asignal.h" DiskId="1" Source="..\..\kernel\bb\dot11a\inc\bb\mod\asignal.h" />
+                    <File Id="idFile_69" Name="async.h" DiskId="1" Source="..\..\kernel\bb\dot11a\inc\bb\mod\async.h" />
+                    <File Id="idFile_70" Name="convenc.h" DiskId="1" Source="..\..\kernel\bb\dot11a\inc\bb\mod\convenc.h" />
+                    <File Id="idFile_71" Name="copynt.h" DiskId="1" Source="..\..\kernel\bb\dot11a\inc\bb\mod\copynt.h" />
+                    <File Id="idFile_72" Name="dagc.h" DiskId="1" Source="..\..\kernel\bb\dot11a\inc\bb\mod\dagc.h" />
+                    <File Id="idFile_73" Name="dump.h" DiskId="1" Source="..\..\kernel\bb\dot11a\inc\bb\mod\dump.h" />
+                    <File Id="idFile_74" Name="fetchdt.h" DiskId="1" Source="..\..\kernel\bb\dot11a\inc\bb\mod\fetchdt.h" />
+                    <File Id="idFile_75" Name="ifft64x.h" DiskId="1" Source="..\..\kernel\bb\dot11a\inc\bb\mod\ifft64x.h" />
+                    <File Id="idFile_76" Name="lbuf1.h" DiskId="1" Source="..\..\kernel\bb\dot11a\inc\bb\mod\lbuf1.h" />
+                    <File Id="idFile_77" Name="ofdmsymbol.h" DiskId="1" Source="..\..\kernel\bb\dot11a\inc\bb\mod\ofdmsymbol.h" />
+                    <File Id="idFile_78" Name="removedc.h" DiskId="1" Source="..\..\kernel\bb\dot11a\inc\bb\mod\removedc.h" />
+                    <File Id="idFile_79" Name="upsample.h" DiskId="1" Source="..\..\kernel\bb\dot11a\inc\bb\mod\upsample.h" />
+                    <File Id="idFile_80" Name="vb.h" DiskId="1" Source="..\..\kernel\bb\dot11a\inc\bb\mod\vb.h" />
+                    <File Id="idFile_81" Name="viterbi.h" DiskId="1" Source="..\..\kernel\bb\dot11a\inc\bb\mod\viterbi.h" />
+                  </Component>
+                </Directory>
+              </Directory>
+            </Directory>
+            <Directory Id="dir_bb_dot11a_lutst" Name="lutst">
+              <Component Id="comp_bb_dot11a_lutst" Guid="d67d7929-38b0-48e7-bb89-7c29d2642e48" KeyPath="yes">
+                <File Id="idFile_82" Name="arg.c" DiskId="1" Source="..\..\kernel\bb\dot11a\lutst\arg.c" />
+                <File Id="idFile_83" Name="atan64.c" DiskId="1" Source="..\..\kernel\bb\dot11a\lutst\atan64.c" />
+                <File Id="idFile_84" Name="conv_encoder_1_2.c" DiskId="1" Source="..\..\kernel\bb\dot11a\lutst\conv_encoder_1_2.c" />
+                <File Id="idFile_85" Name="conv_encoder_2_3.c" DiskId="1" Source="..\..\kernel\bb\dot11a\lutst\conv_encoder_2_3.c" />
+                <File Id="idFile_86" Name="conv_encoder_3_4.c" DiskId="1" Source="..\..\kernel\bb\dot11a\lutst\conv_encoder_3_4.c" />
+                <File Id="idFile_87" Name="cos0xffff.c" DiskId="1" Source="..\..\kernel\bb\dot11a\lutst\cos0xffff.c" />
+                <File Id="idFile_88" Name="interleave_12m.c" DiskId="1" Source="..\..\kernel\bb\dot11a\lutst\interleave_12m.c" />
+                <File Id="idFile_89" Name="interleave_24m.c" DiskId="1" Source="..\..\kernel\bb\dot11a\lutst\interleave_24m.c" />
+                <File Id="idFile_90" Name="interleave_48m.c" DiskId="1" Source="..\..\kernel\bb\dot11a\lutst\interleave_48m.c" />
+                <File Id="idFile_91" Name="interleave_6m.c" DiskId="1" Source="..\..\kernel\bb\dot11a\lutst\interleave_6m.c" />
+                <File Id="idFile_92" Name="mapa_16qam.c" DiskId="1" Source="..\..\kernel\bb\dot11a\lutst\mapa_16qam.c" />
+                <File Id="idFile_93" Name="mapa_64qam.c" DiskId="1" Source="..\..\kernel\bb\dot11a\lutst\mapa_64qam.c" />
+                <File Id="idFile_94" Name="mapa_bpsk.c" DiskId="1" Source="..\..\kernel\bb\dot11a\lutst\mapa_bpsk.c" />
+                <File Id="idFile_95" Name="mapa_qpsk.c" DiskId="1" Source="..\..\kernel\bb\dot11a\lutst\mapa_qpsk.c" />
+                <File Id="idFile_96" Name="pilotsgn.c" DiskId="1" Source="..\..\kernel\bb\dot11a\lutst\pilotsgn.c" />
+                <File Id="idFile_97" Name="preamble16_11a.c" DiskId="1" Source="..\..\kernel\bb\dot11a\lutst\preamble16_11a.c" />
+                <File Id="idFile_98" Name="preamble40_11a.c" DiskId="1" Source="..\..\kernel\bb\dot11a\lutst\preamble40_11a.c" />
+                <File Id="idFile_99" Name="preamble_11a.c" DiskId="1" Source="..\..\kernel\bb\dot11a\lutst\preamble_11a.c" />
+                <File Id="idFile_100" Name="scramble_11a.c" DiskId="1" Source="..\..\kernel\bb\dot11a\lutst\scramble_11a.c" />
+                <File Id="idFile_101" Name="sin0xffff.c" DiskId="1" Source="..\..\kernel\bb\dot11a\lutst\sin0xffff.c" />
+                <File Id="idFile_276" Name="dirs" DiskId="1" Source="..\..\kernel\bb\dot11a\lutst\dirs" />
+              </Component>
+              <Directory Id="dir_bb_dot11a_lutst_kernel" Name="kernel">
+                <Component Id="comp_bb_dot11a_lutst_kernel" Guid="554dffca-5a09-4afd-9fbf-9b74c7f49f02" KeyPath="yes">
+                  <File Id="idFile_277" Name="sources" DiskId="1" Source="..\..\kernel\bb\dot11a\lutst\kernel\sources" />
+                </Component>
+              </Directory>
+              <Directory Id="dir_bb_dot11a_lutst_user" Name="user">
+                <Component Id="comp_bb_dot11a_lutst_user" Guid="efa9276d-1440-46c4-a2a9-e1e5fa343166" KeyPath="yes">
+                  <File Id="idFile_278" Name="sources" DiskId="1" Source="..\..\kernel\bb\dot11a\lutst\user\sources" />
+                </Component>
+              </Directory>
+            </Directory>
+            <Directory Id="dir_bb_dot11a_mod" Name="mod">
+              <Component Id="comp_bb_dot11a_mod" Guid="9de21c22-823a-4ae9-a805-3fbbc9facce3" KeyPath="yes">
+                <File Id="idFile_102" Name="ademap.c" DiskId="1" Source="..\..\kernel\bb\dot11a\mod\ademap.c" />
+                <File Id="idFile_103" Name="async.c" DiskId="1" Source="..\..\kernel\bb\dot11a\mod\async.c" />
+                <File Id="idFile_104" Name="viterbi.c" DiskId="1" Source="..\..\kernel\bb\dot11a\mod\viterbi.c" />
+                <File Id="idFile_279" Name="dirs" DiskId="1" Source="..\..\kernel\bb\dot11a\mod\dirs" />
+              </Component>
+              <Directory Id="dir_bb_dot11a_mod_kernel" Name="kernel">
+                <Component Id="comp_bb_dot11a_mod_kernel" Guid="5eb0f1da-193a-4a71-be8d-028b5320da8f" KeyPath="yes">
+                  <File Id="idFile_280" Name="sources" DiskId="1" Source="..\..\kernel\bb\dot11a\mod\kernel\sources" />
+                </Component>
+              </Directory>
+              <Directory Id="dir_bb_dot11a_mod_user" Name="user">
+                <Component Id="comp_bb_dot11a_mod_user" Guid="919b0c35-349b-4639-bc8b-0bb99dd3ccc5" KeyPath="yes">
+                  <File Id="idFile_281" Name="sources" DiskId="1" Source="..\..\kernel\bb\dot11a\mod\user\sources" />
+                </Component>
+              </Directory>
+            </Directory>
+          </Directory>
+          <Directory Id="dir_bb_dot11b" Name="dot11b">
+            <Component Id="comp_bb_dot11b" Guid="ee20b733-88b3-41ae-bf1f-68aed29c9510" KeyPath="yes">
+              <File Id="idFile_105" Name="bbb_cck11.c" DiskId="1" Source="..\..\kernel\bb\dot11b\bbb_cck11.c" />
+              <File Id="idFile_106" Name="bbb_cck5.c" DiskId="1" Source="..\..\kernel\bb\dot11b\bbb_cck5.c" />
+              <File Id="idFile_107" Name="bbb_dbpsk.c" DiskId="1" Source="..\..\kernel\bb\dot11b\bbb_dbpsk.c" />
+              <File Id="idFile_108" Name="bbb_descramble.c" DiskId="1" Source="..\..\kernel\bb\dot11b\bbb_descramble.c" />
+              <File Id="idFile_109" Name="bbb_dqpsk.c" DiskId="1" Source="..\..\kernel\bb\dot11b\bbb_dqpsk.c" />
+              <File Id="idFile_110" Name="bbb_fir.c" DiskId="1" Source="..\..\kernel\bb\dot11b\bbb_fir.c" />
+              <File Id="idFile_111" Name="bbb_rx.c" DiskId="1" Source="..\..\kernel\bb\dot11b\bbb_rx.c" />
+              <File Id="idFile_112" Name="bbb_scramble.c" DiskId="1" Source="..\..\kernel\bb\dot11b\bbb_scramble.c" />
+              <File Id="idFile_113" Name="bbb_spd.c" DiskId="1" Source="..\..\kernel\bb\dot11b\bbb_spd.c" />
+              <File Id="idFile_114" Name="bbb_tx.c" DiskId="1" Source="..\..\kernel\bb\dot11b\bbb_tx.c" />
+              <File Id="idFile_115" Name="bbb_cck11.h" DiskId="1" Source="..\..\kernel\bb\dot11b\bbb_cck11.h" />
+              <File Id="idFile_116" Name="bbb_cck5.h" DiskId="1" Source="..\..\kernel\bb\dot11b\bbb_cck5.h" />
+              <File Id="idFile_117" Name="bbb_dbpsk.h" DiskId="1" Source="..\..\kernel\bb\dot11b\bbb_dbpsk.h" />
+              <File Id="idFile_118" Name="bbb_debarker.h" DiskId="1" Source="..\..\kernel\bb\dot11b\bbb_debarker.h" />
+              <File Id="idFile_119" Name="bbb_descramble.h" DiskId="1" Source="..\..\kernel\bb\dot11b\bbb_descramble.h" />
+              <File Id="idFile_120" Name="bbb_dqpsk.h" DiskId="1" Source="..\..\kernel\bb\dot11b\bbb_dqpsk.h" />
+              <File Id="idFile_121" Name="bbb_fifos.h" DiskId="1" Source="..\..\kernel\bb\dot11b\bbb_fifos.h" />
+              <File Id="idFile_122" Name="bbb_lut.h" DiskId="1" Source="..\..\kernel\bb\dot11b\bbb_lut.h" />
+              <File Id="idFile_123" Name="bbb_rx.h" DiskId="1" Source="..\..\kernel\bb\dot11b\bbb_rx.h" />
+              <File Id="idFile_124" Name="bbb_tx.h" DiskId="1" Source="..\..\kernel\bb\dot11b\bbb_tx.h" />
+              <File Id="idFile_125" Name="ListenerMac.h" DiskId="1" Source="..\..\kernel\bb\dot11b\ListenerMac.h" />
+              <File Id="idFile_126" Name="sora_fifo.h" DiskId="1" Source="..\..\kernel\bb\dot11b\sora_fifo.h" />
+              <File Id="idFile_282" Name="dirs" DiskId="1" Source="..\..\kernel\bb\dot11b\dirs" />
+            </Component>
+            <Directory Id="dir_bb_dot11b_klib" Name="klib">
+              <Component Id="comp_bb_dot11b_klib" Guid="241c9516-d649-4f97-88d5-828f69157a1c" KeyPath="yes">
+                <File Id="idFile_127" Name="sources" DiskId="1" Source="..\..\kernel\bb\dot11b\klib\sources" />
+              </Component>
+            </Directory>
+            <Directory Id="dir_bb_dot11b_ulib" Name="ulib">
+              <Component Id="comp_bb_dot11b_ulib" Guid="9012f6ae-3555-40c2-840d-479a1d0c87eb" KeyPath="yes">
+                <File Id="idFile_128" Name="sources" DiskId="1" Source="..\..\kernel\bb\dot11b\ulib\sources" />
+              </Component>
+            </Directory>
+          </Directory>
+          <Directory Id="dir_bb_umxdot11" Name="UMXDot11">
+            <Component Id="comp_bb_umxdot11" Guid="854f375e-60df-479f-92f6-dbef176bc3c7" KeyPath="yes">
+              <File Id="idFile_129" Name="appext.h" DiskId="1" Source="..\..\kernel\bb\UMXDot11\appext.h" />
+              <File Id="idFile_130" Name="config.h" DiskId="1" Source="..\..\kernel\bb\UMXDot11\config.h" />
+              <File Id="idFile_131" Name="monitor.h" DiskId="1" Source="..\..\kernel\bb\UMXDot11\monitor.h" />
+              <File Id="idFile_132" Name="dot11arx.c" DiskId="1" Source="..\..\kernel\bb\UMXDot11\dot11arx.c" />
+              <File Id="idFile_133" Name="dot11atx.c" DiskId="1" Source="..\..\kernel\bb\UMXDot11\dot11atx.c" />
+              <File Id="idFile_134" Name="dot11brx.c" DiskId="1" Source="..\..\kernel\bb\UMXDot11\dot11brx.c" />
+              <File Id="idFile_135" Name="dot11btx.c" DiskId="1" Source="..\..\kernel\bb\UMXDot11\dot11btx.c" />
+              <File Id="idFile_136" Name="main.c" DiskId="1" Source="..\..\kernel\bb\UMXDot11\main.c" />
+              <File Id="idFile_137" Name="dot11arx_fb.cpp" DiskId="1" Source="..\..\kernel\bb\UMXDot11\dot11arx_fb.cpp" />
+              <File Id="idFile_138" Name="dot11atx_fb.cpp" DiskId="1" Source="..\..\kernel\bb\UMXDot11\dot11atx_fb.cpp" />
+              <File Id="idFile_139" Name="dot11brx_fb.cpp" DiskId="1" Source="..\..\kernel\bb\UMXDot11\dot11brx_fb.cpp" />
+              <File Id="idFile_140" Name="dot11btx_fb.cpp" DiskId="1" Source="..\..\kernel\bb\UMXDot11\dot11btx_fb.cpp" />
+              <File Id="idFile_141" Name="UMXDot11.rc" DiskId="1" Source="..\..\kernel\bb\UMXDot11\UMXDot11.rc" />
+              <File Id="idFile_142" Name="makefile.inc" DiskId="1" Source="..\..\kernel\bb\UMXDot11\makefile.inc" />
+              <File Id="idFile_143" Name="UMXDot11.exe.ini" DiskId="1" Source="..\..\kernel\bb\UMXDot11\UMXDot11.exe.ini" />
+              <File Id="idFile_283" Name="sources" DiskId="1" Source="..\..\kernel\bb\UMXDot11\sources.publish" />
+            </Component>
+          </Directory>
+          <Directory Id="dir_bb_brick11" Name="Brick11">
+            <Directory Id="dir_bb_brick11_src" Name="src">
+              <Component Id="comp_bb_brick11_src" Guid="3f4f49a8-b8fa-48bc-b227-85a17c8a6e9c" KeyPath="yes">
+                <File Id="idFile_144" Name="40MTo44M.hpp" DiskId="1" Source="..\..\kernel\bb\Brick11\src\40MTo44M.hpp" />
+                <File Id="idFile_145" Name="44MTo40M.hpp" DiskId="1" Source="..\..\kernel\bb\Brick11\src\44MTo40M.hpp" />
+                <File Id="idFile_146" Name="barkerspread.hpp" DiskId="1" Source="..\..\kernel\bb\Brick11\src\barkerspread.hpp" />
+                <File Id="idFile_147" Name="cca.hpp" DiskId="1" Source="..\..\kernel\bb\Brick11\src\cca.hpp" />
+                <File Id="idFile_148" Name="cck.hpp" DiskId="1" Source="..\..\kernel\bb\Brick11\src\cck.hpp" />
+                <File Id="idFile_149" Name="channel_11a.hpp" DiskId="1" Source="..\..\kernel\bb\Brick11\src\channel_11a.hpp" />
+                <File Id="idFile_150" Name="conv_enc.hpp" DiskId="1" Source="..\..\kernel\bb\Brick11\src\conv_enc.hpp" />
+                <File Id="idFile_151" Name="deinterleaver.hpp" DiskId="1" Source="..\..\kernel\bb\Brick11\src\deinterleaver.hpp" />
+                <File Id="idFile_152" Name="demapper11a.hpp" DiskId="1" Source="..\..\kernel\bb\Brick11\src\demapper11a.hpp" />
+                <File Id="idFile_153" Name="depuncturer.hpp" DiskId="1" Source="..\..\kernel\bb\Brick11\src\depuncturer.hpp" />
+                <File Id="idFile_154" Name="fft.hpp" DiskId="1" Source="..\..\kernel\bb\Brick11\src\fft.hpp" />
+                <File Id="idFile_155" Name="freqoffset.hpp" DiskId="1" Source="..\..\kernel\bb\Brick11\src\freqoffset.hpp" />
+                <File Id="idFile_156" Name="ieee80211facade.hpp" DiskId="1" Source="..\..\kernel\bb\Brick11\src\ieee80211facade.hpp" />
+                <File Id="idFile_157" Name="interleave.hpp" DiskId="1" Source="..\..\kernel\bb\Brick11\src\interleave.hpp" />
+                <File Id="idFile_158" Name="mapper11a.hpp" DiskId="1" Source="..\..\kernel\bb\Brick11\src\mapper11a.hpp" />
+                <File Id="idFile_159" Name="PHY_11a.hpp" DiskId="1" Source="..\..\kernel\bb\Brick11\src\PHY_11a.hpp" />
+                <File Id="idFile_160" Name="PHY_11b.hpp" DiskId="1" Source="..\..\kernel\bb\Brick11\src\PHY_11b.hpp" />
+                <File Id="idFile_161" Name="pilot.hpp" DiskId="1" Source="..\..\kernel\bb\Brick11\src\pilot.hpp" />
+                <File Id="idFile_162" Name="preamble11a.hpp" DiskId="1" Source="..\..\kernel\bb\Brick11\src\preamble11a.hpp" />
+                <File Id="idFile_163" Name="pulse.hpp" DiskId="1" Source="..\..\kernel\bb\Brick11\src\pulse.hpp" />
+                <File Id="idFile_164" Name="samples.hpp" DiskId="1" Source="..\..\kernel\bb\Brick11\src\samples.hpp" />
+                <File Id="idFile_165" Name="sampling.hpp" DiskId="1" Source="..\..\kernel\bb\Brick11\src\sampling.hpp" />
+                <File Id="idFile_166" Name="scramble.hpp" DiskId="1" Source="..\..\kernel\bb\Brick11\src\scramble.hpp" />
+                <File Id="idFile_167" Name="sfd_sync.hpp" DiskId="1" Source="..\..\kernel\bb\Brick11\src\sfd_sync.hpp" />
+                <File Id="idFile_168" Name="symtiming.hpp" DiskId="1" Source="..\..\kernel\bb\Brick11\src\symtiming.hpp" />
+                <File Id="idFile_169" Name="viterbi.hpp" DiskId="1" Source="..\..\kernel\bb\Brick11\src\viterbi.hpp" />
+                <File Id="idFile_170" Name="demapper.h" DiskId="1" Source="..\..\kernel\bb\Brick11\src\demapper.h" />
+                <File Id="idFile_171" Name="ieee80211a_cmn.h" DiskId="1" Source="..\..\kernel\bb\Brick11\src\ieee80211a_cmn.h" />
+                <File Id="idFile_172" Name="ieee80211const.h" DiskId="1" Source="..\..\kernel\bb\Brick11\src\ieee80211const.h" />
+                <File Id="idFile_173" Name="viterbicore.h" DiskId="1" Source="..\..\kernel\bb\Brick11\src\viterbicore.h" />
+                <File Id="idFile_174" Name="viterbilut.h" DiskId="1" Source="..\..\kernel\bb\Brick11\src\viterbilut.h" />
+              </Component>
+            </Directory>
+          </Directory>
+        </Directory>
+        <Directory Id="dir_kmsdr" Name="kmsdr">
+          <Component Id="comp_kmsdr" Guid="0f86fa3e-c208-4398-9fcd-8e6c2351f946" KeyPath="yes">
+            <File Id="idFile_284" Name="dirs" DiskId="1" Source="..\..\kernel\sample\dirs" />
+          </Component>
+          <Directory Id="dir_driver_ll" Name="ll">
+            <Component Id="comp_driver_ll" Guid="56f1f5ff-e336-4751-bdbb-a5882c16aa20" KeyPath="yes">
+              <File Id="idFile_175" Name="sdr_ll_main.c" DiskId="1" Source="..\..\kernel\sample\ll\sdr_ll_main.c" />
+              <File Id="idFile_176" Name="sdr_ll_util.c" DiskId="1" Source="..\..\kernel\sample\ll\sdr_ll_util.c" />
+              <File Id="idFile_285" Name="dirs_x86" DiskId="1" Source="..\..\kernel\sample\ll\dirs_x86.publish" />
+              <File Id="idFile_286" Name="dirs_x64" DiskId="1" Source="..\..\kernel\sample\ll\dirs_x64.publish" />
+            </Component>
+            <Directory Id="dir_driver_ll_5x" Name="NDIS5">
+              <Component Id="comp_driver_ll_5x" Guid="77253cc0-9c80-46c3-8783-9ef9c7cfec83" KeyPath="yes">
+                <File Id="idFile_177" Name="sdr_ll_recv.c" DiskId="1" Source="..\..\kernel\sample\ll\5x\sdr_ll_recv.c" />
+                <File Id="idFile_178" Name="sdr_ll_send.c" DiskId="1" Source="..\..\kernel\sample\ll\5x\sdr_ll_send.c" />
+                <File Id="idFile_287" Name="makefile" DiskId="1" Source="..\..\kernel\sample\ll\5x\makefile" />
+                <File Id="idFile_288" Name="sources" DiskId="1" Source="..\..\kernel\sample\ll\5x\sources" />
+              </Component>
+            </Directory>
+            <Directory Id="dir_driver_ll_6x" Name="NDIS6">
+              <Component Id="comp_driver_ll_6x" Guid="f4b694c8-a0f7-4182-8542-d246165565e3" KeyPath="yes">
+                <File Id="idFile_179" Name="sdr_ll_recv.c" DiskId="1" Source="..\..\kernel\sample\ll\6x\sdr_ll_recv.c" />
+                <File Id="idFile_180" Name="sdr_ll_send.c" DiskId="1" Source="..\..\kernel\sample\ll\6x\sdr_ll_send.c" />
+                <File Id="idFile_289" Name="makefile" DiskId="1" Source="..\..\kernel\sample\ll\6x\makefile" />
+                <File Id="idFile_290" Name="sources" DiskId="1" Source="..\..\kernel\sample\ll\6x\sources" />
+              </Component>
+            </Directory>
+          </Directory>
+          <Directory Id="dir_driver_mac" Name="mac">
+            <Component Id="comp_driver_mac" Guid="8f026b24-c60c-4230-9b8a-a80b7843f87a" KeyPath="yes">
+              <File Id="idFile_181" Name="sdr_mac_cs.c" DiskId="1" Source="..\..\kernel\sample\mac\sdr_mac_cs.c" />
+              <File Id="idFile_182" Name="sdr_mac_main.c" DiskId="1" Source="..\..\kernel\sample\mac\sdr_mac_main.c" />
+              <File Id="idFile_183" Name="sdr_mac_recv.c" DiskId="1" Source="..\..\kernel\sample\mac\sdr_mac_recv.c" />
+              <File Id="idFile_184" Name="sdr_mac_recv_queue.c" DiskId="1" Source="..\..\kernel\sample\mac\sdr_mac_recv_queue.c" />
+              <File Id="idFile_185" Name="sdr_mac_rx.c" DiskId="1" Source="..\..\kernel\sample\mac\sdr_mac_rx.c" />
+              <File Id="idFile_186" Name="sdr_mac_send.c" DiskId="1" Source="..\..\kernel\sample\mac\sdr_mac_send.c" />
+              <File Id="idFile_187" Name="sdr_mac_send_queue.c" DiskId="1" Source="..\..\kernel\sample\mac\sdr_mac_send_queue.c" />
+              <File Id="idFile_188" Name="sdr_mac_tx.c" DiskId="1" Source="..\..\kernel\sample\mac\sdr_mac_tx.c" />
+              <File Id="idFile_189" Name="dlink_list_queue.h" DiskId="1" Source="..\..\kernel\sample\mac\dlink_list_queue.h" />
+              <File Id="idFile_190" Name="sdr_mac_precomp.h" DiskId="1" Source="..\..\kernel\sample\mac\sdr_mac_precomp.h" />
+              <File Id="idFile_191" Name="sdr_mac_recv_queue.h" DiskId="1" Source="..\..\kernel\sample\mac\sdr_mac_recv_queue.h" />
+              <File Id="idFile_192" Name="sdr_mac_send_queue.h" DiskId="1" Source="..\..\kernel\sample\mac\sdr_mac_send_queue.h" />
+              <File Id="idFile_193" Name="sdr_mac_util.h" DiskId="1" Source="..\..\kernel\sample\mac\sdr_mac_util.h" />
+              <File Id="idFile_291" Name="sources" DiskId="1" Source="..\..\kernel\sample\mac\sources" />
+            </Component>
+          </Directory>
+          <Directory Id="dir_driver_phy" Name="phy">
+            <Component Id="comp_driver_phy" Guid="10f99e05-fa9c-4bd1-811c-38aceff656f3" KeyPath="yes">
+              <File Id="idFile_194" Name="sdr_phy_ack_cache.c" DiskId="1" Source="..\..\kernel\sample\phy\sdr_phy_ack_cache.c" />
+              <File Id="idFile_195" Name="sdr_phy_cs.c" DiskId="1" Source="..\..\kernel\sample\phy\sdr_phy_cs.c" />
+              <File Id="idFile_196" Name="sdr_phy_main.c" DiskId="1" Source="..\..\kernel\sample\phy\sdr_phy_main.c" />
+              <File Id="idFile_197" Name="sdr_phy_rx.c" DiskId="1" Source="..\..\kernel\sample\phy\sdr_phy_rx.c" />
+              <File Id="idFile_198" Name="sdr_phy_tx.c" DiskId="1" Source="..\..\kernel\sample\phy\sdr_phy_tx.c" />
+              <File Id="idFile_199" Name="sdr_phy_ack_cache.h" DiskId="1" Source="..\..\kernel\sample\phy\sdr_phy_ack_cache.h" />
+              <File Id="idFile_200" Name="sdr_phy_precomp.h" DiskId="1" Source="..\..\kernel\sample\phy\sdr_phy_precomp.h" />
+              <File Id="idFile_292" Name="sources" DiskId="1" Source="..\..\kernel\sample\phy\sources" />
+            </Component>
+          </Directory>
+          <Directory Id="dir_driver_sdrminiport" Name="SDRMiniport">
+            <Component Id="comp_driver_sdrminiport" Guid="db69e201-f77c-41da-9aad-3eef4d86c2dc" KeyPath="yes">
+              <File Id="idFile_201" Name="init.c" DiskId="1" Source="..\..\kernel\sample\SDRMiniport\init.c" />
+              <File Id="idFile_202" Name="ioctrl.c" DiskId="1" Source="..\..\kernel\sample\SDRMiniport\ioctrl.c" />
+              <File Id="idFile_203" Name="init.h" DiskId="1" Source="..\..\kernel\sample\SDRMiniport\init.h" />
+              <File Id="idFile_204" Name="ioctrl.h" DiskId="1" Source="..\..\kernel\sample\SDRMiniport\ioctrl.h" />
+              <File Id="idFile_205" Name="miniport.h" DiskId="1" Source="..\..\kernel\sample\SDRMiniport\miniport.h" />
+              <File Id="idFile_206" Name="sendrcv.h" DiskId="1" Source="..\..\kernel\sample\SDRMiniport\sendrcv.h" />
+              <File Id="idFile_207" Name="trace.h" DiskId="1" Source="..\..\kernel\sample\SDRMiniport\trace.h" />
+              <File Id="idFile_293" Name="dirs_x86" DiskId="1" Source="..\..\kernel\sample\SDRMiniport\dirs_x86.publish" />
+              <File Id="idFile_294" Name="dirs_x64" DiskId="1" Source="..\..\kernel\sample\SDRMiniport\dirs_x64.publish" />
+            </Component>
+            <Directory Id="dir_driver_sdrminiport_exe" Name="dot11config">
+              <Component Id="comp_driver_sdrminiport_exe" Guid="2a536ecb-6283-4073-8aa6-8365808a8bb3" KeyPath="yes">
+                <File Id="idFile_208" Name="main.c" DiskId="1" Source="..\..\kernel\sample\SDRMiniport\exe\main.c" />
+                <File Id="idFile_209" Name="unittest.c" DiskId="1" Source="..\..\kernel\sample\SDRMiniport\exe\unittest.c" />
+                <File Id="idFile_210" Name="dot11config.h" DiskId="1" Source="..\..\kernel\sample\SDRMiniport\exe\dot11config.h" />
+                <File Id="idFile_295" Name="dot11config.rc" DiskId="1" Source="..\..\kernel\sample\SDRMiniport\exe\dot11config.rc" />
+                <File Id="idFile_296" Name="sources" DiskId="1" Source="..\..\kernel\sample\SDRMiniport\exe\sources" />
+              </Component>
+            </Directory>
+            <Directory Id="dir_driver_sdrminiport_sys5x" Name="NDIS5">
+              <Component Id="comp_driver_sdrminiport_sys5x" Guid="63f4bd82-fdb9-4b93-a4e0-937d9c968d72" KeyPath="yes">
+                <File Id="idFile_211" Name="miniport.c" DiskId="1" Source="..\..\kernel\sample\SDRMiniport\sys5x\miniport.c" />
+                <File Id="idFile_212" Name="request.c" DiskId="1" Source="..\..\kernel\sample\SDRMiniport\sys5x\request.c" />
+                <File Id="idFile_213" Name="sendrcv.c" DiskId="1" Source="..\..\kernel\sample\SDRMiniport\sys5x\sendrcv.c" />
+                <File Id="idFile_297" Name="sdr.inx" DiskId="1" Source="..\..\kernel\sample\SDRMiniport\sys5x\sdr.inx" />
+                <File Id="idFile_298" Name="sdr.rc" DiskId="1" Source="..\..\kernel\sample\SDRMiniport\sys5x\sdr.rc" />
+                <File Id="idFile_299" Name="makefile.inc" DiskId="1" Source="..\..\kernel\sample\SDRMiniport\sys5x\makefile.inc" />
+                <File Id="idFile_300" Name="sources" DiskId="1" Source="..\..\kernel\sample\SDRMiniport\sys5x\sources.publish" />
+              </Component>
+            </Directory>
+            <Directory Id="dir_driver_sdrminiport_sys6x" Name="NDIS6">
+              <Component Id="comp_driver_sdrminiport_sys6x" Guid="6824190b-f73f-4dae-9f9e-1f28b07ac39c" KeyPath="yes">
+                <File Id="idFile_214" Name="miniport.c" DiskId="1" Source="..\..\kernel\sample\SDRMiniport\sys6x\miniport.c" />
+                <File Id="idFile_215" Name="request.c" DiskId="1" Source="..\..\kernel\sample\SDRMiniport\sys6x\request.c" />
+                <File Id="idFile_216" Name="sendrcv.c" DiskId="1" Source="..\..\kernel\sample\SDRMiniport\sys6x\sendrcv.c" />
+                <File Id="idFile_217" Name="request.h" DiskId="1" Source="..\..\kernel\sample\SDRMiniport\sys6x\request.h" />
+                <File Id="idFile_301" Name="sdr.inx" DiskId="1" Source="..\..\kernel\sample\SDRMiniport\sys6x\sdr.inx" />
+                <File Id="idFile_302" Name="sdr.rc" DiskId="1" Source="..\..\kernel\sample\SDRMiniport\sys6x\sdr.rc" />
+                <File Id="idFile_303" Name="makefile.inc" DiskId="1" Source="..\..\kernel\sample\SDRMiniport\sys6x\makefile.inc" />
+                <File Id="idFile_304" Name="sources" DiskId="1" Source="..\..\kernel\sample\SDRMiniport\sys6x\sources.publish" />
+              </Component>
+            </Directory>
+          </Directory>
+        </Directory>
+        <Directory Id="dir_umxsdr" Name="umxsdra">
+          <Component Id="comp_umxsdr" Guid="6bcedc95-ec3d-44a6-9b94-2295a05ee059" KeyPath="yes">
+            <File Id="idFile_218" Name="dot11main.cpp" DiskId="1" Source="..\..\kernel\bb\umxsdra\dot11main.cpp" />
+            <File Id="idFile_219" Name="mac.cpp" DiskId="1" Source="..\..\kernel\bb\umxsdra\mac.cpp" />
+            <File Id="idFile_220" Name="main.cpp" DiskId="1" Source="..\..\kernel\bb\umxsdra\main.cpp" />
+            <File Id="idFile_221" Name="mgmt.cpp" DiskId="1" Source="..\..\kernel\bb\umxsdra\mgmt.cpp" />
+            <File Id="idFile_222" Name="errmsg.h" DiskId="1" Source="..\..\kernel\bb\umxsdra\errmsg.h" />
+            <File Id="idFile_223" Name="mac.h" DiskId="1" Source="..\..\kernel\bb\umxsdra\mac.h" />
+            <File Id="idFile_224" Name="mgmt.h" DiskId="1" Source="..\..\kernel\bb\umxsdra\mgmt.h" />
+            <File Id="idFile_225" Name="phy.h" DiskId="1" Source="..\..\kernel\bb\umxsdra\phy.h" />
+            <File Id="idFile_226" Name="umxsdr.h" DiskId="1" Source="..\..\kernel\bb\umxsdra\umxsdr.h" />
+            <File Id="idFile_227" Name="_spinlock.h" DiskId="1" Source="..\..\kernel\bb\umxsdra\_spinlock.h" />
+            <File Id="idFile_228" Name="fb11amod_config.hpp" DiskId="1" Source="..\..\kernel\bb\umxsdra\fb11amod_config.hpp" />
+            <File Id="idFile_305" Name="sources" DiskId="1" Source="..\..\kernel\bb\umxsdra\sources.publish" />
+          </Component>
+        </Directory>
+        <Directory Id="dir_umxsdr_brick" Name="umxsdrbrick">
+          <Component Id="comp_umxsdr_brick" Guid="365d9d6d-6e67-48c0-9551-176a3c464877" KeyPath="yes">
+            <File Id="idFile_229" Name="dot11main.cpp" DiskId="1" Source="..\..\kernel\bb\umxsdrbrick\dot11main.cpp" />
+            <File Id="idFile_230" Name="mac.cpp" DiskId="1" Source="..\..\kernel\bb\umxsdrbrick\mac.cpp" />
+            <File Id="idFile_231" Name="main.cpp" DiskId="1" Source="..\..\kernel\bb\umxsdrbrick\main.cpp" />
+            <File Id="idFile_232" Name="mgmt.cpp" DiskId="1" Source="..\..\kernel\bb\umxsdrbrick\mgmt.cpp" />
+            <File Id="idFile_233" Name="errmsg.h" DiskId="1" Source="..\..\kernel\bb\umxsdrbrick\errmsg.h" />
+            <File Id="idFile_234" Name="mac.h" DiskId="1" Source="..\..\kernel\bb\umxsdrbrick\mac.h" />
+            <File Id="idFile_235" Name="mgmt.h" DiskId="1" Source="..\..\kernel\bb\umxsdrbrick\mgmt.h" />
+            <File Id="idFile_236" Name="phy.h" DiskId="1" Source="..\..\kernel\bb\umxsdrbrick\phy.h" />
+            <File Id="idFile_237" Name="umxsdr.h" DiskId="1" Source="..\..\kernel\bb\umxsdrbrick\umxsdr.h" />
+            <File Id="idFile_238" Name="_spinlock.h" DiskId="1" Source="..\..\kernel\bb\umxsdrbrick\_spinlock.h" />
+            <File Id="idFile_239" Name="fb11ademod_config.hpp" DiskId="1" Source="..\..\kernel\bb\umxsdrbrick\fb11ademod_config.hpp" />
+            <File Id="idFile_240" Name="fb11amod_config.hpp" DiskId="1" Source="..\..\kernel\bb\umxsdrbrick\fb11amod_config.hpp" />
+            <File Id="idFile_241" Name="fb11bdemod_config.hpp" DiskId="1" Source="..\..\kernel\bb\umxsdrbrick\fb11bdemod_config.hpp" />
+            <File Id="idFile_242" Name="fb11bmod_config.hpp" DiskId="1" Source="..\..\kernel\bb\umxsdrbrick\fb11bmod_config.hpp" />
+            <File Id="idFile_306" Name="sources" DiskId="1" Source="..\..\kernel\bb\umxsdrbrick\sources.publish" />
+          </Component>
+        </Directory>
+        <Directory Id="dir_util" Name="util">
+          <Component Id="comp_util" Guid="4a2409cc-96fa-46f6-8957-92b71bf13b01" KeyPath="yes">
+            <File Id="idFile_307" Name="dirs" DiskId="1" Source="..\..\kernel\util\dirs" />
+          </Component>
+          <Directory Id="dir_util_args" Name="args">
+            <Component Id="comp_util_args" Guid="9258c1c1-f686-4cfd-95f3-5e944a01c619" KeyPath="yes">
+              <File Id="idFile_243" Name="args.c" DiskId="1" Source="..\..\kernel\util\args\args.c" />
+              <File Id="idFile_308" Name="sources" DiskId="1" Source="..\..\kernel\util\args\sources" />
+            </Component>
+          </Directory>
+          <Directory Id="dir_util_src" Name="src">
+            <Component Id="comp_util_src" Guid="e519215d-7f88-4eec-9aef-d0f9355881b0" KeyPath="yes">
+              <File Id="idFile_244" Name="mdl.c" DiskId="1" Source="..\..\kernel\util\src\mdl.c" />
+              <File Id="idFile_245" Name="sora_utility.h" DiskId="1" Source="..\..\kernel\util\src\sora_utility.h" />
+              <File Id="idFile_309" Name="sources" DiskId="1" Source="..\..\kernel\util\src\sources" />
+            </Component>
+          </Directory>
+        </Directory>
+        <Directory Id="dir_dbgplot_sample" Name="dbgplot-sample">
+          <Component Id="comp_dbgplot_sample" Guid="d269dda8-66c2-4c39-b9a6-cdbc24558ee9" KeyPath="yes">
+            <File Id="idFile_310" Name="dirs" DiskId="1" Source="..\..\DebugTool\source\Tutorial\dirs.publish" />
+          </Component>
+          <Directory Id="dir_dbgplot_sample_tut1" Name="sample1">
+            <Component Id="comp_dbgplot_sample_tut1" Guid="293583b0-8f4a-495f-ab8c-2d7aa190e35e" KeyPath="yes">
+              <File Id="idFile_311" Name="tut1.cpp" DiskId="1" Source="..\..\DebugTool\source\Tutorial\1\tut1.cpp" />
+              <File Id="idFile_312" Name="sources" DiskId="1" Source="..\..\DebugTool\source\Tutorial\1\sources.publish" />
+            </Component>
+          </Directory>
+          <Directory Id="dir_dbgplot_sample_tut2" Name="sample2">
+            <Component Id="comp_dbgplot_sample_tut2" Guid="e4cd5297-4dd1-44ca-b217-bcb94cf73213" KeyPath="yes">
+              <File Id="idFile_313" Name="tut2.cpp" DiskId="1" Source="..\..\DebugTool\source\Tutorial\2\tut2.cpp" />
+              <File Id="idFile_314" Name="sources" DiskId="1" Source="..\..\DebugTool\source\Tutorial\2\sources.publish" />
+            </Component>
+          </Directory>
+        </Directory>
+        <Directory Id="dir_samples" Name="Samples">
+          <Component Id="comp_samples" Guid="ae28a655-5325-4251-ad9d-b7ce48af53a3" KeyPath="yes">
+            <File Id="idFile_315" Name="dirs" DiskId="1" Source="..\..\kernel\samples\dirs.publish" />
+          </Component>
+          <Directory Id="dir_samples_AppExt" Name="AppExt">
+            <Component Id="comp_samples_AppExt" Guid="d1301df5-d1be-4414-a430-432fd369dd10" KeyPath="yes">
+              <File Id="idFile_316" Name="umx_sample.cpp" DiskId="1" Source="..\..\kernel\SoraAppExtSample\umx_sample.cpp" />
+              <File Id="idFile_317" Name="sources" DiskId="1" Source="..\..\kernel\SoraAppExtSample\sources.publish" />
+            </Component>
+          </Directory>
+          <Directory Id="dir_samples_Simple" Name="Simple">
+            <Component Id="comp_samples_Simple" Guid="2c60e4a9-e28c-415e-bd36-e4b1992b8d02" KeyPath="yes">
+              <File Id="idFile_246" Name="main.cpp" DiskId="1" Source="..\..\kernel\samples\simple-src\main.cpp" />
+              <File Id="idFile_247" Name="sine.cpp" DiskId="1" Source="..\..\kernel\samples\simple-src\sine.cpp" />
+              <File Id="idFile_248" Name="radioinfo.h" DiskId="1" Source="..\..\kernel\samples\simple-src\radioinfo.h" />
+              <File Id="idFile_249" Name="sine.h" DiskId="1" Source="..\..\kernel\samples\simple-src\sine.h" />
+              <File Id="idFile_318" Name="sources" DiskId="1" Source="..\..\kernel\samples\simple-src\sources.publish" />
+            </Component>
+          </Directory>
+          <Directory Id="dir_samples_SpecAnalyzer" Name="SpecAnalyzer">
+            <Component Id="comp_samples_SpecAnalyzer" Guid="67353af7-55a2-4d0e-840a-719347f2aab6" KeyPath="yes">
+              <File Id="idFile_250" Name="main.cpp" DiskId="1" Source="..\..\kernel\samples\speanalyzer\main.cpp" />
+              <File Id="idFile_251" Name="specanalyzer.cpp" DiskId="1" Source="..\..\kernel\samples\speanalyzer\specanalyzer.cpp" />
+              <File Id="idFile_252" Name="radioinfo.h" DiskId="1" Source="..\..\kernel\samples\speanalyzer\radioinfo.h" />
+              <File Id="idFile_253" Name="specanalyzer.h" DiskId="1" Source="..\..\kernel\samples\speanalyzer\specanalyzer.h" />
+              <File Id="idFile_319" Name="sources" DiskId="1" Source="..\..\kernel\samples\speanalyzer\sources.publish" />
+            </Component>
+          </Directory>
+        </Directory>
+      </Directory>
+    </DirectoryRef>
+  </Fragment>
+</Wix>

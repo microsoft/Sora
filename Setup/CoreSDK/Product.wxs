@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+	<Product Id="34D49386-8D0B-4CA9-AD19-3F5B1DF18348"
+             Name="MSR Software Radio Academic Kit"
+             Language="1033" Version="1.8"
+             Manufacturer="Microsoft Research Asia"
+             UpgradeCode="9B0D04EC-99C7-4171-AE6C-43E87EFE119D">
+        <!--9B0D04EC-99C7-4171-AE6C-43E87EFE119D-->
+        <!--A4D8C6CC-63D4-4AE8-88B5-927C5FE92E19-->
+        <Package InstallerVersion="200" Compressed="yes" />
+
+		<Media Id="1" Cabinet="media1.cab" EmbedCab="yes" />
+
+        <Directory Id="TARGETDIR" Name="SourceDir">
+            <Directory Id="APPLICATIONFOLDER" Name="SoraSDK1.8" />
+        
+            <Directory Id="ProgramMenuFolder" Name="Programs">
+                <Directory Id="ProgramMenuDir_MSRA" Name="Microsoft Research Asia">
+                    <Directory Id="ProgramMenuDir_SORA1.8" Name="Software Radio Academic Kit 1.8" />
+                </Directory>
+            </Directory>
+
+            <Component Id='SORA_RegistryKey' Guid='24D1DBFB-9E98-4565-8570-CA3EA437EFE4'>
+                <RegistryKey Root="HKLM" Key="Software\Microsoft Research Asia\SoraSDK 1.8"
+                              Action="createAndRemoveOnUninstall">
+                    <RegistryValue Type="string" Name="InstPath" Value="[APPLICATIONFOLDER]" KeyPath="yes"/>
+                </RegistryKey>
+            </Component>
+        </Directory>
+
+        <DirectoryRef Id="ProgramMenuDir_SORA1.8">
+            <Component Id="SORA_ShortCut" Guid="AE3E1923-57DC-4985-9CA4-3C5378E8E877">
+                <Shortcut Id="SORA_EULA_Shortcut"
+                          Name="EULA"
+                          Description="MSR License Agreement"
+                          Target="[APPLICATIONFOLDER]MSR-LA.pdf"
+                          WorkingDirectory="APPLICATIONFOLDER"/>
+                <Shortcut Id="SORA_KitAgreement_Shortcut"
+                          Name="Order the Academic Kit"
+                          Description="Academic Kit License Agreement"
+                          Target="[APPLICATIONFOLDER]AcademicKit-LA.pdf"
+                          WorkingDirectory="APPLICATIONFOLDER"/>
+                <!--<Shortcut Id="SORA_SDK_Ref_Shortcut"
+                          Name="SORA Manual"
+                          Description="SORA SDK Reference Manual"
+                          Target="[APPLICATIONFOLDER]doc\The Sora Manual-v1_5.pdf"
+                          WorkingDirectory="APPLICATIONFOLDER"/>-->
+                <Shortcut Id="SORA_Driver_Ref_Shortcut"
+                          Name="SORA Device Installation Guide"
+                          Description="SORA Device installation guide"
+                          Target="[APPLICATIONFOLDER]doc\Sora Device Drivers Installation.pdf"
+                          WorkingDirectory="APPLICATIONFOLDER"/>
+                <Shortcut Id="SORA_ReadMe_Shortcut"
+                          Name="Readme"
+                          Description="Readme for Software Radio Academic Kit"
+                          Target="[APPLICATIONFOLDER]ReadMe.htm"
+                          WorkingDirectory="APPLICATIONFOLDER"/>
+                <Shortcut Id="SoraBEChecked"
+                          Name="x86 Checked Build"
+                          Description="Open a checked build window"
+                          Target="[APPLICATIONFOLDER]build\ChkBldEnv.cmd"
+                          WorkingDirectory="APPLICATIONFOLDER"/>
+                <Shortcut Id="SoraBEFree"
+                          Name="x86 Free Build"
+                          Description="Open a free build window"
+                          Target="[APPLICATIONFOLDER]build\FreBldEnv.cmd"
+                          WorkingDirectory="APPLICATIONFOLDER"/>
+                <Shortcut Id="SoraBEChecked_amd64"
+                          Name="x64 Checked Build"
+                          Description="Open a checked build window"
+                          Target="[APPLICATIONFOLDER]build\ChkBldEnv_amd64.cmd"
+                          WorkingDirectory="APPLICATIONFOLDER"/>
+                <Shortcut Id="SoraBEFree_amd64"
+                          Name="x64 Free Build"
+                          Description="Open a free build window"
+                          Target="[APPLICATIONFOLDER]build\FreBldEnv_amd64.cmd"
+                          WorkingDirectory="APPLICATIONFOLDER"/>
+                <Shortcut Id="UninstallProduct"
+                          Name="Uninstall Software Radio Academic Kit"
+                          Target="[System64Folder]msiexec.exe"
+                          Arguments="/x {34D49386-8D0B-4CA9-AD19-3F5B1DF18348}"
+                          Description="Uninstalls the Microsoft Software Radio Academic Kit 1.8" />
+                <RemoveFolder Id="ProgramMenuDir_SORA1.8" On="uninstall"/>
+                <RegistryValue Root="HKCU" Key="Software\Microsoft Research Asia\SoraSDK 1.8" Name="installed" Type="integer" Value="1" KeyPath="yes"/>
+            </Component>
+        </DirectoryRef>
+
+        <DirectoryRef Id="ProgramMenuDir_MSRA">
+            <Component Id="ProgramMenuDir_MSRA" Guid="73DEE38B-FF07-47C6-839E-E2F2638D9882">
+                <RemoveFolder Id="ProgramMenuDir_MSRA" On="uninstall"/>
+                <RegistryValue Root="HKCU" Key="Software\Microsoft Research Asia" Name="installed" Type="integer" Value="1" KeyPath="yes"/>
+            </Component>
+        </DirectoryRef>
+
+        <Property Id="WixShellExecTarget" Value="[APPLICATIONFOLDER]Readme.htm" />
+        <CustomAction Id="LaunchReadMe" BinaryKey="WixCA" DllEntry="WixShellExec" Impersonate="yes" />
+
+        <UIRef Id="FeatureTree" />
+
+        <WixVariable Id="WixUILicenseRtf" Value="..\..\doc\MSR-LA_software_academic_radio_kit.rtf" />
+
+        <Feature Id="Complete" Title="SoraSDK" Level="1" ConfigurableDirectory ="APPLICATIONFOLDER">
+            <Feature Id="idFramework" Title="Framework" Description="Header files, library files, documents" Level ="1">
+                <ComponentGroupRef Id='group_SORA_FILES'/>
+                <ComponentRef Id='ProgramMenuDir_MSRA'/>
+                <ComponentRef Id='SORA_ShortCut'/>
+                <ComponentRef Id='SORA_RegistryKey' />
+            </Feature>
+            <Feature Id='idDriver' Title='Drivers' Description='Windows driver and tools for Radio control board' Level='1'>
+                <ComponentGroupRef Id='group_SORA_DRIVERS'/>
+            </Feature>
+            <Feature Id='idUtility' Title='Utilities' Description='Sora birnary tools and utilities' Level='1'>
+                <ComponentGroupRef Id='group_SORA_UTILITIES'/>
+            </Feature>
+            <Feature Id='idSampleCode' Title='Sample Code' Description='802.11a/b and UMX samples' Level='1'>
+                <ComponentGroupRef Id='group_SORA_sample'/>
+            </Feature>
+        </Feature>
+
+        <InstallExecuteSequence>
+            <Custom Action='LaunchReadMe' After='InstallFinalize'>Not Installed</Custom>
+        </InstallExecuteSequence>
+
+    </Product>
+</Wix>

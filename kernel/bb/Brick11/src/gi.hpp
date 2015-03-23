@@ -36,7 +36,7 @@ private:
 
         const vcs *vin = (const vcs *)in;
         vcs *vout  = (vcs *)out;
-        rep<vncp>::vmemcpy<vcs>(vout, vin + vnsubcarrier - vncp);
-        rep<vnsubcarrier>::vmemcpy<vcs>(vout + vncp, vin);
+        rep_memcpy<vncp>(vout, vin + vnsubcarrier - vncp);
+        rep_memcpy<vnsubcarrier>(vout + vncp, vin);
     }
 };

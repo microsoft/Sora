@@ -2,8 +2,9 @@
 
 #include <sora.h>
 #include <dspcomm.h>
-
 #include "ieee80211facade.hpp"
+#include "operator_repeater.h"
+
 
 /***********************************************
  TPhaseCompensate -- 
@@ -22,10 +23,10 @@ private:
 
 	CTX_VAR_RW (ulong,  error_code );
 
-protected:	
+protected:
 	FINL
 	void _phase_compensate ( vcs* input, vcs* output ) {
-		rep<16>::vmul (output, input, CompCoeffs );
+        rep_mul<16>(output, input, CompCoeffs);
 	}
 	
 public:

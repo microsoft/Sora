@@ -1,0 +1,34 @@
+!include "$(SORA_ROOT)\build\sources_ke.inc"
+
+TARGETNAME  = brktest 
+TARGETTYPE  = PROGRAM
+UMTYPE      = console
+    
+USE_MSVCRT  = 1
+
+INCLUDES        = $(INCLUDES) \
+                  ..\..\brick\inc; \
+                  ..\brick11b\src; \
+                  ..\..\bb\dot11a; \
+                  ..\..\bb\dot11a\inc; \
+                  ..\..\util\src;	\
+				  ..\..\..\DebugTool\Version1.6\source\DebugPlotU
+                  
+TARGETLIBS      = $(TARGETLIBS) \
+				  $(TARGETPATH)\*\dot11bbau.lib \
+				  $(TARGETPATH)\*\libbba_lutstu.lib \
+				  $(TARGETPATH)\*\libbba_modu.lib \
+                  $(TARGETPATH)\*\usora.lib \
+                  $(TARGETPATH)\*\sora_utility.lib	\
+                  $(TARGETPATH)\*\DebugPlotU.lib
+                  
+C_DEFINES       = $(C_DEFINES) \
+                  -DUSER_MODE
+
+USER_C_FLAGS = $(USER_C_FLAGS) /TP
+
+SOURCES     = \
+              main.cpp \
+              mac.cpp
+
+USE_STL=1

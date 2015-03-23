@@ -1,0 +1,21 @@
+!include "$(SORA_ROOT)\build\sources_usr.inc"
+
+TARGETNAME = MacConfig
+TARGETTYPE = PROGRAM
+UMTYPE     = console
+UMBASE     = 0x04000000
+	
+
+TARGETLIBS = \
+             $(SDK_LIB_PATH)\ntdll.lib \
+             $(SDK_LIB_PATH)\ws2_32.lib \
+             $(SDK_LIB_PATH)\ole32.lib \
+             $(SDK_LIB_PATH)\shell32.lib \
+             $(SDK_LIB_PATH)\uuid.lib \
+             $(SDK_LIB_PATH)\setupapi.lib \
+             $(SDK_LIB_PATH)\comdlg32.lib \
+
+INCLUDES   = \
+             $(DDK_INC_PATH)
+
+SOURCES    = macconfig.cpp 

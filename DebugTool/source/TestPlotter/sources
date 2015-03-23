@@ -1,0 +1,27 @@
+!include "$(SORA_ROOT)\build\sources_ke.inc"
+
+USE_STL     = 1
+USE_LIBCMT  = 1
+
+TARGETNAME      = 	TestPlotter
+TARGETTYPE      = 	PROGRAM
+UMTYPE          = 	console
+
+SOURCES         = 	\
+					main.cpp \
+					Sample.cpp \
+					MT_Test.cpp \
+					TestDataValid.cpp \
+					TestTut1.cpp
+                  
+
+USER_C_FLAGS    = 	$(USER_C_FLAGS) \
+					/DUSER_MODE \
+					/DUNICODE
+
+INCLUDES        = 	$(INCLUDES);	\
+					..\DebugPlotU
+
+TARGETLIBS  = 	$(TARGETLIBS) \
+				$(TARGETPATH)\*\usora.lib	\
+				$(TARGETPATH)\*\DebugPlotU.lib

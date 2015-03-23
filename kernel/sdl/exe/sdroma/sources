@@ -1,0 +1,71 @@
+!IF 0
+  This is a ddk version of SDROM maintained for private use by K. Tan.
+  This program is originally created by He Liu at MSR Asia
+!ENDIF
+
+!include "$(SORA_ROOT)\build\sources_ke.inc"
+
+TARGETNAME=msdroma
+TARGETTYPE=PROGRAM
+UMTYPE=console
+UMBASE=0x04000000
+
+
+USE_NATIVE_EH=1
+#USE_LIBCMT = 1
+USE_MSVCRT = 1
+USE_STL    = 1
+
+C_DEFINES= $(C_DEFINES) /DUSER_MODE /D_WIN32 /DWIN32 /D_WINDOWS /UWIN32_LEAN_AND_MEAN /Gz /MTd
+
+USER_C_FLAGS=/c
+
+
+# C_DEFINES=$(C_DEFINES) /D_WIN32 /DWIN32 /D_WINDOWS /Gz /MDd
+
+TARGETLIBS  = $(TARGETLIBS) \
+              $(SDK_LIB_PATH)\Comdlg32.lib \
+              $(SDK_LIB_PATH)\kernel32.lib \
+              $(SDK_LIB_PATH)\user32.lib \
+              $(SDK_LIB_PATH)\gdi32.lib \
+              sora.res \
+              $(TARGETPATH)\*\usora.lib 
+  
+              
+
+
+MSC_WARNING_LEVEL = -W3
+
+RCOPTIONS= /l 0x09
+
+SOURCES= \
+	byte.cpp \
+	color.cpp \
+	colorscheme.cpp \
+	const.cpp \
+	decode.cpp \
+	deinterleave.cpp \
+	demap.cpp \
+	dprintf.cpp \
+	dumpfile.cpp \
+	equalizer.cpp \
+	fft.cpp \
+	keyboard.cpp \
+	main.cpp \
+	mainproc.cpp \
+	mainwin.cpp \
+	minst.cpp \
+	paint.cpp \
+	pilot.cpp \
+	playcontrol.cpp \
+	pt_border.cpp \
+	pt_constel.cpp \
+	pt_text.cpp \
+	pt_wave.cpp \
+	rawdata.cpp \
+	symbol.cpp \
+	sync.cpp   \
+	viterbi.cpp \
+    simplewnd.cpp 
+
+

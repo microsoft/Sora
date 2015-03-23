@@ -42,20 +42,20 @@ void __stdcall PauseViewer();
 
 HRESULT __stdcall PlotLine(
 	__in const char * channelName,
-	__in int * data,
+	__in const int * data,
 	__in int dataCount
 );
 
 HRESULT __stdcall PlotSpectrum(
 	__in const char * channelName,
-	__in int * data,
+	__in const int * data,
 	__in int dataCount
 );
 
 
 HRESULT __stdcall PlotDots(
 	__in const char * channelName,
-	__in COMPLEX16 * pData,
+	__in const COMPLEX16 * pData,
 	__in int dataCount
 );
 

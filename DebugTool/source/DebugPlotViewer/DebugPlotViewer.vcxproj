@@ -1,0 +1,315 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{08B8BAE8-ED25-4230-AA59-825CF05F3C8B}</ProjectGuid>
+    <RootNamespace>DebugPlotViewer</RootNamespace>
+    <Keyword>MFCProj</Keyword>
+    <SccProjectName>SAK</SccProjectName>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>Unicode</CharacterSet>
+    <UseOfMfc>Static</UseOfMfc>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+    <UseOfMfc>Static</UseOfMfc>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+    <TargetName>DbgPlot</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+    <TargetName>DbgPlot</TargetName>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;_DEBUG;USER_MODE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\DebugPlotU;..\..\..\..\kernel\core\inc;..\Common</AdditionalIncludeDirectories>
+      <CallingConvention>StdCall</CallingConvention>
+      <AdditionalOptions>
+ %(AdditionalOptions)</AdditionalOptions>
+      <TreatWChar_tAsBuiltInType>false</TreatWChar_tAsBuiltInType>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <ShowIncludes>false</ShowIncludes>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>msxml6.lib;usora.lib;DebugPlotU_dev.lib</AdditionalDependencies>
+      <AdditionalOptions>
+      </AdditionalOptions>
+      <AdditionalLibraryDirectories>..\..\..\..\target\ke\chk_wxp_x86\i386;..\Debug</AdditionalLibraryDirectories>
+    </Link>
+    <Midl>
+      <MkTypLibCompatible>false</MkTypLibCompatible>
+      <ValidateAllParameters>true</ValidateAllParameters>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </Midl>
+    <ResourceCompile>
+      <Culture>0x0409</Culture>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;USER_MODE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\DebugPlotU;..\..\..\..\kernel\core\inc;..\Common</AdditionalIncludeDirectories>
+      <TreatWChar_tAsBuiltInType>false</TreatWChar_tAsBuiltInType>
+      <CallingConvention>StdCall</CallingConvention>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalLibraryDirectories>..\..\..\..\target\ke\fre_wxp_x86\i386;..\Release</AdditionalLibraryDirectories>
+      <AdditionalDependencies>msxml6.lib;usora.lib;DebugPlotU_dev.lib</AdditionalDependencies>
+    </Link>
+    <Midl>
+      <MkTypLibCompatible>false</MkTypLibCompatible>
+      <ValidateAllParameters>true</ValidateAllParameters>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </Midl>
+    <ResourceCompile>
+      <Culture>0x0409</Culture>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram1.cd" />
+    <None Include="ReadMe.txt" />
+    <None Include="res\autolayout.ico" />
+    <None Include="res\auto_replay.bmp" />
+    <None Include="res\bitmap1.bmp" />
+    <None Include="res\bmp00001.bmp" />
+    <None Include="res\button_auto_pause.bmp" />
+    <None Include="res\button_pause.bmp" />
+    <None Include="res\channel_bmp.bmp" />
+    <None Include="res\classview.bmp" />
+    <None Include="res\classview_hc.bmp" />
+    <None Include="res\class_view.ico" />
+    <None Include="res\class_view_hc.ico" />
+    <None Include="res\DbgPlot.ico" />
+    <None Include="res\DebugPlotViewer.rc2" />
+    <None Include="res\DebugPlotViewerDoc.ico" />
+    <None Include="res\explorer.bmp" />
+    <None Include="res\explorer_hc.bmp" />
+    <None Include="res\fileview.bmp" />
+    <None Include="res\fileview_hc.bmp" />
+    <None Include="res\file_view.ico" />
+    <None Include="res\file_view_hc.ico" />
+    <None Include="res\icon1.ico" />
+    <None Include="res\menuimages.bmp" />
+    <None Include="res\menuimages_hc.bmp" />
+    <None Include="res\minus_button.bmp" />
+    <None Include="res\output_wnd.ico" />
+    <None Include="res\output_wnd_hc.ico" />
+    <None Include="res\properties.bmp" />
+    <None Include="res\properties_hc.bmp" />
+    <None Include="res\properties_wnd.ico" />
+    <None Include="res\properties_wnd_hc.ico" />
+    <None Include="res\sort.bmp" />
+    <None Include="res\sort_hc.bmp" />
+    <None Include="res\Toolbar.bmp" />
+    <None Include="res\Toolbar256.bmp" />
+    <None Include="UserImages.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="AppContext.h" />
+    <ClInclude Include="AppMessage.h" />
+    <ClInclude Include="AutoLayoutPanel.h" />
+    <ClInclude Include="BaseProperty.h" />
+    <ClInclude Include="BitmapPlotWnd.h" />
+    <ClInclude Include="BitmapTypePlotWndProp.h" />
+    <ClInclude Include="PlotWndPropLog.h" />
+    <ClInclude Include="PlotWndPropText.h" />
+    <ClInclude Include="PlotWndPropTextType.h" />
+    <ClInclude Include="SeriesBitmapType.h" />
+    <ClInclude Include="ChannelDataAccessor.h" />
+    <ClInclude Include="ChannelExplorer.h" />
+    <ClInclude Include="ControllerProperty.h" />
+    <ClInclude Include="ControllerWnd.h" />
+    <ClInclude Include="CustomButton.h" />
+    <ClInclude Include="CustomProperties.h" />
+    <ClInclude Include="Debug.h" />
+    <ClInclude Include="DotsPlotWndProperty.h" />
+    <ClInclude Include="DotsSeriesProperty.h" />
+    <ClInclude Include="HelperFunc.h" />
+    <ClInclude Include="Invokable.h" />
+    <ClInclude Include="PlotWndProp.h" />
+    <ClInclude Include="SeriesLineType.h" />
+    <ClInclude Include="PlayControlWnd.h" />
+    <ClInclude Include="PlayTrackBar.h" />
+    <ClInclude Include="PlotWndPropDots.h" />
+    <ClInclude Include="PlotWndPropLine.h" />
+    <ClInclude Include="LinePlotWndProperty.h" />
+    <ClInclude Include="LineSeriesProperty.h" />
+    <ClInclude Include="LogPlotWndProperty.h" />
+    <ClInclude Include="LogSeriesProperty.h" />
+    <ClInclude Include="PlotWndPropLineType.h" />
+    <ClInclude Include="PlotWndPropSpectrum.h" />
+    <ClInclude Include="ReplayBufferTrackBar.h" />
+    <ClInclude Include="SeriesDots.h" />
+    <ClInclude Include="SeriesLine.h" />
+    <ClInclude Include="SeriesLog.h" />
+    <ClInclude Include="SeriesSpectrum.h" />
+    <ClInclude Include="SeriesText.h" />
+    <ClInclude Include="SeriesTextType.h" />
+    <ClInclude Include="SubLogPlotWnd.h" />
+    <ClInclude Include="PlotWndAreaProperty.h" />
+    <ClInclude Include="SeriesPropertySheet.h" />
+    <ClInclude Include="SharedObjManager.h" />
+    <ClInclude Include="SpectrumPlotWndProperty.h" />
+    <ClInclude Include="SpectrumSeriesProperty.h" />
+    <ClInclude Include="SubBitmapPlotWnd.h" />
+    <ClInclude Include="SubTextPlotWnd.h" />
+    <ClInclude Include="Logger.h" />
+    <ClInclude Include="DebugPlotViewer.h" />
+    <ClInclude Include="DebugPlotViewerDoc.h" />
+    <ClInclude Include="DebugPlotViewerView.h" />
+    <ClInclude Include="MainFrm.h" />
+    <ClInclude Include="OutputWnd.h" />
+    <ClInclude Include="PlayControl.h" />
+    <ClInclude Include="PlotWnd.h" />
+    <ClInclude Include="PlotWndArea.h" />
+    <ClInclude Include="PropertiesWnd.h" />
+    <ClInclude Include="Resource.h" />
+    <ClInclude Include="SeriesObj.h" />
+    <ClInclude Include="stdafx.h" />
+    <ClInclude Include="SubPlotWnd.h" />
+    <ClInclude Include="SubTextTypePlotWnd.h" />
+    <ClInclude Include="TargetTestable.h" />
+    <ClInclude Include="targetver.h" />
+    <ClInclude Include="AppType.h" />
+    <ClInclude Include="TextPlotWndProperty.h" />
+    <ClInclude Include="TextSeriesProperty.h" />
+    <ClInclude Include="TextTypePlotWnd.h" />
+    <ClInclude Include="ViewTree.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="AppContext.cpp" />
+    <ClCompile Include="AutoLayoutPanel.cpp" />
+    <ClCompile Include="BaseProperty.cpp" />
+    <ClCompile Include="BitmapPlotWnd.cpp" />
+    <ClCompile Include="BitmapTypePlotWndProp.cpp" />
+    <ClCompile Include="ChannelExplorer.cpp" />
+    <ClCompile Include="ControllerProperty.cpp" />
+    <ClCompile Include="ControllerWnd.cpp" />
+    <ClCompile Include="CustomButton.cpp" />
+    <ClCompile Include="CustomProperties.cpp" />
+    <ClCompile Include="DotsPlotWndProperty.cpp" />
+    <ClCompile Include="DotsSeriesProperty.cpp" />
+    <ClCompile Include="HelperFunc.cpp" />
+    <ClCompile Include="HelpFunc.cpp" />
+    <ClCompile Include="Invokable.cpp" />
+    <ClCompile Include="LinePlotWndProperty.cpp" />
+    <ClCompile Include="LineSeriesProperty.cpp" />
+    <ClCompile Include="LogPlotWndProperty.cpp" />
+    <ClCompile Include="LogSeriesProperty.cpp" />
+    <ClCompile Include="PlayControlWnd.cpp" />
+    <ClCompile Include="PlayTrackBar.cpp" />
+    <ClCompile Include="PlotWndProp.cpp" />
+    <ClCompile Include="PlotWndPropDots.cpp" />
+    <ClCompile Include="PlotWndPropLine.cpp" />
+    <ClCompile Include="PlotWndPropLineType.cpp" />
+    <ClCompile Include="PlotWndPropLog.cpp" />
+    <ClCompile Include="PlotWndPropSpectrum.cpp" />
+    <ClCompile Include="PlotWndPropText.cpp" />
+    <ClCompile Include="PlotWndPropTextType.cpp" />
+    <ClCompile Include="ReplayBufferTrackBar.cpp" />
+    <ClCompile Include="SeriesDots.cpp" />
+    <ClCompile Include="SeriesLine.cpp" />
+    <ClCompile Include="SeriesLineType.cpp" />
+    <ClCompile Include="SeriesLog.cpp" />
+    <ClCompile Include="SeriesSpectrum.cpp" />
+    <ClCompile Include="SeriesText.cpp" />
+    <ClCompile Include="SubLogPlotWnd.cpp" />
+    <ClCompile Include="OutputWnd.cpp" />
+    <ClCompile Include="PlotWndAreaProperty.cpp" />
+    <ClCompile Include="SeriesPropertySheet.cpp" />
+    <ClCompile Include="SharedObjManager.cpp" />
+    <ClCompile Include="SpectrumPlotWndProperty.cpp" />
+    <ClCompile Include="SpectrumSeriesProperty.cpp" />
+    <ClCompile Include="SubBitmapPlotWnd.cpp" />
+    <ClCompile Include="SubTextPlotWnd.cpp" />
+    <ClCompile Include="Logger.cpp" />
+    <ClCompile Include="DebugPlotViewer.cpp" />
+    <ClCompile Include="DebugPlotViewerDoc.cpp" />
+    <ClCompile Include="DebugPlotViewerView.cpp" />
+    <ClCompile Include="MainFrm.cpp" />
+    <ClCompile Include="PlayControl.cpp" />
+    <ClCompile Include="PlotWnd.cpp" />
+    <ClCompile Include="PlotWndArea.cpp" />
+    <ClCompile Include="PropertiesWnd.cpp" />
+    <ClCompile Include="SeriesObj.cpp" />
+    <ClCompile Include="stdafx.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="SubPlotWnd.cpp" />
+    <ClCompile Include="SubTextTypePlotWnd.cpp" />
+    <ClCompile Include="TextPlotWndProperty.cpp" />
+    <ClCompile Include="TextSeriesProperty.cpp" />
+    <ClCompile Include="TextTypePlotWnd.cpp" />
+    <ClCompile Include="ViewTree.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="DebugPlotViewer.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Common\Common.vcxproj">
+      <Project>{54730ad7-5b11-493b-adcc-8e4ec3c0204a}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\DevTool\DevTool.vcxproj">
+      <Project>{95c018b0-2d39-4275-8a5c-01644dbbc398}</Project>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties RESOURCE_FILE="DebugPlotViewer.rc" />
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>

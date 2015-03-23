@@ -4,6 +4,34 @@
 #include <strsafe.h>
 #include <debugplotu.h>
 
+#define MAX_NAME_LEN 128
+class named_plotter {
+protected:
+	char m_name[MAX_NAME_LEN];
+public:
+	named_plotter () {
+		StringCbCopyN ( m_name, MAX_NAME_LEN, "default", 7 );
+	}
+	char* GetName () { return m_name; }
+    void SetName ( char* n) {
+        size_t len = 0;
+        StringCbLength (n, MAX_NAME_LEN, &len );
+        StringCbCopyN ( m_name, MAX_NAME_LEN, n, len );
+    };
+};
+
+//
+// A few ploters
+class CPlotDots {
+public:	
+	void operator() (char* prefix, int stream_id, const COMPLEX16 * pData, int length ) {
+		char chname[MAX_NAME_LEN];
+		sprintf_s ( chname, MAX_NAME_LEN, "%s-%d", prefix, stream_id );
+		PlotDots ( chname, pData, length );
+	}
+};
+
+
 DEFINE_LOCAL_CONTEXT(TPlotLine, CF_VOID);
 template<size_t N = 1>
 class TPlotLine {
@@ -34,7 +62,7 @@ public:
     BOOL_FUNC_PROCESS(ipin) {
         while ( ipin.check_read () ) {
             // plot a line with N points
-            int * pi = ipin.peek ();
+            const int * pi = ipin.peek ();
             PlotLine ( name, pi, N );
             ipin.pop ();
         }    
@@ -73,7 +101,7 @@ public:
     BOOL_FUNC_PROCESS(ipin) {
         while ( ipin.check_read () ) {
             // plot a line with N points
-            int * pi = ipin.peek ();
+            const int * pi = ipin.peek ();
             PlotSpectrum ( name, pi, N );
             ipin.pop ();
         }    
@@ -112,7 +140,7 @@ public:
     BOOL_FUNC_PROCESS(ipin) {
         while ( ipin.check_read () ) {
             // plot a line with N points
-            COMPLEX16 * pi = ipin.peek ();
+            const COMPLEX16 * pi = ipin.peek ();
             PlotDots ( name, pi, N );
             ipin.pop ();
         }    

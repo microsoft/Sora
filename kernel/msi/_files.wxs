@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2003/01/wi">
+  <Fragment Id="FilesFragment">
+    <DirectoryRef Id="TARGETDIR">
+      <Directory Id="srcs" Name="inc">
+            <Component Id='WixExampleFileComponent' Guid='21235127-87A6-49f9-B568-972F94CA9C68' DiskId='1'>
+                <File Id='WixExampleFile' Name='const.h' Source='..\inc\const.h' />
+            </Component>
+      </Directory>
+    </DirectoryRef>
+  </Fragment>
+
+</Wix>

@@ -1,0 +1,4 @@
+DIRS= \
+		dot11b \
+		dot11a \
+     

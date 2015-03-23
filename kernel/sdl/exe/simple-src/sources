@@ -1,0 +1,37 @@
+!include "$(SORA_ROOT)\build\sources_ke.inc"
+
+TARGETNAME  = sinesrc
+TARGETTYPE  = PROGRAM
+UMTYPE      = console
+    
+USE_MSVCRT  = 1
+
+INCLUDES        = $(INCLUDES) \
+                  ..\..\brick\inc; \
+				  ..\..\inc; \
+                  ..\..\..\..\DebugTool\redist 
+                  
+TARGETLIBS      = $(TARGETLIBS) \
+                  $(TARGETPATH)\*\usora.lib \
+                  $(TARGETPATH)\*\sora_utility.lib	\
+                  ..\..\..\..\DebugTool\redist\DebugPlotU.lib
+                  
+C_DEFINES       = $(C_DEFINES) \
+                  -DUSER_MODE
+
+USER_C_FLAGS = $(USER_C_FLAGS) /TP /FAs
+
+## Set code optimization option "MSC_OPTIMIZATION" to /O2 (maximize speed)
+## in the sources file, which is necessary for DSP related inline functions.
+## Otherwise inline functions will not inline expanded. The default value
+## is /Oxs (minimize size) in free build, and /Od /Oi in check build.
+## ref: http://msdn.microsoft.com/en-us/library/ff549305%28VS.85%29.aspx
+!if "$(DDKBUILDENV)" == "fre"
+MSC_OPTIMIZATION=/O2
+!endif
+
+SOURCES     = \
+              main.cpp \
+			  sine.cpp
+
+USE_STL=1

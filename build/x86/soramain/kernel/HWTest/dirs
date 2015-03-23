@@ -1,0 +1,4 @@
+DIRS = \
+		sys5x \
+		exe \
+    

@@ -17,24 +17,29 @@ Abstract: Sora digital signal processing functions.
 
 #include <rxstream.h>
 
-// Helper functor class for RemoveDC(), used together with unroll_for to unroll for-loop to achieve better
-// code generation.
-class VcsRemoveDC
-{
-    const vcs& dc;
-    VcsRemoveDC& operator=(const VcsRemoveDC&) { return *this; } // make compiler happy, calling forbidden
-public:
-    VcsRemoveDC(const vcs& dc) : dc(dc) { }
-    void operator()(SignalBlock& block, size_t j) const
-    {
-        block[j] = sub(block[j], dc);
-    }
-};
-
 // Note: force compiler inline this function to minimize memory usage
 DSP_INLINE void RemoveDC(SignalBlock& block, const vcs& dc)
 {
-    unroll_for<0, SignalBlock::size, 1>(block, VcsRemoveDC(dc));
+    // Helper functor class for RemoveDC(), used together with unroll_for to unroll for-loop to achieve better
+    // code generation.
+    class VcsRemoveDC
+    {
+        const vcs& dc;
+        SignalBlock& block;
+        //VcsRemoveDC& operator=(const VcsRemoveDC&) { return *this; } // make compiler happy, calling forbidden
+    public:
+        VcsRemoveDC(const vcs& dc, SignalBlock& block)
+            : dc(dc), block(block)
+        { }
+
+        void operator()(size_t j)
+        {
+            block[j] = sub(block[j], dc);
+        }
+    };
+
+	VcsRemoveDC removeDC(dc, block);
+	unroll_for<0, SignalBlock::size, 1>(removeDC);
 }
 
 // Check all COMPLEX16 items in a SignalBlock, and find the smallest square to cover them all

@@ -1,0 +1,17 @@
+!include "$(SORA_ROOT)\build\sources_usr.inc"
+
+TARGETNAME  = TaskQueue
+TARGETTYPE	= LIBRARY
+UMTYPE      = windows
+
+USE_STL     = 1
+USE_MSVCR  = 1
+
+INCLUDES    = $(INCLUDES) \
+              ..\Utility;
+
+SOURCES     = \
+              Task.cpp \
+              TaskQueue.cpp \
+              Thread.cpp
+			  

@@ -1,0 +1,9 @@
+Core,kernel\core
+DebugPlot,DebugTool
+Utility,kernel\util
+BaseBand,kernel\bb
+RadioManager,kernel\RadioManager
+SDRMiniport,kernel\sample
+HwTest,kernel\hwtest
+HWVeri,usr\HwVeri
+IntAffinity,usr\IntAffinityConfig

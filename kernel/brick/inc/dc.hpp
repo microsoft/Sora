@@ -74,7 +74,7 @@ public:
 		{
 			const vcs * pi = reinterpret_cast<const vcs*> (ipin.peek());
 			vcs * po = reinterpret_cast<vcs*> (opin().append());
-			rep<N_IN/4>::vsub (po, pi, DC );
+			rep_sub<N_IN/4>(po, pi, DC );
 			ipin.pop();			
 
 			Next()->Process(opin());

@@ -319,7 +319,7 @@ public:
                 pi += skip_cp/4; // skip CP
 
                 vcs* po = (vcs*) opin().write(iss);
-                rep<16>::vmemcpy (po, pi);
+                rep_memcpy<16> (po, pi);
 
                 _dump_symbol<64> ( "OFDM symbol", (COMPLEX16*) po );
 
@@ -433,8 +433,8 @@ public:
     {
         while (ipin.check_read())
         {
-            uchar *input = ipin.peek();
-            uint uiSignal = *(uint *)input;
+            const uchar *input = ipin.peek();
+            uint uiSignal = *(const uint *)input;
             ipin.pop();
 
             if ( !_parse_plcp (uiSignal) || !_parse_htsig (input + 3)) {
@@ -481,7 +481,7 @@ private:
         return true;
     }
 
-    FINL bool _parse_htsig(uchar *ip)
+    FINL bool _parse_htsig(const uchar *ip)
     {
         UCHAR crc8 = CalcCRC8(ip, 4, 2);
 

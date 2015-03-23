@@ -1,0 +1,9 @@
+DIRS = \
+		UMXDot11 \
+		dot11b \
+		demod11 \
+		dot11a \
+		umxsdra \
+		umxsdrbrick \
+        umxsniffer \
+		brick11 \

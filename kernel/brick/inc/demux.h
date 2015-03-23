@@ -7,7 +7,7 @@
 #include "tpltrick.h"
 
 // Use macro to determine default next brick, in order to prevent runtime check overload
-#define NON_DUMMYBRICK(INDEX) (!same_type<T_NEXT##INDEX*, DummyBrick*>::value)
+#define NON_DUMMYBRICK(INDEX) (!same_type<typename T_NEXT##INDEX::iport_traits::type *, void *>::value)
 
 // Note: it is assumed that the maximal output port is 10
 template<class T_CTX

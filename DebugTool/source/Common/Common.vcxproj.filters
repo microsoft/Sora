@@ -1,0 +1,193 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Log">
+      <UniqueIdentifier>{d7de7e63-403d-468c-ae31-cb43d834bcc1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="AppendArray">
+      <UniqueIdentifier>{f9426287-32ec-4f24-bdfb-b719d5d38965}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="RingBuffer">
+      <UniqueIdentifier>{fc77e29f-4bdd-4951-973b-295d85eb5b26}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DataFilter">
+      <UniqueIdentifier>{bb7b48c6-b159-4fb8-b6dc-a5e3f41d9703}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Writable">
+      <UniqueIdentifier>{862eed55-ae25-4b28-af1d-c773eb9971c3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DynamicArray">
+      <UniqueIdentifier>{69a8d289-e1e5-4349-b585-dfb2d180add3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SerialNum">
+      <UniqueIdentifier>{b62095c5-01a4-41d8-9ed4-a1215883d951}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Event">
+      <UniqueIdentifier>{a3428d2b-5505-429f-9ff7-3d7bf05e8119}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Task">
+      <UniqueIdentifier>{90ae29f2-86bf-40a4-a539-45457b4e9332}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Strategy">
+      <UniqueIdentifier>{0b385ccb-5070-4328-94f8-2773ab93eb4f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DataQueue">
+      <UniqueIdentifier>{f670156b-c3ab-478f-8a0d-9787ab6d4d33}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lock">
+      <UniqueIdentifier>{f0a99025-3248-4449-8231-de5bf5547fce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Task\Runnable">
+      <UniqueIdentifier>{809e8963-bea5-4180-ab7f-7abadf5225be}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Task\Runnable\Task">
+      <UniqueIdentifier>{e2a5e64f-6ff5-48f1-be7a-996abef6fa54}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Helper">
+      <UniqueIdentifier>{92f04332-33c6-41d2-b4bb-7133f29947c3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ShareMem">
+      <UniqueIdentifier>{a2fa4a28-d584-4423-8e92-6e0b6bed1490}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="TempBuffer">
+      <UniqueIdentifier>{6253eabc-0081-4011-a347-4d053d11f599}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="File">
+      <UniqueIdentifier>{21350b9f-d893-4900-9bf2-91ced0a7d001}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ErrMsg">
+      <UniqueIdentifier>{677a99bb-78fa-47e0-9684-348cb22031c7}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="ILog.h">
+      <Filter>Log</Filter>
+    </ClInclude>
+    <ClInclude Include="LogWithFileBackup.h">
+      <Filter>Log</Filter>
+    </ClInclude>
+    <ClInclude Include="AppendArray.h">
+      <Filter>AppendArray</Filter>
+    </ClInclude>
+    <ClInclude Include="RingBuffer.h">
+      <Filter>RingBuffer</Filter>
+    </ClInclude>
+    <ClInclude Include="RingBufferWithTimeStamp.h">
+      <Filter>RingBuffer</Filter>
+    </ClInclude>
+    <ClInclude Include="TimeStampQueue.h">
+      <Filter>RingBuffer</Filter>
+    </ClInclude>
+    <ClInclude Include="FrameWithSizeFilter.h">
+      <Filter>DataFilter</Filter>
+    </ClInclude>
+    <ClInclude Include="Writable.h">
+      <Filter>Writable</Filter>
+    </ClInclude>
+    <ClInclude Include="DynamicArray.h">
+      <Filter>DynamicArray</Filter>
+    </ClInclude>
+    <ClInclude Include="SharedSerialNumGenerator.h">
+      <Filter>SerialNum</Filter>
+    </ClInclude>
+    <ClInclude Include="Event.h">
+      <Filter>Event</Filter>
+    </ClInclude>
+    <ClInclude Include="WaitableLatestTaskQueue.h">
+      <Filter>Task</Filter>
+    </ClInclude>
+    <ClInclude Include="Strategy.h">
+      <Filter>Strategy</Filter>
+    </ClInclude>
+    <ClInclude Include="DataQueue.h">
+      <Filter>DataQueue</Filter>
+    </ClInclude>
+    <ClInclude Include="CSLock.h">
+      <Filter>Lock</Filter>
+    </ClInclude>
+    <ClInclude Include="TaskQueue.h">
+      <Filter>Task</Filter>
+    </ClInclude>
+    <ClInclude Include="CSRecursiveLock.h">
+      <Filter>Lock</Filter>
+    </ClInclude>
+    <ClInclude Include="ReadWriteLock.h">
+      <Filter>Lock</Filter>
+    </ClInclude>
+    <ClInclude Include="RWTaskQueue.h">
+      <Filter>Task</Filter>
+    </ClInclude>
+    <ClInclude Include="TaskQueueRequester.h">
+      <Filter>Task</Filter>
+    </ClInclude>
+    <ClInclude Include="Runnable.h">
+      <Filter>Task\Runnable</Filter>
+    </ClInclude>
+    <ClInclude Include="TaskCoordinator.h">
+      <Filter>Task\Runnable\Task</Filter>
+    </ClInclude>
+    <ClInclude Include="TaskSimple.h">
+      <Filter>Task\Runnable\Task</Filter>
+    </ClInclude>
+    <ClInclude Include="std_memory.h">
+      <Filter>Helper</Filter>
+    </ClInclude>
+    <ClInclude Include="TempBuffer.h">
+      <Filter>TempBuffer</Filter>
+    </ClInclude>
+    <ClInclude Include="FileHelper.h">
+      <Filter>File</Filter>
+    </ClInclude>
+    <ClInclude Include="PathName.h">
+      <Filter>File</Filter>
+    </ClInclude>
+    <ClInclude Include="ErrMsg.h">
+      <Filter>ErrMsg</Filter>
+    </ClInclude>
+    <ClInclude Include="DACL_Control.h">
+      <Filter>ShareMem</Filter>
+    </ClInclude>
+    <ClInclude Include="ShareMemHelper.h">
+      <Filter>ShareMem</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="LogWithFileBackup.cpp">
+      <Filter>Log</Filter>
+    </ClCompile>
+    <ClCompile Include="ILog.cpp">
+      <Filter>Log</Filter>
+    </ClCompile>
+    <ClCompile Include="AppendArray.cpp">
+      <Filter>AppendArray</Filter>
+    </ClCompile>
+    <ClCompile Include="TimeStampQueue.cpp">
+      <Filter>RingBuffer</Filter>
+    </ClCompile>
+    <ClCompile Include="TaskQueue.cpp">
+      <Filter>Task</Filter>
+    </ClCompile>
+    <ClCompile Include="Event.cpp">
+      <Filter>Event</Filter>
+    </ClCompile>
+    <ClCompile Include="TempBuffer.cpp">
+      <Filter>TempBuffer</Filter>
+    </ClCompile>
+    <ClCompile Include="FileHelper.cpp">
+      <Filter>File</Filter>
+    </ClCompile>
+    <ClCompile Include="PathName.cpp">
+      <Filter>File</Filter>
+    </ClCompile>
+    <ClCompile Include="ErrMsg.cpp">
+      <Filter>ErrMsg</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

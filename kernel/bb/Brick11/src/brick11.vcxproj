@@ -1,0 +1,135 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{619B1709-CB93-4279-BDFF-690D741A07AB}</ProjectGuid>
+    <SccProjectName>
+    </SccProjectName>
+    <SccAuxPath>
+    </SccAuxPath>
+    <SccLocalPath>
+    </SccLocalPath>
+    <SccProvider>
+    </SccProvider>
+    <RootNamespace>brick11b</RootNamespace>
+    <ProjectName>brick11</ProjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v110</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v110</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\..\..\..\common_usr.props" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\..\..\..\common_usr.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup />
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="40MTo44M.hpp" />
+    <ClInclude Include="44MTo40M.hpp" />
+    <ClInclude Include="autocorr.hpp" />
+    <ClInclude Include="barkerspread.hpp" />
+    <ClInclude Include="cca.hpp" />
+    <ClInclude Include="cca_11n.hpp" />
+    <ClInclude Include="cck.hpp" />
+    <ClInclude Include="channel_11n.hpp" />
+    <ClInclude Include="channel_11a.hpp" />
+    <ClInclude Include="conv_enc.hpp" />
+    <ClInclude Include="csd.hpp" />
+    <ClInclude Include="deinterleaver.hpp" />
+    <ClInclude Include="deinterleaver_11n.hpp" />
+    <ClInclude Include="demapper.h" />
+    <ClInclude Include="demapper11a.hpp" />
+    <ClInclude Include="demapper11n.hpp" />
+    <ClInclude Include="depuncturer.hpp" />
+    <ClInclude Include="dsp_demap.h" />
+    <ClInclude Include="dsp_math.h" />
+    <ClInclude Include="fft.hpp" />
+    <ClInclude Include="freqoffset.hpp" />
+    <ClInclude Include="freqoffset_11n.hpp" />
+    <ClInclude Include="gi.hpp" />
+    <ClInclude Include="ieee80211a_cmn.h" />
+    <ClInclude Include="ieee80211const.h" />
+    <ClInclude Include="ieee80211facade.hpp" />
+    <ClInclude Include="ieee80211n_cmn.h" />
+    <ClInclude Include="interleave.hpp" />
+    <ClInclude Include="mapper11a.hpp" />
+    <ClInclude Include="mapper11n.hpp" />
+    <ClInclude Include="PHY_11a.hpp" />
+    <ClInclude Include="PHY_11b.hpp" />
+    <ClInclude Include="PHY_11n.hpp" />
+    <ClInclude Include="pilot.hpp" />
+    <ClInclude Include="pilot_11n.hpp" />
+    <ClInclude Include="preamble11a.hpp" />
+    <ClInclude Include="preamble11n.hpp" />
+    <ClInclude Include="pulse.hpp" />
+    <ClInclude Include="samples.hpp" />
+    <ClInclude Include="sampling.hpp" />
+    <ClInclude Include="scramble.hpp" />
+    <ClInclude Include="sfd_sync.hpp" />
+    <ClInclude Include="streamparser.hpp" />
+    <ClInclude Include="symtiming.hpp" />
+    <ClInclude Include="viterbi.hpp" />
+    <ClInclude Include="viterbicore.h" />
+    <ClInclude Include="viterbilut.h" />
+    <ClInclude Include="_b_dot11_pilot.h" />
+    <ClInclude Include="_b_htltf.h" />
+    <ClInclude Include="_b_htsig.h" />
+    <ClInclude Include="_b_htstf.h" />
+    <ClInclude Include="_b_lltf.h" />
+    <ClInclude Include="_b_lsig.h" />
+    <ClInclude Include="_b_lstf.h" />
+    <ClInclude Include="_b_stream_parser.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

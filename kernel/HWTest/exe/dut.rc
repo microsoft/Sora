@@ -1,0 +1,6 @@
+#define VER_FILEDESCRIPTION_STR     "Hardware Test Utility"
+#define VER_INTERNALNAME_STR        "dut.exe"
+#define VER_ORIGINALFILENAME_STR    "dut.exe"
+
+#include "Version.rc"
+

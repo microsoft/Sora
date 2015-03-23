@@ -1,6 +1,7 @@
 #pragma once
 
 #include "vector128.h"
+#include "operator_repeater.h"
 
 #define NORM_AC_SHIFT 5
 DSP_INLINE1 int GetAutoCorrelation(const SignalBlock& inBlock, vcs * const histAutoCorrelation)
@@ -45,13 +46,13 @@ DSP_INLINE1 int GetAutoCorrelation(const SignalBlock& inBlock, vcs * const histA
     conj_mul(re[6], im[6], inBlock[6], inBlock[2]);
 
 	set_zero (sum_re);
-	rep<7>::vshift_right (re, NORM_AC_SHIFT);
-	rep<7>::vsum (sum_re, re);
+    rep_shift_right<7>(re, re, NORM_AC_SHIFT);
+	rep_sum<7>(sum_re, re);
 	sum_re = hadd (sum_re );
 
 	set_zero (sum_im);
-	rep<7>::vshift_right (im, NORM_AC_SHIFT);
-	rep<7>::vsum (sum_im, im);
+    rep_shift_right<7>(im, im, NORM_AC_SHIFT);
+	rep_sum<7>(sum_im, im);
 	sum_im = hadd (sum_im );
 	
     // We use 1-norm of complex number as an approximation of Euclidean norm,

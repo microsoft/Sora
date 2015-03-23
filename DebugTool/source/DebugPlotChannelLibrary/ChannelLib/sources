@@ -1,0 +1,25 @@
+!include "$(SORA_ROOT)\build\sources_ke.inc"
+
+USE_LIBCMT  = 1
+
+TARGETNAME      = DpChannelU
+TARGETTYPE      = LIBRARY
+
+SOURCES         = \
+                  DebugPlotChannel.cpp \
+                  ..\ShareChannelManager.cpp \
+                  ..\Channel.cpp \
+                  ChannelObjLookUp.cpp \
+                  ..\DpFixedSizeSharedMemAllocator.cpp \
+                  ..\DpSharedMemAllocator.cpp \
+                  ..\RollbackManager.cpp \
+                  ChannelTableStruct.cpp \
+                  Config.cpp
+
+USER_C_FLAGS    = $(USER_C_FLAGS) \
+                  /DUSER_MODE \
+                  /DUNICODE	\
+				  /EHsc
+
+INCLUDES        = $(INCLUDES) \
+					..

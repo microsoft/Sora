@@ -1,0 +1,15 @@
+!include "$(SORA_ROOT)\build\sources_usr.inc"
+
+TARGETNAME  = IntfiltrCmd
+TARGETTYPE  = PROGRAM
+UMTYPE      = console
+
+TARGETLIBS  = $(TARGETLIBS) \
+              $(SDK_LIB_PATH)\setupapi.lib
+
+SOURCES     = \
+              IntAffinityConfig.c \
+              Addfilter.c \
+              Multisz.c \
+              args.c \
+              main.c

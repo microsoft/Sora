@@ -2,6 +2,7 @@
 #include "const.h"
 #include "vector128.h"
 #include "brick.h"
+#include "operator_repeater.h"
 
 ////////////////////////////////////////////////////
 //
@@ -33,8 +34,6 @@ public:
     STD_TDEMUX10_RESET(){ }
     FINL void Flush()
     {
-		Selector s = Selector();
-			
 		int i_port = s(ctx());
 		switch (i_port) {
         case PORT_0:  FlushPort(0); break;
@@ -55,8 +54,6 @@ public:
     {
         while(ipin.check_read())
         {
-			Selector s = Selector();
-			
 			int i_port = s(ctx());
 			switch (i_port) {
 			case PORT_0:  CopyPinQueue(opin0(), ipin); Next0()->Process(opin0()); break;
@@ -75,16 +72,107 @@ public:
         return true;
     }
 
+    Selector& GetSelector() { return s; }
+
 private:
+	Selector s;
+			
     template<typename OPIN, typename IPIN>
     FINL void CopyPinQueue(OPIN& opin, IPIN& ipin)
     {
         size_t iss = 0;
         for (iss = 0; iss < NSTREAM; iss++)
         {
-            repex<TYPE, BURST>::vmemcpy(opin.write(iss), ipin.peek(iss));
+            rep_memcpy<BURST, TYPE>(opin.write(iss), ipin.peek(iss));
         }
         opin.append();
 		ipin.pop();
     }
+}; };
+
+////////////////////////////////////////////////////
+//
+// Quick Demux: demux without buffer copy
+//
+////////////////////////////////////////////////////
+template<size_t NDEMUX, typename Selector>
+class TQDemux {
+public:
+template<TDEMUX10_ARGS>
+class Filter : public TDemux<TDEMUX10_PARAMS>
+{
+public:
+    typedef typename T_NEXT0::iport_traits::type TYPE;
+    static const size_t BURST = T_NEXT0::iport_traits::burst;
+    static const size_t NSTREAM = T_NEXT0::iport_traits::nstream;
+	DEFINE_IPORT (   TYPE, BURST, NSTREAM);
+    DEFINE_OPORTS(0, TYPE, BURST, NSTREAM);
+    DEFINE_OPORTS(1, TYPE, BURST, NSTREAM);
+    DEFINE_OPORTS(2, TYPE, BURST, NSTREAM);
+    DEFINE_OPORTS(3, TYPE, BURST, NSTREAM);
+    DEFINE_OPORTS(4, TYPE, BURST, NSTREAM);
+    DEFINE_OPORTS(5, TYPE, BURST, NSTREAM);
+    DEFINE_OPORTS(6, TYPE, BURST, NSTREAM);
+    DEFINE_OPORTS(7, TYPE, BURST, NSTREAM);
+    DEFINE_OPORTS(8, TYPE, BURST, NSTREAM);
+    DEFINE_OPORTS(9, TYPE, BURST, NSTREAM);
+
+private:
+    // Add these connection requirements, to enable reusing pinqueue
+    CCASSERT(!NON_DUMMYBRICK(1) || BURST == T_NEXT1::iport_traits::burst);
+    CCASSERT(!NON_DUMMYBRICK(2) || BURST == T_NEXT2::iport_traits::burst);
+    CCASSERT(!NON_DUMMYBRICK(3) || BURST == T_NEXT3::iport_traits::burst);
+    CCASSERT(!NON_DUMMYBRICK(4) || BURST == T_NEXT4::iport_traits::burst);
+    CCASSERT(!NON_DUMMYBRICK(5) || BURST == T_NEXT5::iport_traits::burst);
+    CCASSERT(!NON_DUMMYBRICK(6) || BURST == T_NEXT6::iport_traits::burst);
+    CCASSERT(!NON_DUMMYBRICK(7) || BURST == T_NEXT7::iport_traits::burst);
+    CCASSERT(!NON_DUMMYBRICK(8) || BURST == T_NEXT8::iport_traits::burst);
+    CCASSERT(!NON_DUMMYBRICK(9) || BURST == T_NEXT9::iport_traits::burst);
+    
+public:
+    STD_DEMUX10_CONSTRUCTOR(Filter) { }
+    STD_TDEMUX10_RESET(){ }
+    FINL void Flush()
+    {
+		int i_port = s(ctx());
+		switch (i_port) {
+        case PORT_0:  Next0()->Flush(); break;
+		case PORT_1:  Next1()->Flush(); break;
+		case PORT_2:  Next2()->Flush(); break;
+		case PORT_3:  Next3()->Flush(); break;
+		case PORT_4:  Next4()->Flush(); break;
+		case PORT_5:  Next5()->Flush(); break;
+		case PORT_6:  Next6()->Flush(); break;
+		case PORT_7:  Next7()->Flush(); break;
+		case PORT_8:  Next8()->Flush(); break;
+		case PORT_9:  Next9()->Flush(); break;
+        default: NODEFAULT;
+        }
+    }
+
+	BOOL_FUNC_PROCESS(ipin)
+    {
+        if (ipin.check_read())
+        {
+			int i_port = s(ctx());
+			switch (i_port) {
+			case PORT_0:  Next0()->Process(ipin); break;
+			case PORT_1:  Next1()->Process(ipin); break;
+			case PORT_2:  Next2()->Process(ipin); break;
+			case PORT_3:  Next3()->Process(ipin); break;
+			case PORT_4:  Next4()->Process(ipin); break;
+			case PORT_5:  Next5()->Process(ipin); break;
+			case PORT_6:  Next6()->Process(ipin); break;
+			case PORT_7:  Next7()->Process(ipin); break;
+			case PORT_8:  Next8()->Process(ipin); break;
+			case PORT_9:  Next9()->Process(ipin); break;
+            default: NODEFAULT;
+            }
+        }
+        return true;
+    }
+
+    Selector& GetSelector() { return s; }
+private:
+	Selector s;
 }; };

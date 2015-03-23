@@ -1,0 +1,94 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="kernel">
+      <UniqueIdentifier>{45b59001-8d6e-4ad2-beb1-2ba4a022b142}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="user">
+      <UniqueIdentifier>{b4d35ff5-cd4a-4157-a297-541646000482}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="kernel\sources">
+      <Filter>kernel</Filter>
+    </None>
+    <None Include="user\sources">
+      <Filter>user</Filter>
+    </None>
+    <None Include="dirs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="sin0xffff.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="arg.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="atan64.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="conv_encoder_1_2.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="conv_encoder_2_3.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="conv_encoder_3_4.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="cos0xffff.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="interleave_12m.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="interleave_24m.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="interleave_48m.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="interleave_6m.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mapa_16qam.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mapa_64qam.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mapa_bpsk.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mapa_qpsk.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="pilotsgn.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="preamble16_11a.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="preamble40_11a.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="preamble_11a.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="scramble_11a.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,89 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ImportGroup Label="PropertySheets" />
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup />
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>$(SolutionDir)\kernel\bb;$(SolutionDir)\kernel\inc;$(SolutionDir)\kernel\core\inc;$(SolutionDir)\kernel\inc\bb;$(SolutionDir)\kernel\brick\inc;$(SolutionDir)\usr\inc;$(SolutionDir)\usr\Oscillograph\inc;$(SolutionDir)\kernel\util\src;$(SolutionDir)\DebugTool\source\DebugPlotU;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>USER_MODE;_X86_=1;__HW_40MHZ_SAMPLE_RATE</PreprocessorDefinitions>
+      <WarningLevel>Level4</WarningLevel>
+      <CallingConvention>StdCall</CallingConvention>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <TreatWChar_tAsBuiltInType>false</TreatWChar_tAsBuiltInType>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <AdditionalDependencies>
+      </AdditionalDependencies>
+    </Link>
+    <ResourceCompile>
+      <AdditionalIncludeDirectories>$(SolutionDir)\build</AdditionalIncludeDirectories>
+    </ResourceCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>$(SolutionDir)\kernel\bb;$(SolutionDir)\kernel\inc;$(SolutionDir)\kernel\core\inc;$(SolutionDir)\kernel\inc\bb;$(SolutionDir)\kernel\brick\inc;$(SolutionDir)\usr\inc;$(SolutionDir)\usr\Oscillograph\inc;$(SolutionDir)\kernel\util\src;$(SolutionDir)\DebugTool\source\DebugPlotU;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>NDEBUG;USER_MODE;_X86_=1;__HW_40MHZ_SAMPLE_RATE</PreprocessorDefinitions>
+      <WarningLevel>Level4</WarningLevel>
+      <CallingConvention>StdCall</CallingConvention>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <TreatWChar_tAsBuiltInType>false</TreatWChar_tAsBuiltInType>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <AdditionalDependencies>
+      </AdditionalDependencies>
+      <LinkTimeCodeGeneration>Default</LinkTimeCodeGeneration>
+    </Link>
+    <Lib>
+      <LinkTimeCodeGeneration>false</LinkTimeCodeGeneration>
+    </Lib>
+    <ResourceCompile>
+      <AdditionalIncludeDirectories>$(SolutionDir)\build</AdditionalIncludeDirectories>
+    </ResourceCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>$(SolutionDir)\kernel\bb;$(SolutionDir)\kernel\inc;$(SolutionDir)\kernel\core\inc;$(SolutionDir)\kernel\inc\bb;$(SolutionDir)\kernel\brick\inc;$(SolutionDir)\usr\inc;$(SolutionDir)\usr\Oscillograph\inc;$(SolutionDir)\kernel\util\src;$(SolutionDir)\DebugTool\source\DebugPlotU;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>USER_MODE;_AMD64_;__HW_40MHZ_SAMPLE_RATE</PreprocessorDefinitions>
+      <WarningLevel>Level4</WarningLevel>
+      <CallingConvention>StdCall</CallingConvention>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <TreatWChar_tAsBuiltInType>false</TreatWChar_tAsBuiltInType>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <AdditionalDependencies>
+      </AdditionalDependencies>
+    </Link>
+    <ResourceCompile>
+      <AdditionalIncludeDirectories>$(SolutionDir)\build</AdditionalIncludeDirectories>
+    </ResourceCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>$(SolutionDir)\kernel\bb;$(SolutionDir)\kernel\inc;$(SolutionDir)\kernel\core\inc;$(SolutionDir)\kernel\inc\bb;$(SolutionDir)\kernel\brick\inc;$(SolutionDir)\usr\inc;$(SolutionDir)\usr\Oscillograph\inc;$(SolutionDir)\kernel\util\src;$(SolutionDir)\DebugTool\source\DebugPlotU;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>NDEBUG;USER_MODE;_AMD64_;__HW_40MHZ_SAMPLE_RATE</PreprocessorDefinitions>
+      <WarningLevel>Level4</WarningLevel>
+      <CallingConvention>StdCall</CallingConvention>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <TreatWChar_tAsBuiltInType>false</TreatWChar_tAsBuiltInType>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <AdditionalDependencies>
+      </AdditionalDependencies>
+      <LinkTimeCodeGeneration>Default</LinkTimeCodeGeneration>
+    </Link>
+    <Lib>
+      <LinkTimeCodeGeneration>false</LinkTimeCodeGeneration>
+    </Lib>
+    <ResourceCompile>
+      <AdditionalIncludeDirectories>$(SolutionDir)\build</AdditionalIncludeDirectories>
+    </ResourceCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup />
+</Project>

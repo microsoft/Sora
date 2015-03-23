@@ -1,0 +1,260 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{DB9ED1AD-2FDA-4F1D-8D13-32A81003A679}</ProjectGuid>
+    <RootNamespace>core</RootNamespace>
+    <SccProjectName>
+    </SccProjectName>
+    <SccAuxPath>
+    </SccAuxPath>
+    <SccLocalPath>
+    </SccLocalPath>
+    <SccProvider>
+    </SccProvider>
+    <Keyword>MakeFileProj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <PlatformToolset>v110</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <PlatformToolset>v110</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <PlatformToolset>v110</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <PlatformToolset>v110</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(SolutionDir)\common_usr.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(SolutionDir)\common_usr.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(SolutionDir)\common_usr.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(SolutionDir)\common_usr.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
+    <NMakeBuildCommandLine Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(SolutionDir)kernel\MakeDriver.bat C:\WinDDK\6001.18001 D: $(ProjectDir) chk WXP /bw</NMakeBuildCommandLine>
+    <NMakeBuildCommandLine Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(SolutionDir)kernel\MakeDriver.bat C:\WinDDK\6001.18001 D: $(ProjectDir) chk WXP /bw</NMakeBuildCommandLine>
+    <NMakeReBuildCommandLine Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(SolutionDir)kernel\MakeDriver.bat C:\WinDDK\6001.18001 D: $(ProjectDir) chk WXP /bwcC</NMakeReBuildCommandLine>
+    <NMakeReBuildCommandLine Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(SolutionDir)kernel\MakeDriver.bat C:\WinDDK\6001.18001 D: $(ProjectDir) chk WXP /bwcC</NMakeReBuildCommandLine>
+    <NMakeCleanCommandLine Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(SolutionDir)kernel\MakeDriver.bat C:\WinDDK\6001.18001 D: $(ProjectDir) chk WXP /0cC</NMakeCleanCommandLine>
+    <NMakeCleanCommandLine Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(SolutionDir)kernel\MakeDriver.bat C:\WinDDK\6001.18001 D: $(ProjectDir) chk WXP /0cC</NMakeCleanCommandLine>
+    <NMakeOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" />
+    <NMakeOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" />
+    <NMakePreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">WIN32;_DEBUG;$(NMakePreprocessorDefinitions)</NMakePreprocessorDefinitions>
+    <NMakePreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">WIN32;_DEBUG;$(NMakePreprocessorDefinitions)</NMakePreprocessorDefinitions>
+    <NMakeIncludeSearchPath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(NMakeIncludeSearchPath)</NMakeIncludeSearchPath>
+    <NMakeIncludeSearchPath Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(NMakeIncludeSearchPath)</NMakeIncludeSearchPath>
+    <NMakeForcedIncludes Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(NMakeForcedIncludes)</NMakeForcedIncludes>
+    <NMakeForcedIncludes Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(NMakeForcedIncludes)</NMakeForcedIncludes>
+    <NMakeAssemblySearchPath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(NMakeAssemblySearchPath)</NMakeAssemblySearchPath>
+    <NMakeAssemblySearchPath Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(NMakeAssemblySearchPath)</NMakeAssemblySearchPath>
+    <NMakeForcedUsingAssemblies Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(NMakeForcedUsingAssemblies)</NMakeForcedUsingAssemblies>
+    <NMakeForcedUsingAssemblies Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(NMakeForcedUsingAssemblies)</NMakeForcedUsingAssemblies>
+    <NMakeBuildCommandLine Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)kernel\MakeDriver.bat C:\WinDDK\6001.18001 D: $(ProjectDir) fre WXP /bw</NMakeBuildCommandLine>
+    <NMakeBuildCommandLine Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(SolutionDir)kernel\MakeDriver.bat C:\WinDDK\6001.18001 D: $(ProjectDir) fre WXP /bw</NMakeBuildCommandLine>
+    <NMakeReBuildCommandLine Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)kernel\MakeDriver.bat C:\WinDDK\6001.18001 D: $(ProjectDir) fre WXP /bwcC</NMakeReBuildCommandLine>
+    <NMakeReBuildCommandLine Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(SolutionDir)kernel\MakeDriver.bat C:\WinDDK\6001.18001 D: $(ProjectDir) fre WXP /bwcC</NMakeReBuildCommandLine>
+    <NMakeCleanCommandLine Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)kernel\MakeDriver.bat C:\WinDDK\6001.18001 D: $(ProjectDir) fre WXP /0cC</NMakeCleanCommandLine>
+    <NMakeCleanCommandLine Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(SolutionDir)kernel\MakeDriver.bat C:\WinDDK\6001.18001 D: $(ProjectDir) fre WXP /0cC</NMakeCleanCommandLine>
+    <NMakeOutput Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" />
+    <NMakeOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'" />
+    <NMakePreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">WIN32;NDEBUG;$(NMakePreprocessorDefinitions)</NMakePreprocessorDefinitions>
+    <NMakePreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|x64'">WIN32;NDEBUG;$(NMakePreprocessorDefinitions)</NMakePreprocessorDefinitions>
+    <NMakeIncludeSearchPath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(NMakeIncludeSearchPath)</NMakeIncludeSearchPath>
+    <NMakeIncludeSearchPath Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(NMakeIncludeSearchPath)</NMakeIncludeSearchPath>
+    <NMakeForcedIncludes Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(NMakeForcedIncludes)</NMakeForcedIncludes>
+    <NMakeForcedIncludes Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(NMakeForcedIncludes)</NMakeForcedIncludes>
+    <NMakeAssemblySearchPath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(NMakeAssemblySearchPath)</NMakeAssemblySearchPath>
+    <NMakeAssemblySearchPath Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(NMakeAssemblySearchPath)</NMakeAssemblySearchPath>
+    <NMakeForcedUsingAssemblies Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(NMakeForcedUsingAssemblies)</NMakeForcedUsingAssemblies>
+    <NMakeForcedUsingAssemblies Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(NMakeForcedUsingAssemblies)</NMakeForcedUsingAssemblies>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">usora</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">usora</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">usora</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">usora</TargetName>
+    <NMakeAssemblySearchPath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(NMakeAssemblySearchPath)</NMakeAssemblySearchPath>
+    <NMakeAssemblySearchPath Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(NMakeAssemblySearchPath)</NMakeAssemblySearchPath>
+    <NMakeForcedUsingAssemblies Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(NMakeForcedUsingAssemblies)</NMakeForcedUsingAssemblies>
+    <NMakeForcedUsingAssemblies Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(NMakeForcedUsingAssemblies)</NMakeForcedUsingAssemblies>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <CompileAs>CompileAsCpp</CompileAs>
+      <WarningLevel>Level3</WarningLevel>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <MinimalRebuild>true</MinimalRebuild>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>__HW_V11;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Lib>
+      <AdditionalDependencies>Advapi32.lib</AdditionalDependencies>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <CompileAs>CompileAsCpp</CompileAs>
+      <WarningLevel>Level3</WarningLevel>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>__HW_V11;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Lib>
+      <AdditionalDependencies>Advapi32.lib</AdditionalDependencies>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <CompileAs>CompileAsCpp</CompileAs>
+      <WarningLevel>Level3</WarningLevel>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <PreprocessorDefinitions>__HW_V11;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Lib>
+      <AdditionalDependencies>Advapi32.lib</AdditionalDependencies>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <CompileAs>CompileAsCpp</CompileAs>
+      <WarningLevel>Level3</WarningLevel>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <PreprocessorDefinitions>__HW_V11;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Lib>
+      <AdditionalDependencies>Advapi32.lib</AdditionalDependencies>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <None Include="src\dirs" />
+    <None Include="src\KSora\sources" />
+    <None Include="src\USora\sources" />
+    <None Include="dirs" />
+    <None Include="readme.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="inc\CRC8.h" />
+    <ClInclude Include="inc\complex_ext.h" />
+    <ClInclude Include="inc\CRC16.h" />
+    <ClInclude Include="inc\CRC32.h" />
+    <ClInclude Include="inc\diagnostics.h" />
+    <ClInclude Include="inc\fft.h" />
+    <ClInclude Include="inc\fft_lut_bitreversal.h" />
+    <ClInclude Include="inc\fft_lut_twiddle.h" />
+    <ClInclude Include="inc\fft_r4dif.h" />
+    <ClInclude Include="inc\ifft_r4dif.h" />
+    <ClInclude Include="inc\intalg.h" />
+    <ClInclude Include="inc\intalglut.h" />
+    <ClInclude Include="inc\operator_repeater.h" />
+    <ClInclude Include="inc\resource_collection.h" />
+    <ClInclude Include="inc\send_packet_data.h" />
+    <ClInclude Include="inc\soradsp_asm.h" />
+    <ClInclude Include="inc\soratime.h" />
+    <ClInclude Include="inc\thread_func.h" />
+    <ClInclude Include="inc\tpltrick.h" />
+    <ClInclude Include="inc\thread_if.h" />
+    <ClInclude Include="inc\typeof.h" />
+    <ClInclude Include="inc\unroll.h" />
+    <ClInclude Include="inc\variadic_macro.h" />
+    <ClInclude Include="inc\_enlist.h" />
+    <ClInclude Include="inc\_scheduler.h" />
+    <ClInclude Include="inc\_signal_cache.h" />
+    <ClInclude Include="src\fiber_tracker.h" />
+    <ClInclude Include="src\__radio_man_internal.h" />
+    <ClInclude Include="src\__reg_file.h" />
+    <ClInclude Include="src\__rx_internal.h" />
+    <ClInclude Include="src\__tx_res.h" />
+    <ClInclude Include="inc\_core_thread.h" />
+    <ClInclude Include="inc\_fsm.h" />
+    <ClInclude Include="inc\_hw_op.h" />
+    <ClInclude Include="inc\_packet_base.h" />
+    <ClInclude Include="inc\_rx_stream.h" />
+    <ClInclude Include="inc\_radio_manager.h" />
+    <ClInclude Include="inc\_reg_conf.h" />
+    <ClInclude Include="inc\_rx_manager.h" />
+    <ClInclude Include="inc\_sora_clock.h" />
+    <ClInclude Include="inc\_sora_regman.h" />
+    <ClInclude Include="inc\_tx_manager2.h" />
+    <ClInclude Include="inc\_UExtK.h" />
+    <ClInclude Include="inc\_user_mode_ext.h" />
+    <ClInclude Include="inc\_WARP_Control.h" />
+    <ClInclude Include="inc\_WARP_Regs.h" />
+    <ClInclude Include="inc\complex.h" />
+    <ClInclude Include="inc\const.h" />
+    <ClInclude Include="inc\func.h" />
+    <ClInclude Include="inc\alinew.h" />
+    <ClInclude Include="inc\sora.h" />
+    <ClInclude Include="inc\soradsp.h" />
+    <ClInclude Include="inc\soratypes.h" />
+    <ClInclude Include="inc\uwdm.h" />
+    <ClInclude Include="inc\vector128.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\_dump.c" />
+    <ClCompile Include="src\_fsm.c" />
+    <ClCompile Include="src\_hw_op.c" />
+    <ClCompile Include="src\_packet_base.c" />
+    <ClCompile Include="src\_rx_stream.c" />
+    <ClCompile Include="src\_radio_channel_op.c" />
+    <ClCompile Include="src\_radio_manager.c" />
+    <ClCompile Include="src\_radio_manager2.c" />
+    <ClCompile Include="src\_reg_conf.c" />
+    <ClCompile Include="src\_rx_manager.c" />
+    <ClCompile Include="src\_scheduler_u.c" />
+    <ClCompile Include="src\_share_lock_uimp.cpp" />
+    <ClCompile Include="src\_share_mem_uimp.cpp" />
+    <ClCompile Include="src\_sora_clock.c" />
+    <ClCompile Include="src\_tx_manager2.c" />
+    <ClCompile Include="src\_UExtK.c" />
+    <ClCompile Include="src\_UExtK_Tx_Queue.c" />
+    <ClCompile Include="src\_user_mode_ext.c" />
+    <ClCompile Include="src\_WARP_control.c" />
+    <ClCompile Include="src\queued_rw_lock.c" />
+    <ClCompile Include="src\sora.c" />
+    <ClCompile Include="src\vstream_man.c" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

@@ -282,8 +282,6 @@ static void Dot11ATxClean()
 
 void Dot11ATxApp_Brick(const Config& config)
 {
-    HRESULT hr;
-
     if (Dot11ATxInit() < 0)
         return;
 

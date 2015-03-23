@@ -24,7 +24,6 @@ typedef COMPLEX16       RXSAMPLE;
 #define BK_ERROR_SUCCESS         0x00000000
 #define BK_ERROR_FAILED          0x8000FFFF
 #define BK_ERROR_HARDWARE_FAILED 0x8000FFFE
-#define BK_ERROR_TIMESTAMP_DROP  0x8000FFFD // multiple radio cannot sync timestamps
 #define BK_ERROR_TIMESTAMP_DROPS 0x8000FFFC // multiple radio cannot sync timestamps
 
 #define BK_ERROR_INVALID_PARAM  (-1) 		// 0xFFFFFFFF

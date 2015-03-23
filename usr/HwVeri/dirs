@@ -1,0 +1,8 @@
+DIRS = \
+       fft \
+       HwVeriAlgorithm \
+       SNRLib \
+       TaskQueue \
+       UMX2 \
+       Utility \
+       Dialog

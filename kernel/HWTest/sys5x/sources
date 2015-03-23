@@ -1,0 +1,62 @@
+!include "$(SORA_ROOT)\build\sources_ke.inc"
+
+TARGETNAME  = HWTest
+TARGETTYPE  = DRIVER
+
+TARGETLIBS  = \
+              $(TARGETLIBS) \
+              $(DDK_LIB_PATH)\ndis.lib \
+              $(TARGETPATH)\*\ksora.lib
+            
+
+USE_LIBCMT  = 1
+
+INCLUDES    = \
+              ..\..\core\src;\
+              ..\..\util\src;\
+              ..\..\..\build;\
+              $(INCLUDES)
+
+C_DEFINES   = $(C_DEFINES) \
+              -DNDIS_MINIPORT_DRIVER=1 \
+              -DNDIS_WDM=1 \
+              -DIOCTL_INTERFACE  
+
+!if !defined(DDK_TARGET_OS) || "$(DDK_TARGET_OS)"=="Win2K"
+#
+# The driver is built in the Win2K build environment
+#
+C_DEFINES=$(C_DEFINES) -DNDIS50_MINIPORT=1 
+!else 
+#
+# The driver is built in the XP or .NET build environment
+# So let us build NDIS 5.1 version.
+#
+C_DEFINES=$(C_DEFINES) -DNDIS51_MINIPORT=1
+!endif
+
+!if "$(DDKBUILDENV)" == "chk"
+C_DEFINES=$(C_DEFINES) -DDEBUG_CHECKSUM
+!endif
+
+INF_NAME        = HWTEST
+
+NTTARGETFILES   = $(TARGETPATH)\*\$(INF_NAME).inf
+MISCFILES       = $(NTTARGETFILES)
+
+SOURCES     = \
+                    mp_main_5x.c \
+                    mp_init.c \
+                    mp_oids_5x.c \
+                    mp_sendrcv_5x.c \
+                    ..\mp_common.c \
+                    ..\hwtest_init.c \
+                    ..\hwtest_ioctl.c \
+                    ..\DutRx.c \
+                    ..\DutRadioStart.c \
+                    ..\DutReadRegister.c \
+                    ..\DutSetValue.c \
+                    ..\DutTransfer.c \
+                    ..\DutWriteRegister.c \
+                    HWTest.rc 
+                    

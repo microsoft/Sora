@@ -4,6 +4,8 @@
 #include <brick.h>
 #include <dspcomm.h>
 
+#include <sdlplot.hpp>
+
 // Power meter
 DEFINE_LOCAL_CONTEXT(TPowerMeter, CF_VOID);
 template<size_t N = vcs::size>
@@ -112,6 +114,52 @@ public:
             
             ipin.pop();
             Next()->Process ( opin());
+        }
+        return true;
+    }
+};
+};
+
+
+// Spectrum meter
+DEFINE_LOCAL_CONTEXT(TInspectTube, CF_VOID);
+template<class plotter>
+class TInspectTube
+{
+public:
+template<TFILTER_ARGS>
+class Filter : public TFilter<TFILTER_PARAMS> , public named_plotter
+{    
+public:
+    static const size_t NSTREAM = T_NEXT::iport_traits::nstream;
+    static const size_t BURST = T_NEXT::iport_traits::burst;
+    typedef typename T_NEXT::iport_traits::type TYPE;
+    DEFINE_IPORT(TYPE, BURST, NSTREAM);
+    DEFINE_OPORT(TYPE, 1); // Downstream brick does not care about the burst size
+
+	char m_name[MAX_NAME_LEN];
+
+public:
+	REFERENCE_LOCAL_CONTEXT(TInspectTube);
+        
+public:    
+    STD_TFILTER_CONSTRUCTOR(Filter) {}
+    
+	STD_TFILTER_RESET() {}
+	STD_TFILTER_FLUSH() {}
+    
+	plotter m_plt;
+    BOOL_FUNC_PROCESS(ipin)
+    {
+        while (ipin.check_read())
+        {
+			for ( int i=0; i<NSTREAM; i++) {
+				const TYPE* pi = ipin.peek (i);
+				m_plt ( GetName(), i, pi, BURST); 
+			}
+
+            // just forward
+            Next()->Process (ipin);
         }
         return true;
     }

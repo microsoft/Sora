@@ -1,0 +1,31 @@
+!include "$(SORA_ROOT)\build\sources_ke.inc"
+
+USE_LIBCMT  = 1
+
+TARGETNAME      = DebugPlotU
+TARGETTYPE      = LIBRARY
+
+SOURCES         = \
+                  AppSettings.cpp \
+                  SharedStruct.cpp	\
+				  GlobalSingleton.cpp \
+				  BlockBufferAllocator.cpp \
+				  ChannelBufferImpl.cpp \
+				  FixedSizeFifo.cpp	\
+				  ChannelManager.cpp \
+				  SharedNameManagement.cpp \
+				  DebugPlotU.cpp \
+				  SmChannel.cpp \
+				  SmProcess.cpp	\
+				  ProcessGlobal.cpp	\
+				  SharedChannelW.cpp \
+				  ChannelObjLookUp.cpp
+
+
+USER_C_FLAGS    = $(USER_C_FLAGS) \
+                  /DUSER_MODE \
+                  /DUNICODE	\
+				  /EHsc
+
+INCLUDES        = $(INCLUDES) \
+					..\Common

@@ -164,9 +164,6 @@ struct plcp_selector {
 	}
 };
 	  
-typedef TGDemux<2, COMPLEX16, 64, plcp_selector> T11aPlcpSwitch;
-
-
 /*************************************************************************
 Processing graph
 
@@ -351,6 +348,9 @@ BOOLEAN RxThread ( void * ) {
                 BB11aDemodCtx.MoveState_RX_CS(false, false);
                 //printf("err = %08X\n", err);
 		    }
+
+            // Flush the brick graph, make related brick threads safe to reset
+            ssrc->Flush();
 
 		    BB11aDemodCtx.Reset ();
 		    ssrc->Reset ();

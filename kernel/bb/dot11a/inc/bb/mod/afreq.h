@@ -4,6 +4,7 @@
 #include "bb/bba.h"
 #include "vector128.h"
 #include "lut.h"
+#include "../../../../../brick/inc/bb_debug.h"
 
 __forceinline
 unsigned short 

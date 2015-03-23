@@ -1,0 +1,33 @@
+clc
+clear all
+
+N=8;
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+fpFile   =   fopen('FFTInput.txt',   'r');
+FFTInput = fscanf(fpFile, '%d\t%d\n', [2, N]);
+fclose( fpFile);
+
+FFTSource = FFTInput(1,:).'+1i*FFTInput(2,:).';
+
+fpFile   =   fopen('FFTOutput.txt',   'r');
+FFTInput = fscanf(fpFile, '%d\t%d\n', [2, N]);
+fclose( fpFile);
+
+CFFTOutput = FFTInput(1,:).'+1i*FFTInput(2,:).';
+
+%MatlabFFTOutput = round( fft(FFTSource, N) / (N) );
+MatlabFFTOutput = round( ifft(FFTSource, N)  );
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+hold on
+%plot(real(CFFTOutput-MatlabFFTOutput), 'r.-');
+%plot(imag(CFFTOutput-MatlabFFTOutput), 'b-*');
+
+plot(abs(CFFTOutput-MatlabFFTOutput));
+
+
+% plot(abs(MatlabFFTOutput), 'b-o');
+% plot(abs(CFFTOutput), 'r-*');

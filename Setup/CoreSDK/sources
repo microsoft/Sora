@@ -1,0 +1,14 @@
+!include "$(SORA_ROOT)\build\sources_usr.inc"
+
+TARGETNAME  = CoreSDK
+TARGETTYPE  = NOTARGET
+
+SOURCES            =
+
+NTTARGETFILE2      = product.wixobj SoraFiles.wixobj WixUI_FeatureTree.wixobj product.msi
+
+SYNCHRONIZE_PASS2_DRAIN  = 1
+
+USER_CANDLE_FLAGS = -ext $(WIXPATH)\WixUIExtension.dll -ext $(WIXPATH)\WixDifxAppExtension.dll
+USER_LIGHT_FLAGS = -ext $(WIXPATH)\WixUIExtension.dll -ext $(WIXPATH)\WixDifxAppExtension.dll
+WIX_REFERENCES = $(WIXPATH)\difxapp_x86.wixlib $(O)\SoraFiles.wixobj $(O)\WixUI_FeatureTree.wixobj

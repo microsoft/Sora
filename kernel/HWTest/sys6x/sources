@@ -1,0 +1,48 @@
+!include "$(SORA_ROOT)\build\sources_ke.inc"
+
+TARGETNAME      = hwtest
+TARGETTYPE      = DRIVER
+
+INF_NAME        = hwtest
+
+NTTARGETFILES   = $(TARGETPATH)\*\$(INF_NAME).inf
+MISCFILES       = $(NTTARGETFILES)
+
+TARGETLIBS      = $(TARGETLIBS) \
+                  $(DDK_LIB_PATH)\ndis.lib \
+                  $(TARGETPATH)\*\ksora.lib
+                  
+C_DEFINES       = $(C_DEFINES) \
+                  -DNDIS_MINIPORT_DRIVER=1 \
+
+C_DEFINES       =$(C_DEFINES) -DNDIS620_MINIPORT=1 -DNDIS61_MINIPORT=1
+
+!if "$(DDKBUILDENV)" == "chk"
+C_DEFINES=$(C_DEFINES) -DDEBUG_CHECKSUM
+!endif
+
+INCLUDES    = \
+              $(SORA_ROOT)\kernel\core\src;\
+              $(SORA_ROOT)\kernel\core\inc;\
+              $(SORA_ROOT)\build;\
+              $(INCLUDES)
+
+
+SOURCES         =   \
+                    mp_main_6x.c \
+                    mp_oids_6x.c \
+                    mp_pnp_6x.c \
+                    mp_sendrcv_6x.c \
+                    mp_init.c \
+                    \
+                    \
+                    ..\mp_common.c \
+                    ..\hwtest_init.c \
+                    ..\hwtest_ioctl.c \
+                    ..\DutRx.c \
+                    ..\DutRadioStart.c \
+                    ..\DutReadRegister.c \
+                    ..\DutSetValue.c \
+                    ..\DutTransfer.c \
+                    ..\DutWriteRegister.c \
+                    HWTest.rc 

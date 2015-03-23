@@ -1,0 +1,3 @@
+DIRS = \
+       dsp-toolbox \
+       soraview

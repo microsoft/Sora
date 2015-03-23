@@ -1,0 +1,62 @@
+!include "$(SORA_ROOT)\build\sources_ke.inc"
+
+TARGETNAME      = demod11
+TARGETTYPE      = PROGRAM
+UMTYPE          = console
+
+USER_C_FLAGS    = $(USER_C_FLAGS) \
+                  /DUSER_MODE /FAs /GR
+
+## Set code optimization option "MSC_OPTIMIZATION" to /O2 (maximize speed)
+## in the sources file, which is necessary for DSP related inline functions.
+## Otherwise inline functions will not inline expanded. The default value
+## is /Oxs (minimize size) in free build, and /Od /Oi in check build.
+## ref: http://msdn.microsoft.com/en-us/library/ff549305%28VS.85%29.aspx
+!if "$(DDKBUILDENV)" == "fre"
+MSC_OPTIMIZATION=/O2
+!endif
+
+USE_MSVCRT      = 1
+
+INCLUDES        = \
+                  $(SORA_ROOT)\build; \
+				  ..\..\inc\bb; \
+				  ..\..\bb\dot11b; \
+				  ..\..\bb\brick11\src; \
+                  ..\..\bb\dot11a\dot11; \
+                  ..\..\bb\dot11a\inc; \
+                  ..\..\util\src; \
+                  ..\..\..\DebugTool\inc; \
+                  ..\..\..\DebugTool\ComInc; \
+                  $(INCLUDES)
+
+TARGETLIBS      = $(TARGETLIBS) \
+                  $(SDK_LIB_PATH)\user32.lib    \
+                  $(TARGETPATH)\*\dot11bbbu.lib \
+                  $(TARGETPATH)\*\dot11bbau.lib \
+                  $(TARGETPATH)\*\libbba_lutstu.lib \
+                  $(TARGETPATH)\*\libbba_modu.lib \
+                  $(TARGETPATH)\*\usora.lib \
+                  $(TARGETPATH)\*\sora_utility.lib \
+                  $(TARGETPATH)\*\util_arg.lib
+
+SOURCES         = \
+                  demod11a.cpp \
+                  modulate11a.cpp \
+                  demod11b.cpp \
+                  modulate11b.cpp \
+                  main.cpp \
+                  demod11.rc \
+				  fb11b_mod.cpp \
+				  fb11b_demod.cpp \
+                  fb11a_mod.cpp \
+                  fb11a_demod.cpp \
+                  fb11n_mod.cpp \
+                  fb11n_demod.cpp \
+
+## Use STL
+USE_STL=1
+STL_VER=70
+USE_IOSTREAM=0
+C_DEFINES=$(C_DEFINES) -D_STL70_
+USE_NATIVE_EH=1

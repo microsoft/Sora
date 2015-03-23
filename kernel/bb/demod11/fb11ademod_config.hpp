@@ -150,8 +150,6 @@ struct plcp_selector {
 	}
 };
 	  
-typedef TGDemux<2, COMPLEX16, 64, plcp_selector> T11aPlcpSwitch;
-
 /*************************************************************************
 Processing graph
 

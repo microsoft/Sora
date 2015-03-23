@@ -1,4 +1,5 @@
 #pragma once
+#include "operator_repeater.h"
 
 DEFINE_LOCAL_CONTEXT(TTee, CF_VOID);
 template<size_t N>
@@ -94,22 +95,22 @@ public:
     {
         while(ipin.check_read())
         {
-            COMPLEX16 * pi = ipin.peek();
+            const COMPLEX16 * pi = ipin.peek();
             COMPLEX16 * po;
 
             // port 0
             po = opin0().append();
-            rep<N>::vmemcpy (po, pi);
+            rep_memcpy<N> (po, pi);
             Next0()->Process (opin0());
 
             // port 1
             po = opin1().append();
-            rep<N>::vmemcpy (po, pi);
+            rep_memcpy<N> (po, pi);
             Next1()->Process (opin1());
 
             // port 2
             po = opin2().append();
-            rep<N>::vmemcpy (po, pi);
+            rep_memcpy<N> (po, pi);
             Next2()->Process (opin2());
             
 			ipin.pop();
@@ -118,4 +119,3 @@ public:
     }
 };
 };
-

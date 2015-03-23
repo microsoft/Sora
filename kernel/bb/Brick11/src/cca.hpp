@@ -118,6 +118,7 @@ private:
 	// Context variables	
 	CTX_VAR_RO (uint, cca_pwr_threshold );
 	CTX_VAR_RW (uint, cca_pwr_reading );
+	CTX_VAR_RW (uint, cca_peak_index );
 	CTX_VAR_RW (CF_11CCA::CCAState, cca_state );
 	CTX_VAR_RW (FP_RAD, CFO_est );
 	CTX_VAR_RW (ulong,  error_code );
@@ -132,6 +133,8 @@ protected:
     CAccumulator <int, 4> ac_norm_his; 
     CAccumulator <int, 4> energy_his;
 	CAccumulator <int, 4> energy_sqr_his;
+
+	CAccumulator <COMPLEX16, 4> dc_est;
 
     // counter for autocorrelation high energy samples
     uint auto_count;
@@ -177,16 +180,23 @@ protected:
 		// NORM0
 		int sum = (abs(corr_re) + abs(corr_im));
 
-		ac_norm_his << sum;
-		
-		return ac_norm_his.Register();
+		// ac_norm_his << sum;
+		// return ac_norm_his.Register();
+		return sum;
 	}
 
 	FINL int GetEnergy ( vcs& input ) {
-		vi e  = SquaredNorm (input); 
+		vi e    = SquaredNorm (input); 
 		vi sum  = hadd (e >> NORM_SHIFT );
         energy_his << sum[0];
 		return energy_his.Register();
+	}
+
+	FINL int GetDCEnergy ( vcs& input ) {
+		vcs sum  = hadd (input >> NORM_SHIFT );
+		dc_est << sum[0];
+		COMPLEX16 dc = dc_est.Register();
+		return SquaredNorm (dc);
 	}
 
 	FINL
@@ -290,6 +300,7 @@ public:
 	STD_TFILTER_CONSTRUCTOR(TCCA11a )
 		BIND_CONTEXT(CF_11CCA::cca_pwr_threshold, cca_pwr_threshold)
 		BIND_CONTEXT(CF_11CCA::cca_pwr_reading,   cca_pwr_reading)
+		BIND_CONTEXT(CF_11CCA::cca_peak_index,    cca_peak_index)
 		BIND_CONTEXT(CF_11CCA::cca_state,		  cca_state)
 		BIND_CONTEXT(CF_CFOffset::CFO_est,		  CFO_est)
 		BIND_CONTEXT(CF_Error::error_code,		  error_code)	
@@ -315,17 +326,22 @@ public:
 			if ( sync_state == no_energy ) 
 			{ 
 				// auto-correlation senssing
-				int iAutoCorr = GetAutoCorrelation ( pi>>2, corr_r, corr_i );
-				int iEnergy   = GetEnergy ( pi>>2 );
-				
+				vcs pii = pi >> 2;
+				int iAutoCorr = GetAutoCorrelation ( pii, corr_r, corr_i );
+				int iEnergy   = GetEnergy   (pii);
+
+				//PlotLine ( "energy", &iEnergy,   1 );
+				//PlotLine ( "auto",   &iAutoCorr, 1 );
+
 				// save sample in the accumulator
-				sample_his << (pi>>2);
+				sample_his << (pii);
 				
 				sense_count += 4;
 				
 				if (
 					 (iEnergy > (int)cca_pwr_threshold) && 
-					 iAutoCorr >= (iEnergy - (iEnergy >> 3)))
+					 iAutoCorr >= (iEnergy - (iEnergy >> 3))
+					 )
 				{
                     auto_count++;
 
@@ -336,7 +352,8 @@ public:
                     if (auto_count >= 4) 
                     {
 					    _dump_text ( "power detected!\n" );
-						
+						// PlotText ( "cca log", "power detected auto %d power %d", iAutoCorr, iEnergy );
+
 					    // use cross-correlation to establish sync
 					    if ( establish_sync () ) {
 						    sync_state = high_energy;
@@ -351,6 +368,9 @@ public:
 							    peak_index = peak_index & 0x03;
 						    }
 						
+							// store peak index into context
+							cca_peak_index = peak_index;
+
 						    // coarse CFO estimation
 						    // Kun: disabled
 						    /*						

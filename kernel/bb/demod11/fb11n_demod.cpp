@@ -62,6 +62,9 @@ static BOOLEAN RxThread ( void * pParam ) {
                 printf("err = %08X\n", err);
             }
 
+            // Flush the brick graph, make related brick threads safe to reset
+            ssrc->Flush();
+        
 			//
 			// Reset context
 			BB11nDemodCtx.Reset ();

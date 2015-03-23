@@ -1,0 +1,26 @@
+!include "$(SORA_ROOT)\build\sources_ke.inc"
+
+TARGETNAME  = SamplePlotter
+TARGETTYPE  = PROGRAM
+UMTYPE      = console
+    
+USE_MSVCRT  = 1
+
+INCLUDES        = $(INCLUDES) \
+					..\..\ChannelLib; \
+					..\..\ChannelLibExt
+                  
+TARGETLIBS      = $(TARGETLIBS) \
+                  $(TARGETPATH)\*\usora.lib \
+                  $(TARGETPATH)\*\DpChannelU.lib \
+                  $(TARGETPATH)\*\DpChannelExtU.lib \
+                  
+C_DEFINES       = $(C_DEFINES) \
+                  -DUSER_MODE
+
+USER_C_FLAGS = $(USER_C_FLAGS) /TP /FAs /GR
+
+SOURCES     = \
+              main.cpp
+
+#USE_STL=1

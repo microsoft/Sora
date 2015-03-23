@@ -1,0 +1,27 @@
+!include "$(SORA_ROOT)\build\sources_ke.inc"
+
+USE_LIBCMT  = 1
+
+TARGETNAME      = DpViewerU
+TARGETTYPE      = LIBRARY
+
+SOURCES         = \
+                  ChannelEmum.cpp \
+                  DebugPlotViewer.cpp \
+                  HandleTable.cpp \
+                  ShareChannelManager.cpp \
+                  Channel.cpp \
+                  RollbackManager.cpp \
+                  DpFixedSizeSharedMemAllocator.cpp \
+                  DpSharedMemAllocator.cpp \
+                  ChannelTableStruct.cpp \
+                  Config.cpp
+
+
+USER_C_FLAGS    = $(USER_C_FLAGS) \
+                  /DUSER_MODE \
+                  /DUNICODE	\
+				  /EHsc
+
+INCLUDES        = $(INCLUDES) \
+					..

@@ -213,13 +213,13 @@ FINL void FrequencyShift ( vcs* output, vcs* input, FP_RAD ph0, FP_RAD delta ) {
 	// build the coefficients
 	BuildFrequencyShiftCoeffs<LEN*vcs::size> ( (COMPLEX16*) coeffs, ph0, delta );
 	// frequency shift
-	rep<LEN>::vmul ( output, input, coeffs ); 
+	rep_mul<LEN> ( output, input, coeffs ); 
 }
 
 template<size_t LEN>
 FINL void FrequencyShift ( vcs* output, vcs* input, const vcs* coeffs) {
 	// frequency shift
-	rep<LEN>::vmul ( output, input, coeffs ); 
+	rep_mul<LEN> ( output, input, coeffs ); 
 
 }
 

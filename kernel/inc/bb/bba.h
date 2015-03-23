@@ -10,7 +10,7 @@
 #include "DebugPlotU.h"
 #endif
 
-#include <bb_debug.h>
+#include "../../brick/inc/bb_debug.h"
 
 #define BB11A_CHANNEL_CLEAN         ((HRESULT)0x00000200L) // channel free
 #define BB11A_OK_POWER_DETECTED     ((HRESULT)0x00000201L) // channel busy

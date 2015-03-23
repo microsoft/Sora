@@ -1,0 +1,40 @@
+!include "$(SORA_ROOT)\build\sources_ke.inc"
+
+TARGETNAME      = usora
+TARGETTYPE      = LIBRARY
+
+USER_C_FLAGS    = $(USER_C_FLAGS) \
+                  /DUSER_MODE 
+
+USE_MSVCRT=1
+
+C_DEFINES = $(C_DEFINES) -D__HW_V11 
+
+!if defined(AMD64) && "$(AMD64)" == "1"
+USER_C_FLAGS = $(USER_C_FLAGS) /DSSE2_INTRINSIC /TP
+!else
+USER_C_FLAGS = $(USER_C_FLAGS) /TP
+!endif
+
+!if "$(DDKBUILDENV)" == "chk"
+USER_C_FLAGS = $(USER_C_FLAGS) /DDEBUG_CHECKSUM
+!endif
+
+SOURCES         = \
+                  ..\sora.c \
+                  ..\_reg_conf.c \
+                  ..\_radio_manager.c \
+                  ..\_rx_manager.c \
+                  ..\_radio_manager2.c \
+                  ..\_tx_manager2.c  \
+                  ..\_signal_cache.c \
+                  ..\_hw_op.c \
+                  ..\_WARP_control.c \
+                  ..\_packet_base.c \
+                  ..\_rx_stream.c \
+                  ..\_radio_channel_op.c \
+                  ..\_user_mode_ext.c \
+                  ..\vstream_man.c \
+				  ..\_scheduler_u.c \
+				  ..\_share_lock_uimp.cpp \
+				  ..\_share_mem_uimp.cpp 

@@ -1,0 +1,148 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>3.0</ProductVersion>
+    <ProjectGuid>{73f69587-a3c0-4bd6-9489-16b1831d49fc}</ProjectGuid>
+    <SchemaVersion>2.0</SchemaVersion>
+    <OutputName>WixUilExtSrc</OutputName>
+    <OutputType>Library</OutputType>
+    <WixTargetsPath Condition=" '$(WixTargetsPath)' == '' AND '$(MSBuildExtensionsPath32)' != '' ">$(MSBuildExtensionsPath32)\Microsoft\WiX\v3.x\Wix.targets</WixTargetsPath>
+    <WixTargetsPath Condition=" '$(WixTargetsPath)' == '' ">$(MSBuildExtensionsPath)\Microsoft\WiX\v3.x\Wix.targets</WixTargetsPath>
+    <SccProjectName>SAK</SccProjectName>
+    <SccProvider>SAK</SccProvider>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccLocalPath>SAK</SccLocalPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <OutputPath>bin\$(Configuration)\</OutputPath>
+    <IntermediateOutputPath>obj\$(Configuration)\</IntermediateOutputPath>
+    <DefineConstants>Debug</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <OutputPath>bin\$(Configuration)\</OutputPath>
+    <IntermediateOutputPath>obj\$(Configuration)\</IntermediateOutputPath>
+  </PropertyGroup>
+  <Import Project="$(WixTargetsPath)" />
+  <!--
+	To modify your build process, add your task inside one of the targets below and uncomment it.
+	Other similar extension points exist, see Wix.targets.
+	<Target Name="BeforeBuild">
+	</Target>
+	<Target Name="AfterBuild">
+	</Target>
+	-->
+  <ItemGroup>
+    <Compile Include="..\..\..\..\Software\wix3.0.5419.0-sources\src\ext\UIExtension\wixlib\AdvancedWelcomeEulaDlg.wxs">
+      <Link>AdvancedWelcomeEulaDlg.wxs</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\Software\wix3.0.5419.0-sources\src\ext\UIExtension\wixlib\BrowseDlg.wxs">
+      <Link>BrowseDlg.wxs</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\Software\wix3.0.5419.0-sources\src\ext\UIExtension\wixlib\CancelDlg.wxs">
+      <Link>CancelDlg.wxs</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\Software\wix3.0.5419.0-sources\src\ext\UIExtension\wixlib\Common.wxs">
+      <Link>Common.wxs</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\Software\wix3.0.5419.0-sources\src\ext\UIExtension\wixlib\CustomizeDlg.wxs">
+      <Link>CustomizeDlg.wxs</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\Software\wix3.0.5419.0-sources\src\ext\UIExtension\wixlib\DiskCostDlg.wxs">
+      <Link>DiskCostDlg.wxs</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\Software\wix3.0.5419.0-sources\src\ext\UIExtension\wixlib\ErrorDlg.wxs">
+      <Link>ErrorDlg.wxs</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\Software\wix3.0.5419.0-sources\src\ext\UIExtension\wixlib\ErrorProgressText.wxs">
+      <Link>ErrorProgressText.wxs</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\Software\wix3.0.5419.0-sources\src\ext\UIExtension\wixlib\ExitDialog.wxs">
+      <Link>ExitDialog.wxs</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\Software\wix3.0.5419.0-sources\src\ext\UIExtension\wixlib\FatalError.wxs">
+      <Link>FatalError.wxs</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\Software\wix3.0.5419.0-sources\src\ext\UIExtension\wixlib\FeaturesDlg.wxs">
+      <Link>FeaturesDlg.wxs</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\Software\wix3.0.5419.0-sources\src\ext\UIExtension\wixlib\FilesInUse.wxs">
+      <Link>FilesInUse.wxs</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\Software\wix3.0.5419.0-sources\src\ext\UIExtension\wixlib\InstallDirDlg.wxs">
+      <Link>InstallDirDlg.wxs</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\Software\wix3.0.5419.0-sources\src\ext\UIExtension\wixlib\InstallScopeDlg.wxs">
+      <Link>InstallScopeDlg.wxs</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\Software\wix3.0.5419.0-sources\src\ext\UIExtension\wixlib\InvalidDirDlg.wxs">
+      <Link>InvalidDirDlg.wxs</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\Software\wix3.0.5419.0-sources\src\ext\UIExtension\wixlib\LicenseAgreementDlg.wxs">
+      <Link>LicenseAgreementDlg.wxs</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\Software\wix3.0.5419.0-sources\src\ext\UIExtension\wixlib\MaintenanceTypeDlg.wxs">
+      <Link>MaintenanceTypeDlg.wxs</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\Software\wix3.0.5419.0-sources\src\ext\UIExtension\wixlib\MaintenanceWelcomeDlg.wxs">
+      <Link>MaintenanceWelcomeDlg.wxs</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\Software\wix3.0.5419.0-sources\src\ext\UIExtension\wixlib\MsiRMFilesInUse.wxs">
+      <Link>MsiRMFilesInUse.wxs</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\Software\wix3.0.5419.0-sources\src\ext\UIExtension\wixlib\OutOfDiskDlg.wxs">
+      <Link>OutOfDiskDlg.wxs</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\Software\wix3.0.5419.0-sources\src\ext\UIExtension\wixlib\OutOfRbDiskDlg.wxs">
+      <Link>OutOfRbDiskDlg.wxs</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\Software\wix3.0.5419.0-sources\src\ext\UIExtension\wixlib\PrepareDlg.wxs">
+      <Link>PrepareDlg.wxs</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\Software\wix3.0.5419.0-sources\src\ext\UIExtension\wixlib\ProgressDlg.wxs">
+      <Link>ProgressDlg.wxs</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\Software\wix3.0.5419.0-sources\src\ext\UIExtension\wixlib\ResumeDlg.wxs">
+      <Link>ResumeDlg.wxs</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\Software\wix3.0.5419.0-sources\src\ext\UIExtension\wixlib\SetupTypeDlg.wxs">
+      <Link>SetupTypeDlg.wxs</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\Software\wix3.0.5419.0-sources\src\ext\UIExtension\wixlib\UserExit.wxs">
+      <Link>UserExit.wxs</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\Software\wix3.0.5419.0-sources\src\ext\UIExtension\wixlib\VerifyReadyDlg.wxs">
+      <Link>VerifyReadyDlg.wxs</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\Software\wix3.0.5419.0-sources\src\ext\UIExtension\wixlib\WaitForCostingDlg.wxs">
+      <Link>WaitForCostingDlg.wxs</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\Software\wix3.0.5419.0-sources\src\ext\UIExtension\wixlib\WelcomeDlg.wxs">
+      <Link>WelcomeDlg.wxs</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\Software\wix3.0.5419.0-sources\src\ext\UIExtension\wixlib\WelcomeEulaDlg.wxs">
+      <Link>WelcomeEulaDlg.wxs</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\Software\wix3.0.5419.0-sources\src\ext\UIExtension\wixlib\WixUI_Advanced.wxs">
+      <Link>WixUI_Advanced.wxs</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\Software\wix3.0.5419.0-sources\src\ext\UIExtension\wixlib\WixUI_FeatureTree.wxs">
+      <Link>WixUI_FeatureTree.wxs</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\Software\wix3.0.5419.0-sources\src\ext\UIExtension\wixlib\WixUI_InstallDir.wxs">
+      <Link>WixUI_InstallDir.wxs</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\Software\wix3.0.5419.0-sources\src\ext\UIExtension\wixlib\WixUI_Minimal.wxs">
+      <Link>WixUI_Minimal.wxs</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\Software\wix3.0.5419.0-sources\src\ext\UIExtension\wixlib\WixUI_Mondo.wxs">
+      <Link>WixUI_Mondo.wxs</Link>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="..\..\..\..\Software\wix3.0.5419.0-sources\src\ext\UIExtension\wixlib\WixUI_en-us.wxl">
+      <Link>WixUI_en-us.wxl</Link>
+    </EmbeddedResource>
+  </ItemGroup>
+</Project>

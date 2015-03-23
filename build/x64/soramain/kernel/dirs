@@ -1,0 +1,7 @@
+DIRS = \
+		core \
+        RadioManager \
+        sample \
+        hwtest \
+		util \
+		bb \

@@ -28,7 +28,7 @@ ULONG PrepareSamples(const char *fname, char *SampleBuffer, ULONG SampleBufferSi
 void TxRoutine ( char* fname )
 {
     // try to load the samples
-    HRESULT hr;
+    HRESULT hr = S_OK;
     PVOID SampleBuffer = NULL;
     ULONG SampleBufferSize = 0;
     ULONG TxID = 0;

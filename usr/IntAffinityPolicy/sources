@@ -1,0 +1,14 @@
+!include "$(SORA_ROOT)\build\sources_usr.inc"
+
+TARGETNAME  = IntAffinityCmd
+TARGETTYPE  = PROGRAM
+UMTYPE      = console
+
+TARGETLIBS  = $(TARGETLIBS) \
+              $(SDK_LIB_PATH)\setupapi.lib \
+              $(TARGETPATH)\*\util_arg.lib
+
+SOURCES     = \
+              \
+              AddRmAffinityReg.c \
+              main.c 

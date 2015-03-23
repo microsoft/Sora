@@ -1,0 +1,388 @@
+<?xml version='1.0' encoding='Windows-1252'?>
+<Wix xmlns='http://schemas.microsoft.com/wix/2006/wi'>
+  <Fragment Id='FragmentUsr'>
+    <ComponentGroup Id='group_SORA_sample'>
+      <ComponentRef Id='comp_build' />
+      <ComponentRef Id='comp_src' />
+      <ComponentRef Id='comp_inc' />
+      <ComponentRef Id='comp_inc_bb' />
+      <ComponentRef Id='comp_bb' />
+      <ComponentRef Id='comp_bb_demod11' />
+      <ComponentRef Id='comp_bb_umxdot11' />
+      <ComponentRef Id="comp_bb_brick11_src" />
+      <ComponentRef Id='comp_bb_dot11a' />
+      <ComponentRef Id='comp_bb_dot11a_dot11' />
+      <ComponentRef Id='comp_bb_dot11a_dot11_kernel' />
+      <ComponentRef Id='comp_bb_dot11a_dot11_user' />
+      <ComponentRef Id='comp_bb_dot11a_inc' />
+      <ComponentRef Id='comp_bb_dot11a_inc_bb' />
+      <ComponentRef Id='comp_bb_dot11a_inc_bb_mod' />
+      <ComponentRef Id='comp_bb_dot11a_lutst' />
+      <ComponentRef Id='comp_bb_dot11a_lutst_kernel' />
+      <ComponentRef Id='comp_bb_dot11a_lutst_user' />
+      <ComponentRef Id='comp_bb_dot11a_mod' />
+      <ComponentRef Id='comp_bb_dot11a_mod_kernel' />
+      <ComponentRef Id='comp_bb_dot11a_mod_user' />
+      <ComponentRef Id='comp_bb_dot11b' />
+      <ComponentRef Id='comp_bb_dot11b_klib' />
+      <ComponentRef Id='comp_bb_dot11b_ulib' />
+      <ComponentRef Id="comp_umxsdr" />
+      <ComponentRef Id="comp_umxsdr_brick" />
+      <ComponentRef Id="comp_kmsdr" />
+      <ComponentRef Id='comp_driver_ll' />
+      <ComponentRef Id='comp_driver_ll_5x' />
+      <ComponentRef Id='comp_driver_ll_6x' />
+      <ComponentRef Id='comp_driver_mac' />
+      <ComponentRef Id='comp_driver_phy' />
+      <ComponentRef Id='comp_driver_sdrminiport' />
+      <ComponentRef Id='comp_driver_sdrminiport_exe' />
+      <ComponentRef Id='comp_driver_sdrminiport_sys5x' />
+      <ComponentRef Id='comp_driver_sdrminiport_sys6x' />
+      <ComponentRef Id='comp_util' />
+      <ComponentRef Id='comp_util_args' />
+      <ComponentRef Id='comp_util_src' />
+      <ComponentRef Id="comp_dbgplot_sample" />
+      <ComponentRef Id="comp_dbgplot_sample_tut1" />
+      <ComponentRef Id="comp_dbgplot_sample_tut2" />
+      <ComponentRef Id="comp_samples" />
+      <ComponentRef Id="comp_samples_AppExt" />
+      <ComponentRef Id="comp_samples_Simple" />
+      <ComponentRef Id="comp_samples_SpecAnalyzer" />
+    </ComponentGroup>
+
+    <DirectoryRef Id='APPLICATIONFOLDER'>
+      <Directory Id='dir_build' Name='build'>
+        <Component Id='comp_build' Guid='*' KeyPath='yes'>
+          <FileRef SrcName='..\..\build\publish\sources_ke.inc' />
+          <FileRef SrcName='..\..\build\setenv_publish.bat' DstName='setenv.bat'/>
+          <FileRef SrcName='..\..\build\ChkBldEnv.cmd' />
+          <FileRef SrcName='..\..\build\FreBldEnv.cmd' />
+          <FileRef SrcName='..\..\build\ChkBldEnv_amd64.cmd' />
+          <FileRef SrcName='..\..\build\FreBldEnv_amd64.cmd' />
+          <FileRef SrcName='..\..\build\Version.rc' />
+          <FileRef SrcName='..\..\build\bldver.h' />
+          <FileRef SrcName='..\..\build\makefile.inx' />
+        </Component>
+      </Directory>
+      <Directory Id='dir_src' Name='src'>
+        <Component Id='comp_src' Guid='*' KeyPath='yes'>
+          <FileRef SrcName='..\..\kernel\dirs_x86.publish' DstName='dirs_x86' />
+          <FileRef SrcName='..\..\kernel\dirs_x64.publish' DstName='dirs_x64' />
+          <FileRef SrcName='..\..\kernel\set_dirs_x86.cmd' />
+          <FileRef SrcName='..\..\kernel\set_dirs_x64.cmd' />
+        </Component>
+
+        <Directory Id='dir_inc' Name='inc'>
+          <Component Id='comp_inc' Guid='*' KeyPath='yes'>
+            <FileGroup SrcDir='..\..\kernel\inc' Pattern='*.h' />
+          </Component>
+          <Directory Id='dir_inc_bb' Name='bb'>
+            <Component Id='comp_inc_bb' Guid='*' KeyPath='yes'>
+              <FileGroup SrcDir='..\..\kernel\inc\bb' Pattern='*.h' />
+            </Component>
+          </Directory>
+        </Directory>
+
+        <Directory Id='dir_bb' Name='bb'>
+          <Component Id='comp_bb' Guid='*' KeyPath='yes'>
+            <FileRef SrcName='..\..\kernel\bb\dirs_x86.publish' DstName='dirs_x86' />
+            <FileRef SrcName='..\..\kernel\bb\dirs_x64.publish' DstName='dirs_x64' />
+          </Component>
+
+          <Directory Id='dir_bb_demod11' Name='demod11'>
+            <Component Id='comp_bb_demod11' Guid='*' KeyPath='yes'>
+              <FileRef SrcName='..\..\kernel\bb\demod11\sources.publish' DstName='sources' />
+              <FileGroup SrcDir='..\..\kernel\bb\demod11' Pattern='*.h' />
+              <FileGroup SrcDir='..\..\kernel\bb\demod11' Pattern='*.hpp' />
+              <FileGroup SrcDir='..\..\kernel\bb\demod11' Pattern='*.cpp' />
+              <FileGroup SrcDir='..\..\kernel\bb\demod11' Pattern='*.rc' />
+            </Component>
+          </Directory>
+
+          <Directory Id='dir_bb_dot11a' Name='dot11a'>
+            <Component Id='comp_bb_dot11a' Guid='*' KeyPath='yes'>
+              <FileRef SrcName='..\..\kernel\bb\dot11a\dirs' />
+            </Component>
+
+            <Directory Id='dir_bb_dot11a_dot11' Name='dot11'>
+              <Component Id='comp_bb_dot11a_dot11' Guid='*' KeyPath='yes'>
+                <FileRef SrcName='..\..\kernel\bb\dot11a\dot11\dirs' />
+                <FileGroup SrcDir='..\..\kernel\bb\dot11a\dot11' Pattern='*.h' />
+                <FileGroup SrcDir='..\..\kernel\bb\dot11a\dot11' Pattern='*.c' />
+              </Component>
+              <Directory Id='dir_bb_dot11a_dot11_kernel' Name='kernel'>
+                <Component Id='comp_bb_dot11a_dot11_kernel' Guid='*' KeyPath='yes'>
+                  <FileRef SrcName='..\..\kernel\bb\dot11a\dot11\kernel\sources' />
+                </Component>
+              </Directory>
+              <Directory Id='dir_bb_dot11a_dot11_user' Name='user'>
+                <Component Id='comp_bb_dot11a_dot11_user' Guid='*' KeyPath='yes'>
+                  <FileRef SrcName='..\..\kernel\bb\dot11a\dot11\user\sources' />
+                </Component>
+              </Directory>
+            </Directory>
+
+            <Directory Id='dir_bb_dot11a_inc' Name='inc'>
+              <Component Id='comp_bb_dot11a_inc' Guid='*' KeyPath='yes'>
+                <FileRef SrcName='..\..\kernel\bb\dot11a\inc\lut.h' />
+              </Component>
+              <Directory Id='dir_bb_dot11a_inc_bb' Name='bb'>
+                <Component Id='comp_bb_dot11a_inc_bb' Guid='*' KeyPath='yes'>
+                  <FileRef SrcName='..\..\kernel\bb\dot11a\inc\bb\mod.h' />
+                </Component>
+                <Directory Id='dir_bb_dot11a_inc_bb_mod' Name='mod'>
+                  <Component Id='comp_bb_dot11a_inc_bb_mod' Guid='*' KeyPath='yes'>
+                    <FileGroup SrcDir='..\..\kernel\bb\dot11a\inc\bb\mod' Pattern='*.h' />
+                  </Component>
+                </Directory>
+              </Directory>
+            </Directory>
+
+            <Directory Id='dir_bb_dot11a_lutst' Name='lutst'>
+              <Component Id='comp_bb_dot11a_lutst' Guid='*' KeyPath='yes'>
+                <FileRef SrcName='..\..\kernel\bb\dot11a\lutst\dirs' />
+                <FileGroup SrcDir='..\..\kernel\bb\dot11a\lutst' Pattern='*.c' />
+              </Component>
+              <Directory Id='dir_bb_dot11a_lutst_kernel' Name='kernel'>
+                <Component Id='comp_bb_dot11a_lutst_kernel' Guid='*' KeyPath='yes'>
+                  <FileRef SrcName='..\..\kernel\bb\dot11a\lutst\kernel\sources' />
+                </Component>
+              </Directory>
+              <Directory Id='dir_bb_dot11a_lutst_user' Name='user'>
+                <Component Id='comp_bb_dot11a_lutst_user' Guid='*' KeyPath='yes'>
+                  <FileRef SrcName='..\..\kernel\bb\dot11a\lutst\user\sources' />
+                </Component>
+              </Directory>
+            </Directory>
+
+            <Directory Id='dir_bb_dot11a_mod' Name='mod'>
+              <Component Id='comp_bb_dot11a_mod' Guid='*' KeyPath='yes'>
+                <FileRef SrcName='..\..\kernel\bb\dot11a\mod\dirs' />
+                <FileGroup SrcDir='..\..\kernel\bb\dot11a\mod' Pattern='*.c' />
+              </Component>
+              <Directory Id='dir_bb_dot11a_mod_kernel' Name='kernel'>
+                <Component Id='comp_bb_dot11a_mod_kernel' Guid='*' KeyPath='yes'>
+                  <FileRef SrcName='..\..\kernel\bb\dot11a\mod\kernel\sources' />
+                </Component>
+              </Directory>
+              <Directory Id='dir_bb_dot11a_mod_user' Name='user'>
+                <Component Id='comp_bb_dot11a_mod_user' Guid='*' KeyPath='yes'>
+                  <FileRef SrcName='..\..\kernel\bb\dot11a\mod\user\sources' />
+                </Component>
+              </Directory>
+            </Directory>
+
+          </Directory>
+
+          <Directory Id='dir_bb_dot11b' Name='dot11b'>
+            <Component Id='comp_bb_dot11b' Guid='*' KeyPath='yes'>
+              <FileGroup SrcDir='..\..\kernel\bb\dot11b' Pattern='*.c' />
+              <FileGroup SrcDir='..\..\kernel\bb\dot11b' Pattern='*.h' />
+              <FileRef SrcName='..\..\kernel\bb\dot11b\dirs'/>
+            </Component>
+
+            <Directory Id='dir_bb_dot11b_klib' Name='klib'>
+              <Component Id='comp_bb_dot11b_klib' Guid='*' KeyPath='yes'>
+                <FileGroup SrcDir='..\..\kernel\bb\dot11b\klib' Pattern='sources' />
+              </Component>
+            </Directory>
+
+            <Directory Id='dir_bb_dot11b_ulib' Name='ulib'>
+              <Component Id='comp_bb_dot11b_ulib' Guid='*' KeyPath='yes'>
+                <FileGroup SrcDir='..\..\kernel\bb\dot11b\ulib' Pattern='sources' />
+              </Component>
+            </Directory>
+          </Directory>
+
+          <Directory Id='dir_bb_umxdot11' Name='UMXDot11'>
+            <Component Id='comp_bb_umxdot11' Guid='*' KeyPath='yes'>
+              <FileRef SrcName='..\..\kernel\bb\UMXDot11\sources.publish' DstName='sources'/>
+              <FileGroup SrcDir='..\..\kernel\bb\UMXDot11' Pattern='*.h' />
+              <FileGroup SrcDir='..\..\kernel\bb\UMXDot11' Pattern='*.c' />
+              <FileGroup SrcDir='..\..\kernel\bb\UMXDot11' Pattern='*.cpp' />
+              <FileGroup SrcDir='..\..\kernel\bb\UMXDot11' Pattern='*.rc' />
+              <FileGroup SrcDir='..\..\kernel\bb\UMXDot11' Pattern='*.inc' />
+              <FileGroup SrcDir='..\..\kernel\bb\UMXDot11' Pattern='*.ini' />
+            </Component>
+          </Directory>
+
+          <Directory Id='dir_bb_brick11' Name='Brick11'>
+            <Directory Id='dir_bb_brick11_src' Name='src'>
+              <Component Id='comp_bb_brick11_src' Guid='*' KeyPath='yes'>
+                <FileGroup SrcDir='..\..\kernel\bb\Brick11\src' Pattern='*.hpp'/>
+                <FileGroup SrcDir='..\..\kernel\bb\Brick11\src' Pattern='*.h'/>
+              </Component>
+            </Directory>
+          </Directory>
+
+        </Directory>
+
+        <Directory Id='dir_kmsdr' Name='kmsdr'>
+          <Component Id='comp_kmsdr' Guid='*' KeyPath='yes'>
+            <FileRef SrcName='..\..\kernel\sample\dirs' />
+          </Component>
+
+          <Directory Id='dir_driver_ll' Name='ll'>
+            <Component Id='comp_driver_ll' Guid='*' KeyPath='yes'>
+              <FileGroup SrcDir='..\..\kernel\sample\ll' Pattern='*.c' />
+              <FileRef SrcName='..\..\kernel\sample\ll\dirs_x86.publish' DstName='dirs_x86' />
+              <FileRef SrcName='..\..\kernel\sample\ll\dirs_x64.publish' DstName='dirs_x64' />
+            </Component>
+
+            <Directory Id='dir_driver_ll_5x' Name='NDIS5'>
+              <Component Id='comp_driver_ll_5x' Guid='*' KeyPath='yes'>
+                <FileGroup SrcDir='..\..\kernel\sample\ll\5x' Pattern='*.c' />
+                <FileRef SrcName='..\..\kernel\sample\ll\5x\makefile' />
+                <FileRef SrcName='..\..\kernel\sample\ll\5x\sources' />
+              </Component>
+            </Directory>
+
+            <Directory Id='dir_driver_ll_6x' Name='NDIS6'>
+              <Component Id='comp_driver_ll_6x' Guid='*' KeyPath='yes'>
+                <FileGroup SrcDir='..\..\kernel\sample\ll\6x' Pattern='*.c' />
+                <FileRef SrcName='..\..\kernel\sample\ll\6x\makefile' />
+                <FileRef SrcName='..\..\kernel\sample\ll\6x\sources' />
+              </Component>
+            </Directory>
+          </Directory>
+
+          <Directory Id='dir_driver_mac' Name='mac'>
+            <Component Id='comp_driver_mac' Guid='*' KeyPath='yes'>
+              <FileGroup SrcDir='..\..\kernel\sample\mac' Pattern='*.c' />
+              <FileGroup SrcDir='..\..\kernel\sample\mac' Pattern='*.h' />
+              <FileRef SrcName='..\..\kernel\sample\mac\sources' />
+            </Component>
+          </Directory>
+
+          <Directory Id='dir_driver_phy' Name='phy'>
+            <Component Id='comp_driver_phy' Guid='*' KeyPath='yes'>
+              <FileGroup SrcDir='..\..\kernel\sample\phy' Pattern='*.c' />
+              <FileGroup SrcDir='..\..\kernel\sample\phy' Pattern='*.h' />
+              <FileRef SrcName='..\..\kernel\sample\phy\sources' />
+            </Component>
+          </Directory>
+
+          <Directory Id='dir_driver_sdrminiport' Name='SDRMiniport'>
+            <Component Id='comp_driver_sdrminiport' Guid='*' KeyPath='yes'>
+              <FileRef SrcName='..\..\kernel\sample\SDRMiniport\dirs_x86.publish' DstName='dirs_x86' />
+              <FileRef SrcName='..\..\kernel\sample\SDRMiniport\dirs_x64.publish' DstName='dirs_x64' />
+              <FileGroup SrcDir='..\..\kernel\sample\SDRMiniport' Pattern='*.c' />
+              <FileGroup SrcDir='..\..\kernel\sample\SDRMiniport' Pattern='*.h' />
+            </Component>
+            <Directory Id='dir_driver_sdrminiport_exe' Name='dot11config'>
+              <Component Id='comp_driver_sdrminiport_exe' Guid='*' KeyPath='yes'>
+                <FileGroup SrcDir='..\..\kernel\sample\SDRMiniport\exe' Pattern='*.c' />
+                <FileGroup SrcDir='..\..\kernel\sample\SDRMiniport\exe' Pattern='*.h' />
+                <FileRef SrcName='..\..\kernel\sample\SDRMiniport\exe\dot11config.rc' />
+                <FileRef SrcName='..\..\kernel\sample\SDRMiniport\exe\sources' />
+              </Component>
+            </Directory>
+            <Directory Id='dir_driver_sdrminiport_sys5x' Name='NDIS5'>
+              <Component Id='comp_driver_sdrminiport_sys5x' Guid='*' KeyPath='yes'>
+                <FileGroup SrcDir='..\..\kernel\sample\SDRMiniport\sys5x' Pattern='*.c' />
+                <FileGroup SrcDir='..\..\kernel\sample\SDRMiniport\sys5x' Pattern='*.h' />
+                <FileRef SrcName='..\..\kernel\sample\SDRMiniport\sys5x\sdr.inx' />
+                <FileRef SrcName='..\..\kernel\sample\SDRMiniport\sys5x\sdr.rc' />
+                <FileRef SrcName='..\..\kernel\sample\SDRMiniport\sys5x\makefile.inc' />
+                <FileRef SrcName='..\..\kernel\sample\SDRMiniport\sys5x\sources.publish' DstName='sources' />
+              </Component>
+            </Directory>
+
+            <Directory Id='dir_driver_sdrminiport_sys6x' Name='NDIS6'>
+              <Component Id='comp_driver_sdrminiport_sys6x' Guid='*' KeyPath='yes'>
+                <FileGroup SrcDir='..\..\kernel\sample\SDRMiniport\sys6x' Pattern='*.c' />
+                <FileGroup SrcDir='..\..\kernel\sample\SDRMiniport\sys6x' Pattern='*.h' />
+                <FileRef SrcName='..\..\kernel\sample\SDRMiniport\sys6x\sdr.inx' />
+                <FileRef SrcName='..\..\kernel\sample\SDRMiniport\sys6x\sdr.rc' />
+                <FileRef SrcName='..\..\kernel\sample\SDRMiniport\sys6x\makefile.inc' />
+                <FileRef SrcName='..\..\kernel\sample\SDRMiniport\sys6x\sources.publish' DstName='sources' />
+              </Component>
+            </Directory>
+          </Directory>
+        </Directory>
+
+        <Directory Id='dir_umxsdr' Name='umxsdra'>
+          <Component Id='comp_umxsdr' Guid='*' KeyPath='yes'>
+            <FileRef SrcName='..\..\kernel\bb\umxsdra\sources.publish' DstName='sources' />
+            <FileGroup SrcDir='..\..\kernel\bb\umxsdra' Pattern='*.cpp' />
+            <FileGroup SrcDir='..\..\kernel\bb\umxsdra' Pattern='*.h' />
+            <FileGroup SrcDir='..\..\kernel\bb\umxsdra' Pattern='*.hpp' />
+          </Component>
+        </Directory>
+
+        <Directory Id='dir_umxsdr_brick' Name='umxsdrbrick'>
+          <Component Id='comp_umxsdr_brick' Guid='*' KeyPath='yes'>
+            <FileRef SrcName='..\..\kernel\bb\umxsdrbrick\sources.publish' DstName='sources' />
+            <FileGroup SrcDir='..\..\kernel\bb\umxsdrbrick' Pattern='*.cpp' />
+            <FileGroup SrcDir='..\..\kernel\bb\umxsdrbrick' Pattern='*.h' />
+            <FileGroup SrcDir='..\..\kernel\bb\umxsdrbrick' Pattern='*.hpp' />
+          </Component>
+        </Directory>
+
+        <Directory Id='dir_util' Name='util'>
+          <Component Id='comp_util' Guid='*' KeyPath='yes'>
+            <FileRef SrcName='..\..\kernel\util\dirs' />
+          </Component>
+          <Directory Id='dir_util_args' Name='args'>
+            <Component Id='comp_util_args' Guid='*' KeyPath='yes'>
+              <FileGroup SrcDir='..\..\kernel\util\args' Pattern='*.c' />
+              <FileGroup SrcDir='..\..\kernel\util\args' Pattern='*.h' />
+              <FileRef SrcName='..\..\kernel\util\args\sources' />
+            </Component>
+          </Directory>
+          <Directory Id='dir_util_src' Name='src'>
+            <Component Id='comp_util_src' Guid='*' KeyPath='yes'>
+              <FileGroup SrcDir='..\..\kernel\util\src' Pattern='*.c' />
+              <FileGroup SrcDir='..\..\kernel\util\src' Pattern='*.h' />
+              <FileRef SrcName='..\..\kernel\util\src\sources' />
+            </Component>
+          </Directory>
+        </Directory>
+
+        <Directory Id='dir_dbgplot_sample' Name='dbgplot-sample'>
+          <Component Id='comp_dbgplot_sample' Guid='*' KeyPath='yes'>
+            <FileRef SrcName='..\..\DebugTool\source\Tutorial\dirs.publish' DstName='dirs' />
+          </Component>
+          <Directory Id='dir_dbgplot_sample_tut1' Name='sample1'>
+            <Component Id='comp_dbgplot_sample_tut1' Guid='*' KeyPath='yes'>
+              <FileRef SrcName='..\..\DebugTool\source\Tutorial\1\tut1.cpp' />
+              <FileRef SrcName='..\..\DebugTool\source\Tutorial\1\sources.publish' DstName='sources' />
+            </Component>
+          </Directory>
+          <Directory Id='dir_dbgplot_sample_tut2' Name='sample2'>
+            <Component Id='comp_dbgplot_sample_tut2' Guid='*' KeyPath='yes'>
+              <FileRef SrcName='..\..\DebugTool\source\Tutorial\2\tut2.cpp' />
+              <FileRef SrcName='..\..\DebugTool\source\Tutorial\2\sources.publish' DstName='sources' />
+            </Component>
+          </Directory>
+        </Directory>
+        
+       <Directory Id='dir_samples' Name='Samples'>
+          <Component Id='comp_samples' Guid='*' KeyPath='yes'>
+            <FileRef SrcName='..\..\kernel\samples\dirs.publish' DstName='dirs' />
+          </Component>
+          <Directory Id='dir_samples_AppExt' Name='AppExt'>
+            <Component Id='comp_samples_AppExt' Guid='*' KeyPath='yes'>
+              <FileRef SrcName='..\..\kernel\SoraAppExtSample\umx_sample.cpp' />
+              <FileRef SrcName='..\..\kernel\SoraAppExtSample\sources.publish' DstName='sources' />
+            </Component>
+          </Directory>
+          <Directory Id='dir_samples_Simple' Name='Simple'>
+            <Component Id='comp_samples_Simple' Guid='*' KeyPath='yes'>
+              <FileGroup SrcDir='..\..\kernel\samples\simple-src' Pattern='*.cpp'/>
+              <FileGroup SrcDir='..\..\kernel\samples\simple-src' Pattern='*.h'/>
+              <FileRef SrcName='..\..\kernel\samples\simple-src\sources.publish' DstName='sources' />
+            </Component>
+          </Directory>
+          <Directory Id='dir_samples_SpecAnalyzer' Name='SpecAnalyzer'>
+            <Component Id='comp_samples_SpecAnalyzer' Guid='*' KeyPath='yes'>
+              <FileGroup SrcDir='..\..\kernel\samples\speanalyzer' Pattern='*.cpp'/>
+              <FileGroup SrcDir='..\..\kernel\samples\speanalyzer' Pattern='*.h'/>
+              <FileRef SrcName='..\..\kernel\samples\speanalyzer\sources.publish' DstName='sources' />
+            </Component>
+          </Directory>
+        </Directory>
+      </Directory>
+    </DirectoryRef>
+  </Fragment>
+</Wix>

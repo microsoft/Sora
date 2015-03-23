@@ -1,0 +1,27 @@
+!include "$(SORA_ROOT)\build\sources_usr.inc"
+
+TARGETNAME  = HwVeriAlgorithm
+TARGETTYPE	= LIBRARY
+UMTYPE      = windows
+
+USE_STL     = 1
+USE_MSVCR  = 1
+
+INCLUDES    = $(INCLUDES) \
+              ..\UMX2; \
+              ..\Utility; \
+              ..\SNRLib\dsp-toolbox; \
+              ..\SNRLib\soraview; \
+              ..\Dialog; \
+              ..\fft;
+
+USER_C_FLAGS  = $(USER_C_FLAGS) \
+                /D"_UNICODE" \
+                /D"UNICODE"
+                
+SOURCES     = \
+              AGC.cpp \
+              FreqOffset.cpp \
+              SineWaveTest.cpp \
+              SNRTest.cpp
+			  

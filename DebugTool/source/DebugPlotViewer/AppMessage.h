@@ -1,0 +1,95 @@
+#pragma once
+
+//enum AppMessage
+//{
+//	WM_APP_QUERY_TYPE = WM_APP + 1,
+//	WM_APP_HIGHLIGHT_WND,
+//};
+
+enum AppMessageCommand
+{
+	CMD_HIGHLIGHT_WND,
+	CMD_QUERY_TYPE,
+	CMD_GET_CONTEXT,
+	CMD_NEW_DOCUMENT,
+	CMD_CLEAR_DOCUMENT,
+	CMD_ADD_OBSERVER,
+	CMD_NOTIFY_CHANGED,
+	//CMD_ADD_SERIES,
+	CMD_NEW_DATA,
+	CMD_DATA_CLEAR,
+	CMD_SERIES_CLOSED,
+	CMD_SET_SERIES,
+	CMD_QUERY_ACCEPT_SERIES,
+	CMD_SET_REPLACE_MODE,
+	CMD_CHANGE_PROPERTY,
+	CMD_CHANGE_PROPERTY_VALUE,
+	CMD_AUTO_LAYOUT,
+	CMD_NEW_PLOT_WND,
+	CMD_DELETE_WND,
+	CMD_UPDATE_CHANNEL_TREE,
+	CMD_PLAY_FRAME,
+	CMD_GET_PLOT_WND_AREA_WND,
+	CMD_CONTROLLER_UPDATE_BUTTON,
+	CMD_UPDATE_TREE_TIMER,
+	CMD_UPDATE_GRAPH_TIMER,
+	CMD_MAIN_FRAME_ENABLE_TIMER,
+	CMD_NOTIFY_RELEASED,
+	CMD_TRACE_TYPE_CHANGED,
+	CMD_UPDATE_BITMAP,
+	CMD_REGISTER_WND,
+	CMD_UNREGISTER_WND,
+	CMD_RESET_VIEW,
+	CMD_UPDATE_PLOT_WND,
+	CMD_UPDATE_PROPERTY_PANEL,
+	CMD_UPDATE_CONTROLLER,
+	CMD_CONTROLLER_TIMER,
+	CMD_PLAY_PAUSE_ALL,
+};
+
+enum WndType
+{
+	WND_TYPE_DEFAULT,
+	WND_TYPE_OTHER_PROCESS,
+	WND_TYPE_PLOT,
+	WND_TYPE_VIEW,
+};
+
+struct TargetWnd
+{
+	WndType type;
+	CWnd * wnd;
+};
+
+struct MsgUpdateBmp
+{
+	CWnd * wnd;
+	Bitmap * bmp;
+};
+
+class NewData
+{
+public:
+	int len;
+	void * addr;
+	void * sender;
+
+	NewData() : len(0), addr(0), sender(0) {}
+	~NewData() {
+		if (addr)
+			delete addr;
+	}
+};
+
+class StringData
+{
+public:
+	CString * string;
+	void * sender;
+
+	StringData() : string(0), sender(0) {}
+	~StringData() {
+		if (string)
+			delete string;
+	}
+};

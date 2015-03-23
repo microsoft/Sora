@@ -139,12 +139,13 @@ SELECTANY extern const vcs::data_type gDemapMax = {
 };
 
 template<int N>
-FINL void demap_limit ( COMPLEX16 * input ) {
-	vcs * pi = (vcs*) input;
-	rep<N/4>::vshift_right (pi, 4);
+FINL void demap_limit ( const COMPLEX16 * input, COMPLEX16 * output ) {
+	const vcs * pi = (const vcs *) input;
+    vcs * po = (vcs *) output;
+	rep_shift_right<N/4>(po, pi, 4);
 
 	for (int i = 0; i < N/4; i++)
 	{
-		pi[i] = smin(smax(pi[i], gDemapMin), gDemapMax);
+		po[i] = smin(smax(po[i], gDemapMin), gDemapMax);
 	}
 }

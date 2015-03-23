@@ -1,0 +1,121 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="sys5x">
+      <UniqueIdentifier>{bce95f9e-25c8-45b3-8bd8-4258b7a10ba6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="exe">
+      <UniqueIdentifier>{0624361a-8bf8-43ca-9e7f-38a883bf6204}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="sys6x">
+      <UniqueIdentifier>{73714da6-7216-4099-8e3a-8832a68b783e}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="readme.txt">
+      <Filter>sys5x</Filter>
+    </None>
+    <None Include="sys5x\sources">
+      <Filter>sys5x</Filter>
+    </None>
+    <None Include="exe\sources">
+      <Filter>exe</Filter>
+    </None>
+    <None Include="sys6x\hwtest_sign.cmd">
+      <Filter>sys6x</Filter>
+    </None>
+    <None Include="sys6x\hwtest_win7_x86.inx">
+      <Filter>sys6x</Filter>
+    </None>
+    <None Include="sys6x\makefile.inc">
+      <Filter>sys6x</Filter>
+    </None>
+    <None Include="sys6x\sources">
+      <Filter>sys6x</Filter>
+    </None>
+    <None Include="dirs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="sys5x\HWTest.rc">
+      <Filter>sys5x</Filter>
+    </ResourceCompile>
+    <ResourceCompile Include="exe\dut.rc">
+      <Filter>exe</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="sys5x\mixtest.c">
+      <Filter>sys5x</Filter>
+    </ClCompile>
+    <ClCompile Include="sys5x\mp_init.c">
+      <Filter>sys5x</Filter>
+    </ClCompile>
+    <ClCompile Include="sys5x\mp_main_5x.c">
+      <Filter>sys5x</Filter>
+    </ClCompile>
+    <ClCompile Include="sys5x\mp_oids_5x.c">
+      <Filter>sys5x</Filter>
+    </ClCompile>
+    <ClCompile Include="sys5x\mp_sendrcv_5x.c">
+      <Filter>sys5x</Filter>
+    </ClCompile>
+    <ClCompile Include="sys5x\phyframecache.c">
+      <Filter>sys5x</Filter>
+    </ClCompile>
+    <ClCompile Include="sys5x\sendrcvhelp.c">
+      <Filter>sys5x</Filter>
+    </ClCompile>
+    <ClCompile Include="exe\dut.c">
+      <Filter>exe</Filter>
+    </ClCompile>
+    <ClCompile Include="exe\main.c">
+      <Filter>exe</Filter>
+    </ClCompile>
+    <ClCompile Include="sys6x\mp_init.c">
+      <Filter>sys6x</Filter>
+    </ClCompile>
+    <ClCompile Include="sys6x\mp_main_6x.c">
+      <Filter>sys6x</Filter>
+    </ClCompile>
+    <ClCompile Include="sys6x\mp_oids_6x.c">
+      <Filter>sys6x</Filter>
+    </ClCompile>
+    <ClCompile Include="sys6x\mp_pnp_6x.c">
+      <Filter>sys6x</Filter>
+    </ClCompile>
+    <ClCompile Include="sys6x\mp_sendrcv_6x.c">
+      <Filter>sys6x</Filter>
+    </ClCompile>
+    <ClCompile Include="DutLockRxBuffer.c" />
+    <ClCompile Include="DutRadioStart.c" />
+    <ClCompile Include="DutReadRegister.c" />
+    <ClCompile Include="DutRx.c" />
+    <ClCompile Include="DutSetValue.c" />
+    <ClCompile Include="DutTransfer.c" />
+    <ClCompile Include="DutWriteRegister.c" />
+    <ClCompile Include="hwtest_init.c" />
+    <ClCompile Include="hwtest_ioctl.c" />
+    <ClCompile Include="mp_common.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="sys5x\mp_5x.h">
+      <Filter>sys5x</Filter>
+    </ClInclude>
+    <ClInclude Include="sys5x\sendrcvhelp.h">
+      <Filter>sys5x</Filter>
+    </ClInclude>
+    <ClInclude Include="exe\dut.h">
+      <Filter>exe</Filter>
+    </ClInclude>
+    <ClInclude Include="sys6x\mp_6x.h">
+      <Filter>sys6x</Filter>
+    </ClInclude>
+    <ClInclude Include="sys6x\mp_oids_6x.h">
+      <Filter>sys6x</Filter>
+    </ClInclude>
+    <ClInclude Include="consts.h" />
+    <ClInclude Include="dut_entries.h" />
+    <ClInclude Include="hwtest_ioctrl.h" />
+    <ClInclude Include="hwtest_miniport.h" />
+  </ItemGroup>
+</Project>

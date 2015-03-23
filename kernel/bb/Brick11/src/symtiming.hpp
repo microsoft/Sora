@@ -2,6 +2,7 @@
 #include "sora.h"
 #include "dspcomm.h"
 #include "ieee80211facade.hpp"
+#include "operator_repeater.h"
 
 /***********************************************
 	TSymTiming - 4 TO 1 decimation
@@ -119,9 +120,9 @@ protected:
 		vi   energy[7];
 		vi   sum;
 		set_zero (sum);
-		rep<7>::vshift_right (pv, 3);
-		rep<7>::vsqrnorm (energy, pv);
-		rep<7>::vsum     (sum, energy );
+		rep_shift_right<7>(pv, pv, 3);
+		rep_sqrnorm<7>(energy, pv);
+		rep_sum<7>(sum, energy );
 
         assert(m_index >= 0 && m_index < 4);
 		int early_index = (m_index==0)?3:(m_index-1);

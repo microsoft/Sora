@@ -1,0 +1,20 @@
+!include "$(SORA_ROOT)\build\sources_ke.inc"
+
+TARGETNAME  = SoraAppExtSample
+TARGETTYPE  = PROGRAM
+UMTYPE      = console
+    
+USE_MSVCRT  = 1
+
+TARGETLIBS      = $(TARGETLIBS) \
+                  $(TARGETPATH)\*\usora.lib
+                  
+C_DEFINES       = $(C_DEFINES) \
+                  -DUSER_MODE
+
+INCLUDES        = $(INCLUDES) \
+
+USER_C_FLAGS = $(USER_C_FLAGS) /TP
+
+SOURCES     = \
+              umx_sample.cpp

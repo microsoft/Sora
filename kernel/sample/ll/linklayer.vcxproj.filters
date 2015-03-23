@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Source Files\6x">
+      <UniqueIdentifier>{898017d0-7d0a-462f-aac3-2552f10041d3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\5x">
+      <UniqueIdentifier>{d7889f13-8815-41ad-9856-20165750ace1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="sdr_ll_main.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="sdr_ll_util.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="6x\sdr_ll_recv.c">
+      <Filter>Source Files\6x</Filter>
+    </ClCompile>
+    <ClCompile Include="6x\sdr_ll_send.c">
+      <Filter>Source Files\6x</Filter>
+    </ClCompile>
+    <ClCompile Include="5x\sdr_ll_recv.c">
+      <Filter>Source Files\5x</Filter>
+    </ClCompile>
+    <ClCompile Include="5x\sdr_ll_send.c">
+      <Filter>Source Files\5x</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="6x\makefile">
+      <Filter>Source Files\6x</Filter>
+    </None>
+    <None Include="6x\sources">
+      <Filter>Source Files\6x</Filter>
+    </None>
+    <None Include="5x\makefile">
+      <Filter>Source Files\5x</Filter>
+    </None>
+    <None Include="5x\sources">
+      <Filter>Source Files\5x</Filter>
+    </None>
+    <None Include="readme.txt" />
+  </ItemGroup>
+</Project>

@@ -145,7 +145,7 @@ struct rate_selector {
         }
     }
 };
-typedef TGDemux<4, COMPLEX16, 64, rate_selector> T11nRxRateSel;
+typedef TQDemux<4, rate_selector> T11nRxRateSel;
 typedef TStreamJoin<2, 64> Mimo64Join;
 
 /*************************************************************************

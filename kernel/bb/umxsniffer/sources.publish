@@ -1,0 +1,45 @@
+!include "$(SORA_ROOT)\build\sources_ke.inc"
+
+TARGETNAME  = umxsdrab 
+TARGETTYPE  = PROGRAM
+UMTYPE      = console
+    
+USE_MSVCRT  = 1
+
+INCLUDES        = $(INCLUDES) \
+                  ..\bb\dot11a; \
+                  ..\bb\dot11a\inc; \
+                  ..\bb\brick11\src; \
+                  ..\util\src;	\
+				  ..\..\inc; \
+                  ..\..\inc\brick;
+                  
+TARGETLIBS      = $(TARGETLIBS) \
+				  $(TARGETPATH)\*\dot11bbau.lib \
+				  $(TARGETPATH)\*\libbba_lutstu.lib \
+				  $(TARGETPATH)\*\libbba_modu.lib \
+                  $(TARGETPATH)\*\sora_utility.lib	\
+                  $(SORA_ROOT)\lib\$(BUILD_ALT_DIR)\*\DebugPlotU.lib \
+                  $(SORA_ROOT)\lib\$(BUILD_ALT_DIR)\*\usora.lib
+                  
+C_DEFINES       = $(C_DEFINES) \
+                  -DUSER_MODE
+
+USER_C_FLAGS = $(USER_C_FLAGS) /TP /FAs
+
+## Set code optimization option "MSC_OPTIMIZATION" to /O2 (maximize speed)
+## in the sources file, which is necessary for DSP related inline functions.
+## Otherwise inline functions will not inline expanded. The default value
+## is /Oxs (minimize size) in free build, and /Od /Oi in check build.
+## ref: http://msdn.microsoft.com/en-us/library/ff549305%28VS.85%29.aspx
+!if "$(DDKBUILDENV)" == "fre"
+MSC_OPTIMIZATION=/O2
+!endif
+
+SOURCES     = \
+              main.cpp \
+              dot11main.cpp \
+              mac.cpp \
+              mgmt.cpp
+
+USE_STL=1

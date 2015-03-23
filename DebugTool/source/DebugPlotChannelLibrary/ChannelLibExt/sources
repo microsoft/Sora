@@ -1,0 +1,19 @@
+!include "$(SORA_ROOT)\build\sources_ke.inc"
+
+USE_LIBCMT  = 1
+
+TARGETNAME      = DpChannelExtU
+TARGETTYPE      = LIBRARY
+
+SOURCES         = \
+                  ChannelLibExt.cpp \
+
+USER_C_FLAGS    = $(USER_C_FLAGS) \
+                  /DUSER_MODE \
+                  /DUNICODE	\
+				  /EHsc
+
+INCLUDES        = $(INCLUDES) \
+					..; \
+					..\ChannelLib; \
+					..\..\..\..\kernel\core\inc;

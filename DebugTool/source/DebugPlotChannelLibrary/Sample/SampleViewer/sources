@@ -1,0 +1,31 @@
+!include "$(SORA_ROOT)\build\sources_ke.inc"
+
+TARGETNAME  = SampleViewer
+TARGETTYPE  = PROGRAM
+UMTYPE      = console
+    
+USE_MSVCRT  = 1
+
+INCLUDES        = $(INCLUDES) \
+					..\..\ViewerLib; \
+					..\..\ViewerLibExt
+                  
+TARGETLIBS      = $(TARGETLIBS) \
+                  $(TARGETPATH)\*\usora.lib \
+                  $(TARGETPATH)\*\DpViewerU.lib \
+                  $(TARGETPATH)\*\DpViewerExtU.lib \
+                  
+C_DEFINES       = $(C_DEFINES) \
+                  -DUSER_MODE
+
+USER_C_FLAGS = $(USER_C_FLAGS) /TP /FAs /GR
+
+SOURCES     = \
+              main.cpp \
+			  ViewData.cpp \
+			  ViewDots.cpp \
+			  ViewLine.cpp \
+			  ViewSpectrum.cpp \
+			  ViewText.cpp
+
+#USE_STL=1

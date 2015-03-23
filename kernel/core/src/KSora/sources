@@ -1,0 +1,47 @@
+!include "$(SORA_ROOT)\build\sources_ke.inc"
+
+TARGETNAME      = ksora
+TARGETTYPE      = LIBRARY
+
+!if defined(AMD64) && "$(AMD64)" == "1"
+USER_C_FLAGS = $(USER_C_FLAGS) /DSSE2_INTRINSIC /TP
+!else
+USER_C_FLAGS = $(USER_C_FLAGS) /TP
+!endif
+
+C_DEFINES = $(C_DEFINES) -D__HW_V11
+
+!if defined(_NT_TARGET_VERSION)
+USER_C_FLAGS = $(USER_C_FLAGS) /DWIN_VER=$(_NT_TARGET_VERSION)
+!endif
+
+!if "$(DDKBUILDENV)" == "chk"
+USER_C_FLAGS = $(USER_C_FLAGS) /DDEBUG_CHECKSUM
+!endif
+
+SOURCES         = \
+                  ..\sora.c \
+                  ..\_reg_conf.c \
+                  ..\_radio_manager.c \
+                  ..\_rx_manager.c \
+                  ..\_radio_manager2.c \
+                  ..\_tx_manager2.c \
+                  ..\_signal_cache.c \
+                  ..\_hw_op.c \
+                  ..\_WARP_control.c \
+                  ..\_dump.c \
+                  ..\_packet_base.c \
+                  ..\_sora_clock.c \
+                  ..\_fsm.c \
+                  ..\_rx_stream.c \
+                  ..\_radio_channel_op.c \
+                  ..\vstream_man.c \
+                  ..\queued_rw_lock.c \
+                  ..\_UExtK.c \
+                  ..\_UExtK_Tx_Queue.c \
+                  ..\_scheduler_k.c \
+                  ..\resource_collection.c \
+                  ..\_enlist.c \
+                  ..\_share_lock_kimp.cpp \
+                  ..\_share_mem_kimp.cpp \
+                  ..\_private_ext_k.c

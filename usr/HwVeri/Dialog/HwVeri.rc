@@ -1,0 +1,6 @@
+#define VER_FILEDESCRIPTION_STR     "Hardware Verification Tool"
+#define VER_INTERNALNAME_STR        "HwVeri.exe"
+#define VER_ORIGINALFILENAME_STR    "HwVeri.exe"
+
+#include "Version.rc"
+
