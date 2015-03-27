@@ -1,0 +1,133 @@
+###############################################################################
+##  2007-2008 Xilinx, Inc. All Rights Reserved.
+## Confidential and proprietary information of Xilinx, Inc.
+###############################################################################
+##   ____  ____ 
+##  /   /\/   / 
+## /___/  \  /   Vendor: Xilinx 
+## \   \   \/    Version: 1.0
+##  \   \        Filename: pcie_dma_top.xcf 
+##  /   /        Date Last Modified: Apr. 1st, 2008  
+## /___/   /\    Date Created: Apr. 1st, 2008
+## \   \  /  \ 
+##  \___\/\___\ 
+##
+## Device: Virtex-5 LXT
+## Purpose: Endpoint Block Plus to DDR2 DMA Initiator XST User Constraints File
+## Reference:  XAPP859
+## Revision History:
+##   Rev 1.0 - First created, Kraig Lund, Apr. 1 2008.
+###############################################################################
+################################################################################
+# Define Device, Package, and Speed Grade
+################################################################################
+#
+# CONFIG PART = XC5VLX50T-FF1136 ;
+#
+################################################################################
+
+# Timing specifications common to all board/chip 
+
+NET "trn_clk_c"            TNM_NET = "USR_PCIE_CLK"; 
+#TIMESPEC "TS_USR_PCIE_CLK" = PERIOD "USR_PCIE_CLK" 4 ns HIGH 50 %;
+TIMESPEC "TS_USR_PCIE_CLK" = PERIOD "USR_PCIE_CLK" 8 ns HIGH 50 %;
+
+NET "SYS_CLK_P" TNM_NET = "SYS_CLK"; 
+#TIMESPEC "TS_SYS_CLK" = PERIOD "SYS_CLK" 4 ns HIGH 50 %;
+TIMESPEC "TS_SYS_CLK" = PERIOD "SYS_CLK" 8 ns HIGH 50 %;
+
+NET "trn_clk_c"  TNM_NET = "TRN_CLK";
+#TIMESPEC "TS_TRN_CLK" = PERIOD "TRN_CLK" 4 ns HIGH 50 %; 
+TIMESPEC "TS_TRN_CLK" = PERIOD "TRN_CLK" 8 ns HIGH 50 %; 
+
+## Multi-cycle paths
+#Multi-cycle paths for tx_trn_sm adder/subtractor
+INST "pcie_dma_wrapper_inst/rx_engine_inst/rx_trn_monitor_inst/dma*_div8_reg*" TNM=FFS "TNM_DMARDIV8_REG_SRC";
+INST "pcie_dma_wrapper_inst/rx_engine_inst/rx_trn_monitor_inst/dma*_div8_now*"     TNM=FFS "TNM_DMARDIV8_NOW_SRC";
+INST "pcie_dma_wrapper_inst/rx_engine_inst/rx_trn_monitor_inst/addsub_state*"      TNM=FFS "TNM_RADDSUB_STATE_SRC";
+TIMEGRP "DMARDIV8_2X_SRC" = "TNM_DMARDIV8_REG_SRC"  "TNM_DMARDIV8_NOW_SRC" "TNM_RADDSUB_STATE_SRC";
+INST "pcie_dma_wrapper_inst/rx_engine_inst/rx_trn_monitor_inst/dma*_div8_reg_new*" TNM=FFS "TNM_DMARDIV8_REGNEW_DEST";
+TIMESPEC "TS_DMARDIV8_2X" = FROM "DMARDIV8_2X_SRC" TO "TNM_DMARDIV8_REGNEW_DEST" "TS_TRN_CLK"*2; 
+
+# Jiansong: disabled
+#Multi-cycle paths for tx_trn_sm adder/subtractor
+#INST "pcie_dma_wrapper_inst/tx_engine_inst/tx_trn_sm_inst/dma*_div8_reg*" TNM=FFS "TNM_DMAWDIV8_REG_SRC";
+#INST "pcie_dma_wrapper_inst/tx_engine_inst/tx_trn_sm_inst/dma*_div8_now*"     TNM=FFS "TNM_DMAWDIV8_NOW_SRC";
+#INST "pcie_dma_wrapper_inst/tx_engine_inst/tx_trn_sm_inst/addsub_state*"      TNM=FFS "TNM_WADDSUB_STATE_SRC";
+#TIMEGRP "DMAWDIV8_2X_SRC" = "TNM_DMAWDIV8_REG_SRC"  "TNM_DMAWDIV8_NOW_SRC" "TNM_WADDSUB_STATE_SRC";
+#INST "pcie_dma_wrapper_inst/tx_engine_inst/tx_trn_sm_inst/dma*_div8_reg_new*" TNM=FFS "TNM_DMAWDIV8_REGNEW_DEST";
+#TIMESPEC "TS_DMAWDIV8_2X" = FROM "DMAWDIV8_2X_SRC" TO "TNM_DMAWDIV8_REGNEW_DEST" "TS_TRN_CLK"*2;
+
+# Jiansong: disabled
+#Multi-cycle paths for posted slicer adder
+#INST "pcie_dma_wrapper_inst/tx_engine_inst/posted_pkt_gen_inst/posted_pkt_slicer_inst/four_kb_xfer*" TNM=FFS "TNM_PFKB_SRC";
+#INST "pcie_dma_wrapper_inst/tx_engine_inst/posted_pkt_gen_inst/posted_pkt_slicer_inst/dma*_reg*" TNM=FFS "TNM_PDMAREG_SRC";
+#INST "pcie_dma_wrapper_inst/tx_engine_inst/posted_pkt_gen_inst/posted_pkt_slicer_inst/state*" TNM=FFS "TNM_PSTATE_SRC";
+#TIMEGRP "POSTED_2X_SRC" = "TNM_PFKB_SRC" "TNM_PDMAREG_SRC" "TNM_PSTATE_SRC";
+#INST "pcie_dma_wrapper_inst/tx_engine_inst/posted_pkt_gen_inst/posted_pkt_slicer_inst/dma*_new*" TNM=FFS "TNM_PDMANEW_DEST";
+#TIMESPEC "TS_POSTED_2X" = FROM "POSTED_2X_SRC" TO "TNM_PDMANEW_DEST" "TS_TRN_CLK"*2; 
+
+# Jiansong: modified
+#Multi-cycle paths for non-posted slicer adder#INST "pcie_dma_wrapper_inst/tx_engine_inst/non_posted_pkt_gen_inst/non_posted_pkt_slicer_inst/four_kb_xfer*" TNM=FFS "TNM_NFKB_SRC";
+INST "pcie_dma_wrapper_inst/non_posted_pkt_gen_inst/non_posted_pkt_slicer_inst/four_kb_xfer*" TNM=FFS "TNM_NFKB_SRC";
+INST "pcie_dma_wrapper_inst/non_posted_pkt_gen_inst/non_posted_pkt_slicer_inst/dma*_reg*" TNM=FFS "TNM_NDMAREG_SRC";
+INST "pcie_dma_wrapper_inst/non_posted_pkt_gen_inst/non_posted_pkt_slicer_inst/state*" TNM=FFS "TNM_NSTATE_SRC";
+TIMEGRP "NONPOSTED_2X_SRC" = "TNM_NFKB_SRC" "TNM_NDMAREG_SRC" "TNM_NSTATE_SRC";
+INST "pcie_dma_wrapper_inst/non_posted_pkt_gen_inst/non_posted_pkt_slicer_inst/dma*_new*" TNM=FFS "TNM_NDMANEW_DEST";
+TIMESPEC "TS_NONPOSTED_2X" = FROM "NONPOSTED_2X_SRC" TO "TNM_NDMANEW_DEST" "TS_TRN_CLK"*2; 
+#INST "pcie_dma_wrapper_inst/tx_engine_inst/non_posted_pkt_gen_inst/non_posted_pkt_slicer_inst/four_kb_xfer*" TNM=FFS "TNM_NFKB_SRC";
+#INST "pcie_dma_wrapper_inst/tx_engine_inst/non_posted_pkt_gen_inst/non_posted_pkt_slicer_inst/dma*_reg*" TNM=FFS "TNM_NDMAREG_SRC";
+#INST "pcie_dma_wrapper_inst/tx_engine_inst/non_posted_pkt_gen_inst/non_posted_pkt_slicer_inst/state*" TNM=FFS "TNM_NSTATE_SRC";
+#TIMEGRP "NONPOSTED_2X_SRC" = "TNM_NFKB_SRC" "TNM_NDMAREG_SRC" "TNM_NSTATE_SRC";
+#INST "pcie_dma_wrapper_inst/tx_engine_inst/non_posted_pkt_gen_inst/non_posted_pkt_slicer_inst/dma*_new*" TNM=FFS "TNM_NDMANEW_DEST";
+#TIMESPEC "TS_NONPOSTED_2X" = FROM "NONPOSTED_2X_SRC" TO "TNM_NDMANEW_DEST" "TS_TRN_CLK"*2; 
+
+# Jiansong: added for poset_packet_scheduler
+# Multi-cycle paths for posted scheduler adder
+INST "pcie_dma_wrapper_inst/posted_pkt_gen_inst/posted_pkt_scheduler_inst/RXBuf*" TNM=FFS "TNM_NRXB_SRC";
+INST "pcie_dma_wrapper_inst/posted_pkt_gen_inst/posted_pkt_scheduler_inst/dmawad_now*" TNM=FFS "TNM_NDWNW_SRC";
+TIMEGRP "POSTED_2X_SRC" = "TNM_NRXB_SRC" "TNM_NDWNW_SRC";
+INST "pcie_dma_wrapper_inst/posted_pkt_gen_inst/posted_pkt_scheduler_inst/dmawad_next*" TNM=FFS "TNM_NDWNT_DEST";
+TIMESPEC "TS_POSTED_2X" = FROM "POSTED_2X_SRC" TO "TNM_NDWNT_DEST" "TS_TRN_CLK"*2; 
+
+# Jiansong: modified
+# Multi-cycle paths for large xfers shim adder
+#INST "pcie_dma_wrapper_inst/dma_ctrl_wrapper_inst/dma_ctrl_status_reg_file_inst/state_1*" TNM=FFS "TNM_STATE_1_SRC";
+INST "pcie_dma_wrapper_inst/dma_ctrl_wrapper_inst/dma_ctrl_status_reg_file_inst/state_3*" TNM=FFS "TNM_STATE_3_SRC";
+INST "pcie_dma_wrapper_inst/dma_ctrl_wrapper_inst/dma_ctrl_status_reg_file_inst/dma*_now*" TNM=FFS "TNM_DMANOW_SRC";
+#TIMEGRP "LARGE_XFER_2X_SRC" = "TNM_STATE_1_SRC" "TNM_STATE_3_SRC" "TNM_DMANOW_SRC";
+TIMEGRP "LARGE_XFER_2X_SRC" = "TNM_STATE_3_SRC" "TNM_DMANOW_SRC";
+INST "pcie_dma_wrapper_inst/dma_ctrl_wrapper_inst/dma_ctrl_status_reg_file_inst/dma*_next*" TNM=FFS "TNM_DMANEXT_DEST";
+TIMESPEC "TS_DMAREG_DMANEXT" = FROM "LARGE_XFER_2X_SRC" TO "TNM_DMANEXT_DEST" "TS_TRN_CLK"*2; 
+
+# Jiansong: added
+# Multi-cycle paths for large xfers shim adder
+INST "pcie_dma_wrapper_inst/dma_ctrl_wrapper_inst/dma_ctrl_status_reg_file_inst/TX_state_1*" TNM=FFS "TNM_TX_STATE_1_SRC";
+INST "pcie_dma_wrapper_inst/dma_ctrl_wrapper_inst/dma_ctrl_status_reg_file_inst/TX_*_now*" TNM=FFS "TNM_TXNOW_SRC";
+TIMEGRP "TX_LARGE_XFER_2X_SRC" = "TNM_TX_STATE_1_SRC" "TNM_TXNOW_SRC";
+INST "pcie_dma_wrapper_inst/dma_ctrl_wrapper_inst/dma_ctrl_status_reg_file_inst/TX_*_next*" TNM=FFS "TNM_TXNEXT_DEST";
+TIMESPEC "TS_TXREG_TXNEXT" = FROM "TX_LARGE_XFER_2X_SRC" TO "TNM_TXNEXT_DEST" "TS_TRN_CLK"*2; 
+
+# Jiansong: added, used for WARP radio register version
+# Multi-cycle paths from radio module to host registers
+# INST "WARP_Radio_module_inst/host_*" TNM=FFS "TNM_RADIOHOST_SRC";
+# TIMEGRP "RADIO_WARP_SRC" = "TNM_RADIOHOST_SRC";
+# INST "pcie_dma_wrapper_inst/dma_ctrl_wrapper_inst/dma_ctrl_status_reg_file_inst/WARP_*" TNM=FFS "TNM_WARP_DEST";
+# TIMESPEC "TS_RADIO_INTERFACE" = FROM "RADIO_WARP_SRC" TO "TNM_WARP_DEST" "TS_TRN_CLK"*3; 
+
+# Jiansong: added, used for SORA radio register version
+# Multi-cycle paths from radio module to host registers
+# INST "Sora_Radio_Interpretation_for_WARP_inst/host_*" TNM=FFS "TNM_ABS_RADIOHOST_SRC";
+# TIMEGRP "ABS_RADIO_SORA_SRC" = "TNM_ABS_RADIOHOST_SRC";
+# INST "pcie_dma_wrapper_inst/dma_ctrl_wrapper_inst/dma_ctrl_status_reg_file_inst/SORA_*" TNM=FFS "TNM_ABS_SORA_DEST";
+# TIMESPEC "TS_ABS_RADIO_INTERFACE" = FROM "ABS_RADIO_SORA_SRC" TO "TNM_ABS_SORA_DEST" "TS_TRN_CLK"*3; 
+
+#Tig'ed nets - these are static signals
+NET "trn_lnk_up_n_c" TIG;
+NET "phy_init_initialization_done" TIG;
+
+INST "max_read_req_reg*" TIG;
+INST "max_pay_size_reg*" TIG;
+INST "pcie_id_reg*" TIG;
+
+

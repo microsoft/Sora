@@ -1,0 +1,1117 @@
+###############################################################################
+##  2007-2008 Xilinx, Inc. All Rights Reserved.
+## Confidential and proprietary information of Xilinx, Inc.
+###############################################################################
+##   ____  ____ 
+##  /   /\/   / 
+## /___/  \  /   Vendor: Xilinx 
+## \   \   \/    Version: 1.1
+##  \   \        Filename: pcie_dma_top_x8_plus.ucf 
+##  /   /        Date Last Modified: May. 15th, 2008  
+## /___/   /\    Date Created: Apr. 1st, 2008
+## \   \  /  \ 
+##  \___\/\___\ 
+##
+## Device: Virtex-5 LXT
+## Purpose: Endpoint Block Plus to DDR2 DMA Initiator User Constraints File
+## Reference:  XAPP859
+## Revision History:
+##   Rev 1.0 - First created, Kraig Lund, Apr. 1 2008.
+##   Rev 1.1 - Changed instance names of RX Engine Fifo Brams - necessary 
+##             because the Fifo Generato LogiCore was updated to latest version
+##             (Rev 4.3) May 15th, 2008
+##             Removed CLK_0_FROM_MEM_CTRL_DCM pin (this was a debug pin and
+##             was not necessary for the design to work properly. May29th, 2008
+##
+##   Modified by Jiansong Zhang:
+##         PCIe x4, 125MHz user logic
+##         133MHz DDR
+##         work on RCBv1.1.3
+##         plus warp radio
+##
+###############################################################################
+# Define Device, Package And Speed Grade
+###############################################################################
+CONFIG PART = XC5VLX110T-FF1136-1;
+
+###############################################################################
+# User Time Names / User Time Groups / Time Specs
+###############################################################################
+###############################################################################
+# User Physical Constraints
+###############################################################################
+
+###############################################################################
+# Pinout and Related I/O Constraints
+###############################################################################
+#
+# SYS reset (input) signal.  The sys_reset_n signal should be
+# obtained from the PCI Express interface if possible.  For
+# slot based form factors, a system reset signal is usually
+# present on the connector.  For cable based form factors, a
+# system reset signal may not be available.  In this case, the
+# system reset signal must be generated locally by some form of
+# supervisory circuit.  You may change the IOSTANDARD and LOC
+# to suit your requirements and VCCO voltage banking rules.
+#wo#NET "sys_reset_n" LOC = AE14 | IOSTANDARD = "LVCMOS25" | PULLUP | NODELAY;
+NET "sys_reset_n" LOC = K21 | IOSTANDARD = "LVCMOS33" | PULLUP | NODELAY;
+
+#
+# SYS clock 100 MHz (input) signal. The sys_clk_p and sys_clk_n
+# signals are the PCI Express reference clock. Virtex-5 GTP
+# Transceiver architecture requires the use of a dedicated clock
+# resources (FPGA input pins) associated with each GTP Transceiver Tile.
+# To use these pins an IBUFDS primitive (refclk_ibuf) is
+# instantiated in user's design.
+# Please refer to the Virtex-5 GTP Transceiver User Guide
+# (UG196) for guidelines regarding clock resource selection.
+#
+NET  "pcie_sys_clk_p"       LOC = "Y4"  ; #KL: changed the name from sys_clk_p
+NET  "pcie_sys_clk_n"       LOC = "Y3"  ; #KL: changed the name from sys_clk_n
+INST "refclk_ibuf"     DIFF_TERM = "TRUE" ;
+
+#
+# Transceiver instance placement.  This constraint selects the
+# transceivers to be used, which also dictates the pinout for the
+# transmit and receive differential pairs.  Please refer to the
+# Virtex-5 GTP Transceiver User Guide (UG196) for more
+# information.
+#
+#KL: changed the ordering of the GTP LOCs to match the ML555
+# PCIe Lanes 0, 1
+#INST "ep/BU2/U0/pcie_ep0/pcie_blk/SIO/.pcie_gt_wrapper_i/GTD[0].GT_i" LOC = GTP_DUAL_X0Y3;
+INST "ep/BU2/U0/pcie_ep0/pcie_blk/SIO/.pcie_gt_wrapper_i/GTD[0].GT_i" LOC = GTP_DUAL_X0Y4;
+
+# PCIe Lanes 2, 3
+#INST "ep/BU2/U0/pcie_ep0/pcie_blk/SIO/.pcie_gt_wrapper_i/GTD[2].GT_i" LOC = GTP_DUAL_X0Y2;
+INST "ep/BU2/U0/pcie_ep0/pcie_blk/SIO/.pcie_gt_wrapper_i/GTD[2].GT_i" LOC = GTP_DUAL_X0Y3;
+
+# PCIe Lanes 4, 5
+#INST "ep/BU2/U0/pcie_ep0/pcie_blk/SIO/.pcie_gt_wrapper_i/GTD[4].GT_i" LOC = GTP_DUAL_X0Y1;
+
+# PCIe Lanes 6, 7
+#INST "ep/BU2/U0/pcie_ep0/pcie_blk/SIO/.pcie_gt_wrapper_i/GTD[6].GT_i" LOC = GTP_DUAL_X0Y0;
+
+
+#####################  reference  ##################
+#50t£º
+## PCIe Lanes 0, 1
+#INST "ep/pcie_ep0/pcie_blk/SIO/.pcie_gt_wrapper_i/GTD[0].GT_i" LOC = GTP_DUAL_X0Y3;
+# 
+## PCIe Lanes 2, 3
+#INST "ep/pcie_ep0/pcie_blk/SIO/.pcie_gt_wrapper_i/GTD[2].GT_i" LOC = GTP_DUAL_X0Y2;
+# 
+## PCIe Lanes 4, 5
+#INST "ep/pcie_ep0/pcie_blk/SIO/.pcie_gt_wrapper_i/GTD[4].GT_i" LOC = GTP_DUAL_X0Y1;
+# 
+## PCIe Lanes 6, 7
+#INST "ep/pcie_ep0/pcie_blk/SIO/.pcie_gt_wrapper_i/GTD[6].GT_i" LOC = GTP_DUAL_X0Y0;
+# 
+################################################################################
+## Physical Constraints
+################################################################################
+##
+## BlockRAM placement
+##
+#INST "ep/pcie_ep0/pcie_blk/pcie_mim_wrapper_i/bram_tl_tx/generate_tdp2[1].ram_tdp2_inst" LOC = RAMB36_X1Y9 ;
+#INST "ep/pcie_ep0/pcie_blk/pcie_mim_wrapper_i/bram_tl_rx/generate_tdp2[1].ram_tdp2_inst" LOC = RAMB36_X1Y8 ;
+#INST "ep/pcie_ep0/pcie_blk/pcie_mim_wrapper_i/bram_tl_tx/generate_tdp2[0].ram_tdp2_inst" LOC = RAMB36_X1Y7 ;
+#INST "ep/pcie_ep0/pcie_blk/pcie_mim_wrapper_i/bram_tl_rx/generate_tdp2[0].ram_tdp2_inst" LOC = RAMB36_X1Y6 ;
+#INST "ep/pcie_ep0/pcie_blk/pcie_mim_wrapper_i/bram_retry/generate_sdp.ram_sdp_inst"      LOC = RAMB36_X1Y5 ;
+# 
+#110t£º
+## PCIe Lanes 0, 1
+#INST "ep/pcie_ep0/pcie_blk/SIO/.pcie_gt_wrapper_i/GTD[0].GT_i" LOC = GTP_DUAL_X0Y4;
+# 
+## PCIe Lanes 2, 3
+#INST "ep/pcie_ep0/pcie_blk/SIO/.pcie_gt_wrapper_i/GTD[2].GT_i" LOC = GTP_DUAL_X0Y3;
+# 
+## PCIe Lanes 4, 5
+#INST "ep/pcie_ep0/pcie_blk/SIO/.pcie_gt_wrapper_i/GTD[4].GT_i" LOC = GTP_DUAL_X0Y2;
+# 
+## PCIe Lanes 6, 7
+#INST "ep/pcie_ep0/pcie_blk/SIO/.pcie_gt_wrapper_i/GTD[6].GT_i" LOC = GTP_DUAL_X0Y1;
+# 
+################################################################################
+## Physical Constraints
+################################################################################
+##
+## BlockRAM placement
+##
+#INST "ep/pcie_ep0/pcie_blk/pcie_mim_wrapper_i/bram_retry/generate_sdp.ram_sdp_inst"      LOC = RAMB36_X3Y12 ;
+#INST "ep/pcie_ep0/pcie_blk/pcie_mim_wrapper_i/bram_tl_tx/generate_tdp2[1].ram_tdp2_inst" LOC = RAMB36_X3Y11 ;
+#INST "ep/pcie_ep0/pcie_blk/pcie_mim_wrapper_i/bram_tl_rx/generate_tdp2[1].ram_tdp2_inst" LOC = RAMB36_X3Y10 ;
+#INST "ep/pcie_ep0/pcie_blk/pcie_mim_wrapper_i/bram_tl_tx/generate_tdp2[0].ram_tdp2_inst" LOC = RAMB36_X3Y9 ;
+#INST "ep/pcie_ep0/pcie_blk/pcie_mim_wrapper_i/bram_tl_rx/generate_tdp2[0].ram_tdp2_inst" LOC = RAMB36_X3Y8 ;
+# 
+#########################################################
+
+
+
+
+###############################################################################
+# Physical Constraints
+###############################################################################
+#
+# BlockRAM placement
+#
+#INST "ep/BU2/U0/pcie_ep0/pcie_blk/pcie_mim_wrapper_i/bram_tl_tx/generate_tdp2[1].ram_tdp2_inst" LOC = RAMB36_X1Y9 ;
+#INST "ep/BU2/U0/pcie_ep0/pcie_blk/pcie_mim_wrapper_i/bram_tl_rx/generate_tdp2[1].ram_tdp2_inst" LOC = RAMB36_X1Y8 ;
+#INST "ep/BU2/U0/pcie_ep0/pcie_blk/pcie_mim_wrapper_i/bram_tl_tx/generate_tdp2[0].ram_tdp2_inst" LOC = RAMB36_X1Y7 ;
+#INST "ep/BU2/U0/pcie_ep0/pcie_blk/pcie_mim_wrapper_i/bram_tl_rx/generate_tdp2[0].ram_tdp2_inst" LOC = RAMB36_X1Y6 ;
+#INST "ep/BU2/U0/pcie_ep0/pcie_blk/pcie_mim_wrapper_i/bram_retry/generate_sdp.ram_sdp_inst"      LOC = RAMB36_X1Y5 ;
+
+#
+# Timing critical placements
+#
+#INST "ep/BU2/U0/pcie_ep0/pcie_blk_if/ll_bridge/tx_bridge/tx_bridge/shift_pipe1" LOC = "SLICE_X59Y36" ;
+#INST "ep/BU2/U0/pcie_ep0/pcie_blk_if/ll_bridge/rx_bridge/arb_inst/completion_available" LOC = "SLICE_X58Y26" ;
+#INST "ep/BU2/U0/pcie_ep0/pcie_blk_if/cf_bridge/management_interface/mgmt_rdata_d1_3" LOC = "SLICE_X59Y25" ;
+
+###############################################################################
+# Timing Constraints
+###############################################################################
+#
+# Timing requirements and related constraints.
+#
+NET "sys_clk_c"                                      PERIOD = 10ns;
+
+NET "ep/BU2/U0/pcie_ep0/pcie_blk/SIO/.pcie_gt_wrapper_i/gt_refclk_out[0]" TNM_NET = "MGTCLK" ;
+
+TIMESPEC "TS_MGTCLK"  = PERIOD "MGTCLK" 100.00 MHz HIGH 50 % ;
+
+###############################################################################
+# End of contraints from Endpoint Block Plus
+###############################################################################
+###################################################
+##  Additional Timing Constraints
+###################################################
+## SYS_CLK is the DDR2 clock - 200 MHz
+#NET "ddr2_cntrl_inst/u_infrastructure/sys_clk_ibufg" TNM_NET =  "SYS_CLK";
+NET "ddr2_cntrl_inst/u_infrastructure/sys_clk" TNM_NET =  "SYS_CLK";
+#TIMESPEC "TS_SYS_CLK" = PERIOD "SYS_CLK" 5 ns HIGH 50 %;
+TIMESPEC "TS_SYS_CLK" = PERIOD "SYS_CLK" 7.5 ns HIGH 50 %;
+## SYS_CLK_200 is for the idelay - 200 MHz
+NET "ddr2_cntrl_inst/u_infrastructure/clk200_ibufg" TNM_NET = "SYS_CLK_200";
+TIMESPEC "TS_SYS_CLK_200" = PERIOD "SYS_CLK_200" 5 ns HIGH 50 %; 
+#TIMESPEC "TS_SYS_CLK_200" = PERIOD "SYS_CLK_200" 7.5 ns HIGH 50 %; 
+
+NET "dma_ddr2_if_inst/ddr_clk" TNM_NET = "DDR_CLK";
+TIMESPEC "TS_DDR_CLK" = PERIOD "DDR_CLK" 7.5 ns HIGH 50 %;		# 133MHz
+
+# timing constrain for posted packet scheduler
+#NET "pcie_dma_wrapper_inst/posted_pkt_gen_inst/posted_pkt_scheduler_inst/clk" TNM_NET = "POSTED_CLK";
+NET "pcie_dma_wrapper_inst/posted_pkt_gen_inst/posted_pkt_scheduler_4radios_inst/clk" TNM_NET = "POSTED_CLK";
+TIMESPEC "TS_POSTED_CLK" = PERIOD "POSTED_CLK" 8ns HIGH 50%;
+
+# timing constrain for pcie_dma_wrapper
+NET "pcie_dma_wrapper_inst/clk" TNM_NET = "PCIE_DMA_CLK";
+TIMESPEC "TS_PCIE_DMA_CLK" = PERIOD "PCIE_DMA_CLK" 8ns HIGH 50%;
+
+# timing constrain for Sora_FRL module
+NET "Sora_FRL_RCB_inst/CLKDIV_R" TNM_NET = "LVDS_CLKDIV_R";
+#TIMESPEC "TS_LVDS_CLKDIV_R" = PERIOD "LVDS_CLKDIV_R" 12.5ns HIGH 50%;
+#TIMESPEC "TS_LVDS_CLKDIV_R" = PERIOD "LVDS_CLKDIV_R" 16.6ns HIGH 50%;
+TIMESPEC "TS_LVDS_CLKDIV_R" = PERIOD "LVDS_CLKDIV_R" 16ns HIGH 50%;
+
+# timing constrain for Sora_FRL module
+NET "Sora_FRL_RCB_inst/CLK_R" TNM_NET = "LVDS_CLK_R";
+#TIMESPEC "TS_LVDS_CLK_R" = PERIOD "LVDS_CLK_R" 3.125ns HIGH 50%;
+#TIMESPEC "TS_LVDS_CLK_R" = PERIOD "LVDS_CLK_R" 4.15ns HIGH 50%;
+TIMESPEC "TS_LVDS_CLK_R" = PERIOD "LVDS_CLK_R" 4ns HIGH 50%;
+
+# timing constrain for Sora_FRL module
+NET "Sora_FRL_2nd_RCB_inst/CLKDIV_R" TNM_NET = "LVDS_2nd_CLKDIV_R";
+#TIMESPEC "TS_LVDS_2nd_CLKDIV_R" = PERIOD "LVDS_2nd_CLKDIV_R" 12.5ns HIGH 50%;
+#TIMESPEC "TS_LVDS_2nd_CLKDIV_R" = PERIOD "LVDS_2nd_CLKDIV_R" 16.6ns HIGH 50%;
+TIMESPEC "TS_LVDS_2nd_CLKDIV_R" = PERIOD "LVDS_2nd_CLKDIV_R" 16ns HIGH 50%;
+
+# timing constrain for Sora_FRL module
+NET "Sora_FRL_2nd_RCB_inst/CLK_R" TNM_NET = "LVDS_2nd_CLK_R";
+#TIMESPEC "TS_LVDS_2nd_CLK_R" = PERIOD "LVDS_2nd_CLK_R" 3.125ns HIGH 50%;
+#TIMESPEC "TS_LVDS_2nd_CLK_R" = PERIOD "LVDS_2nd_CLK_R" 4.15ns HIGH 50%;
+TIMESPEC "TS_LVDS_2nd_CLK_R" = PERIOD "LVDS_2nd_CLK_R" 4ns HIGH 50%;
+
+# timing constrain for Sora_FRL module
+NET "Sora_FRL_3rd_RCB_inst/CLKDIV_R" TNM_NET = "LVDS_3rd_CLKDIV_R";
+#TIMESPEC "TS_LVDS_3rd_CLKDIV_R" = PERIOD "LVDS_3rd_CLKDIV_R" 12.5ns HIGH 50%;
+#TIMESPEC "TS_LVDS_3rd_CLKDIV_R" = PERIOD "LVDS_3rd_CLKDIV_R" 16.6ns HIGH 50%;
+TIMESPEC "TS_LVDS_3rd_CLKDIV_R" = PERIOD "LVDS_3rd_CLKDIV_R" 16ns HIGH 50%;
+
+# timing constrain for Sora_FRL module
+NET "Sora_FRL_3rd_RCB_inst/CLK_R" TNM_NET = "LVDS_3rd_CLK_R";
+#TIMESPEC "TS_LVDS_3rd_CLK_R" = PERIOD "LVDS_3rd_CLK_R" 3.125ns HIGH 50%;
+#TIMESPEC "TS_LVDS_3rd_CLK_R" = PERIOD "LVDS_3rd_CLK_R" 4.15ns HIGH 50%;
+TIMESPEC "TS_LVDS_3rd_CLK_R" = PERIOD "LVDS_3rd_CLK_R" 4ns HIGH 50%;
+
+# timing constrain for Sora_FRL module
+NET "Sora_FRL_4th_RCB_inst/CLKDIV_R" TNM_NET = "LVDS_4th_CLKDIV_R";
+#TIMESPEC "TS_LVDS_4th_CLKDIV_R" = PERIOD "LVDS_4th_CLKDIV_R" 12.5ns HIGH 50%;
+#TIMESPEC "TS_LVDS_4th_CLKDIV_R" = PERIOD "LVDS_4th_CLKDIV_R" 16.6ns HIGH 50%;
+TIMESPEC "TS_LVDS_4th_CLKDIV_R" = PERIOD "LVDS_4th_CLKDIV_R" 16ns HIGH 50%;
+
+# timing constrain for Sora_FRL module
+NET "Sora_FRL_4th_RCB_inst/CLK_R" TNM_NET = "LVDS_4th_CLK_R";
+#TIMESPEC "TS_LVDS_4th_CLK_R" = PERIOD "LVDS_4th_CLK_R" 3.125ns HIGH 50%;
+#TIMESPEC "TS_LVDS_4th_CLK_R" = PERIOD "LVDS_4th_CLK_R" 4.15ns HIGH 50%;
+TIMESPEC "TS_LVDS_4th_CLK_R" = PERIOD "LVDS_4th_CLK_R" 4ns HIGH 50%;
+
+
+
+
+## timing constrain for Sora_FRL module
+#NET "Sora_FRL_RCB_inst/Sora_FRL_RCB_RX_data_inst/CLKDIV" TNM_NET = "LVDS_RX_CLK";
+#TIMESPEC "TS_LVDS_RX_CLK" = PERIOD "LVDS_RX_CLK" 12.5ns HIGH 50%;
+#
+## timing constrain for Sora_FRL module
+#NET "Sora_FRL_RCB_inst/Sora_FRL_RCB_RX_MSG_inst/CLKDIV" TNM_NET = "LVDS_RX_MSG_CLK";
+#TIMESPEC "TS_LVDS_RX_MSG_CLK" = PERIOD "LVDS_RX_MSG_CLK" 12.5ns HIGH 50%;
+#
+## timing constrain for Sora_FRL module
+#NET "Sora_FRL_RCB_inst/Sora_FRL_RCB_TX_data_inst/CLKDIV" TNM_NET = "LVDS_TX_CLK";
+#TIMESPEC "TS_LVDS_TX_CLK" = PERIOD "LVDS_TX_CLK" 12.5ns HIGH 50%;
+#
+## timing constrain for Sora_FRL module
+#NET "Sora_FRL_RCB_inst/Sora_FRL_RCB_TX_MSG_inst/CLKDIV" TNM_NET = "LVDS_TX_MSG_CLK";
+#TIMESPEC "TS_LVDS_TX_MSG_CLK" = PERIOD "LVDS_TX_MSG_CLK" 12.5ns HIGH 50%;
+
+## Multi-cycle paths
+#Multi-cycle paths for tx_trn_sm adder/subtractor
+INST "pcie_dma_wrapper_inst/rx_engine_inst/rx_trn_monitor_inst/dma*_div8_reg*" TNM=FFS "TNM_DMARDIV8_REG_SRC";
+INST "pcie_dma_wrapper_inst/rx_engine_inst/rx_trn_monitor_inst/dma*_div8_now*"     TNM=FFS "TNM_DMARDIV8_NOW_SRC";
+INST "pcie_dma_wrapper_inst/rx_engine_inst/rx_trn_monitor_inst/addsub_state*"      TNM=FFS "TNM_RADDSUB_STATE_SRC";
+TIMEGRP "DMARDIV8_2X_SRC" = "TNM_DMARDIV8_REG_SRC"  "TNM_DMARDIV8_NOW_SRC" "TNM_RADDSUB_STATE_SRC";
+INST "pcie_dma_wrapper_inst/rx_engine_inst/rx_trn_monitor_inst/dma*_div8_reg_new*" TNM=FFS "TNM_DMARDIV8_REGNEW_DEST";
+TIMESPEC "TS_DMARDIV8_2X" = FROM "DMARDIV8_2X_SRC" TO "TNM_DMARDIV8_REGNEW_DEST" "TS_MGTCLK"*1.25; ## 2/5 for 250MHz * 2 for multicycle
+
+#Multi-cycle paths for tx_trn_sm adder/subtractor
+##INST "pcie_dma_wrapper_inst/tx_engine_inst/tx_trn_sm_inst/dma*_div8_reg*" TNM=FFS "TNM_DMAWDIV8_REG_SRC";
+##INST "pcie_dma_wrapper_inst/tx_engine_inst/tx_trn_sm_inst/dma*_div8_now*"     TNM=FFS "TNM_DMAWDIV8_NOW_SRC";
+##INST "pcie_dma_wrapper_inst/tx_engine_inst/tx_trn_sm_inst/addsub_state*"      TNM=FFS "TNM_WADDSUB_STATE_SRC";
+##TIMEGRP "DMAWDIV8_2X_SRC" = "TNM_DMAWDIV8_REG_SRC"  "TNM_DMAWDIV8_NOW_SRC" "TNM_WADDSUB_STATE_SRC";
+##INST "pcie_dma_wrapper_inst/tx_engine_inst/tx_trn_sm_inst/dma*_div8_reg_new*" TNM=FFS "TNM_DMAWDIV8_REGNEW_DEST";
+##TIMESPEC "TS_DMAWDIV8_2X" = FROM "DMAWDIV8_2X_SRC" TO "TNM_DMAWDIV8_REGNEW_DEST" "TS_MGTCLK"*1.25; ## 2/5 for 250MHz * 2 for multicycle
+
+#Multi-cycle paths for posted slicer adder
+##INST "pcie_dma_wrapper_inst/tx_engine_inst/posted_pkt_gen_inst/posted_pkt_slicer_inst/four_kb_xfer*" TNM=FFS "TNM_PFKB_SRC";
+##INST "pcie_dma_wrapper_inst/tx_engine_inst/posted_pkt_gen_inst/posted_pkt_slicer_inst/dma*_reg*" TNM=FFS "TNM_PDMAREG_SRC";
+##INST "pcie_dma_wrapper_inst/tx_engine_inst/posted_pkt_gen_inst/posted_pkt_slicer_inst/state*" TNM=FFS "TNM_PSTATE_SRC";
+##TIMEGRP "POSTED_2X_SRC" = "TNM_PFKB_SRC" "TNM_PDMAREG_SRC" "TNM_PSTATE_SRC";
+##INST "pcie_dma_wrapper_inst/tx_engine_inst/posted_pkt_gen_inst/posted_pkt_slicer_inst/dma*_new*" TNM=FFS "TNM_PDMANEW_DEST";
+##TIMESPEC "TS_POSTED_2X" = FROM "POSTED_2X_SRC" TO "TNM_PDMANEW_DEST" "TS_MGTCLK"*1.25; ## 2/5 for 250MHz * 2 for multicycle
+
+#Multi-cycle paths for non-posted slicer adder
+##INST "pcie_dma_wrapper_inst/tx_engine_inst/non_posted_pkt_gen_inst/non_posted_pkt_slicer_inst/four_kb_xfer*" TNM=FFS "TNM_NFKB_SRC";
+##INST "pcie_dma_wrapper_inst/tx_engine_inst/non_posted_pkt_gen_inst/non_posted_pkt_slicer_inst/dma*_reg*" TNM=FFS "TNM_NDMAREG_SRC";
+##INST "pcie_dma_wrapper_inst/tx_engine_inst/non_posted_pkt_gen_inst/non_posted_pkt_slicer_inst/state*" TNM=FFS "TNM_NSTATE_SRC";
+##TIMEGRP "NONPOSTED_2X_SRC" = "TNM_NFKB_SRC" "TNM_NDMAREG_SRC" "TNM_NSTATE_SRC";
+##INST "pcie_dma_wrapper_inst/tx_engine_inst/non_posted_pkt_gen_inst/non_posted_pkt_slicer_inst/dma*_new*" TNM=FFS "TNM_NDMANEW_DEST";
+##TIMESPEC "TS_NONPOSTED_2X" = FROM "NONPOSTED_2X_SRC" TO "TNM_NDMANEW_DEST" "TS_MGTCLK"*1.25; ## 2/5 for 250MHz * 2 for multicycle
+INST "pcie_dma_wrapper_inst/non_posted_pkt_gen_inst/non_posted_pkt_slicer_inst/four_kb_xfer*" TNM=FFS "TNM_NFKB_SRC";
+INST "pcie_dma_wrapper_inst/non_posted_pkt_gen_inst/non_posted_pkt_slicer_inst/dma*_reg*" TNM=FFS "TNM_NDMAREG_SRC";
+INST "pcie_dma_wrapper_inst/non_posted_pkt_gen_inst/non_posted_pkt_slicer_inst/state*" TNM=FFS "TNM_NSTATE_SRC";
+TIMEGRP "NONPOSTED_2X_SRC" = "TNM_NFKB_SRC" "TNM_NDMAREG_SRC" "TNM_NSTATE_SRC";
+INST "pcie_dma_wrapper_inst/non_posted_pkt_gen_inst/non_posted_pkt_slicer_inst/dma*_new*" TNM=FFS "TNM_NDMANEW_DEST";
+TIMESPEC "TS_NONPOSTED_2X" = FROM "NONPOSTED_2X_SRC" TO "TNM_NDMANEW_DEST" "TS_MGTCLK"*1.25; ## 2/5 for 250MHz * 2 for multicycle
+
+# Multi-cycle paths for large xfers shim adder
+##INST "pcie_dma_wrapper_inst/transfer_controller_inst/state_1*" TNM=FFS "TNM_STATE_1_SRC";
+INST "pcie_dma_wrapper_inst/transfer_controller_inst/state_3*" TNM=FFS "TNM_STATE_3_SRC";
+INST "pcie_dma_wrapper_inst/transfer_controller_inst/dma*_now*" TNM=FFS "TNM_DMANOW_SRC";
+##TIMEGRP "LARGE_XFER_2X_SRC" = "TNM_STATE_1_SRC" "TNM_STATE_3_SRC" "TNM_DMANOW_SRC";
+TIMEGRP "LARGE_XFER_2X_SRC" = "TNM_STATE_3_SRC" "TNM_DMANOW_SRC";
+INST "pcie_dma_wrapper_inst/transfer_controller_inst/dma*_next*" TNM=FFS "TNM_DMANEXT_DEST";
+TIMESPEC "TS_DMAREG_DMANEXT" = FROM "LARGE_XFER_2X_SRC" TO "TNM_DMANEXT_DEST" "TS_MGTCLK"*1.25; ## 2/5 for 250MHz * 2 for multicycle
+
+# Jiansong: added
+# Multi-cycle paths for large xfers shim adder
+INST "pcie_dma_wrapper_inst/TX_controller_inst/TX_state_1*" TNM=FFS "TNM_TX_STATE_1_SRC";
+INST "pcie_dma_wrapper_inst/TX_controller_inst/TX_*_now*" TNM=FFS "TNM_TXNOW_SRC";
+TIMEGRP "TX_LARGE_XFER_2X_SRC" = "TNM_TX_STATE_1_SRC" "TNM_TXNOW_SRC";
+INST "pcie_dma_wrapper_inst/TX_controller_inst/TX_*_next*" TNM=FFS "TNM_TXNEXT_DEST";
+TIMESPEC "TS_TXREG_TXNEXT" = FROM "TX_LARGE_XFER_2X_SRC" TO "TNM_TXNEXT_DEST" "TS_MGTCLK"*1.25; ## 2/5 for 250MHz * 2 for multicycle
+# Multi-cycle paths for large xfers shim adder
+INST "pcie_dma_wrapper_inst/TX_controller_2nd_inst/TX_state_1*" TNM=FFS "TNM_TX_STATE_1_SRC_2nd";
+INST "pcie_dma_wrapper_inst/TX_controller_2nd_inst/TX_*_now*" TNM=FFS "TNM_TXNOW_SRC_2nd";
+TIMEGRP "TX_LARGE_XFER_2X_SRC_2nd" = "TNM_TX_STATE_1_SRC_2nd" "TNM_TXNOW_SRC_2nd";
+INST "pcie_dma_wrapper_inst/TX_controller_2nd_inst/TX_*_next*" TNM=FFS "TNM_TXNEXT_DEST_2nd";
+TIMESPEC "TS_TXREG_TXNEXT_2nd" = FROM "TX_LARGE_XFER_2X_SRC_2nd" TO "TNM_TXNEXT_DEST_2nd" "TS_MGTCLK"*1.25; ## 2/5 for 250MHz * 2 for multicycle
+# Multi-cycle paths for large xfers shim adder
+INST "pcie_dma_wrapper_inst/TX_controller_3rd_inst/TX_state_1*" TNM=FFS "TNM_TX_STATE_1_SRC_3rd";
+INST "pcie_dma_wrapper_inst/TX_controller_3rd_inst/TX_*_now*" TNM=FFS "TNM_TXNOW_SRC_3rd";
+TIMEGRP "TX_LARGE_XFER_2X_SRC_3rd" = "TNM_TX_STATE_1_SRC_3rd" "TNM_TXNOW_SRC_3rd";
+INST "pcie_dma_wrapper_inst/TX_controller_3rd_inst/TX_*_next*" TNM=FFS "TNM_TXNEXT_DEST_3rd";
+TIMESPEC "TS_TXREG_TXNEXT_3rd" = FROM "TX_LARGE_XFER_2X_SRC_3rd" TO "TNM_TXNEXT_DEST_3rd" "TS_MGTCLK"*1.25; ## 2/5 for 250MHz * 2 for multicycle
+# Multi-cycle paths for large xfers shim adder
+INST "pcie_dma_wrapper_inst/TX_controller_4th_inst/TX_state_1*" TNM=FFS "TNM_TX_STATE_1_SRC_4th";
+INST "pcie_dma_wrapper_inst/TX_controller_4th_inst/TX_*_now*" TNM=FFS "TNM_TXNOW_SRC_4th";
+TIMEGRP "TX_LARGE_XFER_2X_SRC_4th" = "TNM_TX_STATE_1_SRC_4th" "TNM_TXNOW_SRC_4th";
+INST "pcie_dma_wrapper_inst/TX_controller_4th_inst/TX_*_next*" TNM=FFS "TNM_TXNEXT_DEST_4th";
+TIMESPEC "TS_TXREG_TXNEXT_4th" = FROM "TX_LARGE_XFER_2X_SRC_4th" TO "TNM_TXNEXT_DEST_4th" "TS_MGTCLK"*1.25; ## 2/5 for 250MHz * 2 for multicycle
+
+## Jiansong: added for poset_packet_scheduler
+## Multi-cycle paths for posted scheduler adder
+#INST "pcie_dma_wrapper_inst/posted_pkt_gen_inst/posted_pkt_scheduler_inst/RXBuf*" TNM=FFS "TNM_NRXB_SRC";
+#INST "pcie_dma_wrapper_inst/posted_pkt_gen_inst/posted_pkt_scheduler_inst/dmawad_now*" TNM=FFS "TNM_NDWNW_SRC";
+#TIMEGRP "POSTED_2X_SRC" = "TNM_NRXB_SRC" "TNM_NDWNW_SRC";
+#INST "pcie_dma_wrapper_inst/posted_pkt_gen_inst/posted_pkt_scheduler_inst/dmawad_next*" TNM=FFS "TNM_NDWNT_DEST";
+#TIMESPEC "TS_POSTED_2X" = FROM "POSTED_2X_SRC" TO "TNM_NDWNT_DEST" "TS_MGTCLK"*1.25; ## 2/5 for 250MHz * 2 for multic
+
+# Jiansong: added for poset_packet_scheduler_4radios
+# Multi-cycle paths for posted scheduler adder
+INST "pcie_dma_wrapper_inst/posted_pkt_gen_inst/posted_pkt_scheduler_4radios_inst/RXBuf_1st*" TNM=FFS "TNM_NRXB_SRC";
+INST "pcie_dma_wrapper_inst/posted_pkt_gen_inst/posted_pkt_scheduler_4radios_inst/dmawad_now1_1st*" TNM=FFS "TNM_NDWNW_SRC";
+TIMEGRP "POSTED_2X_SRC" = "TNM_NRXB_SRC" "TNM_NDWNW_SRC";
+INST "pcie_dma_wrapper_inst/posted_pkt_gen_inst/posted_pkt_scheduler_4radios_inst/dmawad_next_1st*" TNM=FFS "TNM_NDWNT_DEST";
+TIMESPEC "TS_POSTED_2X" = FROM "POSTED_2X_SRC" TO "TNM_NDWNT_DEST" "TS_TRN_CLK"*2; 
+# Jiansong: added for poset_packet_scheduler_4radios
+# Multi-cycle paths for posted scheduler adder
+INST "pcie_dma_wrapper_inst/posted_pkt_gen_inst/posted_pkt_scheduler_4radios_inst/RXBuf_2nd*" TNM=FFS "TNM_NRXB_SRC_2nd";
+INST "pcie_dma_wrapper_inst/posted_pkt_gen_inst/posted_pkt_scheduler_4radios_inst/dmawad_now1_2nd*" TNM=FFS "TNM_NDWNW_SRC_2nd";
+TIMEGRP "POSTED_2X_SRC_2nd" = "TNM_NRXB_SRC_2nd" "TNM_NDWNW_SRC_2nd";
+INST "pcie_dma_wrapper_inst/posted_pkt_gen_inst/posted_pkt_scheduler_4radios_inst/dmawad_next_2nd*" TNM=FFS "TNM_NDWNT_DEST_2nd";
+TIMESPEC "TS_POSTED_2X_2nd" = FROM "POSTED_2X_SRC_2nd" TO "TNM_NDWNT_DEST_2nd" "TS_TRN_CLK"*2; 
+# Jiansong: added for poset_packet_scheduler_4radios
+# Multi-cycle paths for posted scheduler adder
+INST "pcie_dma_wrapper_inst/posted_pkt_gen_inst/posted_pkt_scheduler_4radios_inst/RXBuf_3rd*" TNM=FFS "TNM_NRXB_SRC_3rd";
+INST "pcie_dma_wrapper_inst/posted_pkt_gen_inst/posted_pkt_scheduler_4radios_inst/dmawad_now1_3rd*" TNM=FFS "TNM_NDWNW_SRC_3rd";
+TIMEGRP "POSTED_2X_SRC_3rd" = "TNM_NRXB_SRC_3rd" "TNM_NDWNW_SRC_3rd";
+INST "pcie_dma_wrapper_inst/posted_pkt_gen_inst/posted_pkt_scheduler_4radios_inst/dmawad_next_3rd*" TNM=FFS "TNM_NDWNT_DEST_3rd";
+TIMESPEC "TS_POSTED_2X_3rd" = FROM "POSTED_2X_SRC_3rd" TO "TNM_NDWNT_DEST_3rd" "TS_TRN_CLK"*2; 
+# Jiansong: added for poset_packet_scheduler_4radios
+# Multi-cycle paths for posted scheduler adder
+INST "pcie_dma_wrapper_inst/posted_pkt_gen_inst/posted_pkt_scheduler_4radios_inst/RXBuf_4th*" TNM=FFS "TNM_NRXB_SRC_4th";
+INST "pcie_dma_wrapper_inst/posted_pkt_gen_inst/posted_pkt_scheduler_4radios_inst/dmawad_now1_4th*" TNM=FFS "TNM_NDWNW_SRC_4th";
+TIMEGRP "POSTED_2X_SRC_4th" = "TNM_NRXB_SRC_4th" "TNM_NDWNW_SRC_4th";
+INST "pcie_dma_wrapper_inst/posted_pkt_gen_inst/posted_pkt_scheduler_4radios_inst/dmawad_next_4th*" TNM=FFS "TNM_NDWNT_DEST_4th";
+TIMESPEC "TS_POSTED_2X_4th" = FROM "POSTED_2X_SRC_4th" TO "TNM_NDWNT_DEST_4th" "TS_TRN_CLK"*2;
+
+#Tig'ed nets - these are static signals
+NET "trn_lnk_up_n_c" TIG;
+NET "phy_init_initialization_done" TIG;
+
+INST "max_read_req_reg*" TIG;
+INST "max_pay_size_reg*" TIG;
+INST "pcie_id_reg*" TIG;
+
+################################################################################
+# PIN Location and I/O STANDARDS
+################################################################################
+################################################################################
+##
+##  Global Clock inputs 
+##  FPGA Bank 3: Vcco = 2.5 Volts 
+##
+## Note: Use DIFF_TERM attribute on LVDS clock inputs as the ML555 DOES NOT 
+##       provide 100 ohm terminators on the circuit board assembly
+################################################################################
+NET  "CLK200_P"   LOC  =  J16 | DIFF_TERM = TRUE;  ## ICS1 PLL LVDS
+NET  "CLK200_N"   LOC  =  J17 | DIFF_TERM = TRUE;  
+NET "SYS_CLK_P" LOC = H14 | DIFF_TERM = TRUE;  ## ICS2 PLL LVDS
+NET "SYS_CLK_N" LOC = H15 | DIFF_TERM = TRUE;  
+
+# LEDs
+# Indicates that the PCIe endpoint has successfully completed link training 
+# with the downstream port connected to it
+
+# RCB LEDs
+NET "LED_link_up_and_phy_init_initialization_done_n" LOC = L21 | IOSTANDARD = "LVCMOS33";
+NET "Sora_FRL_done_n" LOC = L20 | IOSTANDARD = "LVCMOS33";
+NET "Radio_RX_blink" LOC = L15 | IOSTANDARD = "LVCMOS33"; 
+NET "Radio_TX_n" LOC = L16 | IOSTANDARD = "LVCMOS33";
+
+# Front-panel LEDs
+NET "Front_PCIe_DDR_up" LOC = AJ14 | IOSTANDARD = "LVCMOS33";
+NET "Front_Sora_FRL_up" LOC = AL20 | IOSTANDARD = "LVCMOS33";
+NET "Front_Radio_TX" LOC = AL19 | IOSTANDARD = "LVCMOS33";
+NET "Front_Radio_RX_blink" LOC = AP17 | IOSTANDARD = "LVCMOS33";
+
+# RCB LEDs
+INST "LED_link_up_and_phy_init_initialization_done_n_OBUF" DRIVE = 24;
+INST "Sora_FRL_done_n_OBUF" DRIVE = 24;
+INST "Radio_RX_blink_OBUF" DRIVE = 24;
+INST "Radio_TX_n_OBUF" DRIVE = 24;
+
+// Front-panel LEDs	 
+INST "Front_Sora_FRL_up_OBUF" DRIVE = 24;
+INST "Front_PCIe_DDR_up_OBUF" DRIVE = 24;
+INST "Front_Radio_TX_OBUF" DRIVE = 24;
+INST "Front_Radio_RX_blink_OBUF" DRIVE = 24;
+
+#Clock ICS load
+NET  "nPLOAD_1"					LOC = "K12" | IOSTANDARD = "LVCMOS33";
+NET  "nPLOAD_2"					LOC = "K23" | IOSTANDARD = "LVCMOS33";
+
+NET	"V5_reset_n"				LOC = "AF20" | IOSTANDARD = "LVCMOS25";
+
+###############################################################################
+# Location Constraints for Sora_FRL
+###############################################################################
+
+##port A
+#NET "Sora_FRL_CLK_I_p"			LOC = N33;
+#NET "Sora_FRL_CLK_I_n"			LOC = M33;
+##NET "Sora_FRL_DATA_IN_p[3]"	LOC = L33;
+##NET "Sora_FRL_DATA_IN_n[3]"	LOC = M32;
+##NET "Sora_FRL_DATA_IN_p[2]"	LOC = K31;
+##NET "Sora_FRL_DATA_IN_n[2]"	LOC = L31;
+##NET "Sora_FRL_DATA_IN_p[1]"	LOC = K33;
+##NET "Sora_FRL_DATA_IN_n[1]"	LOC = K32;
+##NET "Sora_FRL_DATA_IN_p[0]"	LOC = G33;
+##NET "Sora_FRL_DATA_IN_n[0]"	LOC = F34;
+#// modified to match MIMO RAB, not compatible with SP3 RAB now
+#NET "Sora_FRL_DATA_IN_p[0]"	LOC = L33;
+#NET "Sora_FRL_DATA_IN_n[0]"	LOC = M32;
+#NET "Sora_FRL_DATA_IN_p[1]"	LOC = K31;
+#NET "Sora_FRL_DATA_IN_n[1]"	LOC = L31;
+#NET "Sora_FRL_DATA_IN_p[2]"	LOC = K33;
+#NET "Sora_FRL_DATA_IN_n[2]"	LOC = K32;
+#NET "Sora_FRL_DATA_IN_p[3]"	LOC = G33;
+#NET "Sora_FRL_DATA_IN_n[3]"	LOC = F34;
+#NET "Sora_FRL_MSG_IN_p"		LOC = F33;
+#NET "Sora_FRL_MSG_IN_n"		LOC = E34;
+#NET "Sora_FRL_STATUS_IN_p"	LOC = K18;
+#NET "Sora_FRL_STATUS_IN_n"	LOC = J19;
+#
+#NET "Sora_FRL_CLK_O_p"			LOC = C34;
+#NET "Sora_FRL_CLK_O_n"			LOC = D34;
+##NET "Sora_FRL_DATA_OUT_p[3]"	LOC = B33;
+##NET "Sora_FRL_DATA_OUT_n[3]"	LOC = C33;
+##NET "Sora_FRL_DATA_OUT_p[2]"	LOC = B32;
+##NET "Sora_FRL_DATA_OUT_n[2]"	LOC = A33;
+##NET "Sora_FRL_DATA_OUT_p[1]"	LOC = C32;
+##NET "Sora_FRL_DATA_OUT_n[1]"	LOC = D32;
+##NET "Sora_FRL_DATA_OUT_p[0]"	LOC = E32;
+##NET "Sora_FRL_DATA_OUT_n[0]"	LOC = E33;
+#// modified to match MIMO RAB, not compatible with SP3 RAB now
+#NET "Sora_FRL_DATA_OUT_p[0]"	LOC = B33;
+#NET "Sora_FRL_DATA_OUT_n[0]"	LOC = C33;
+#NET "Sora_FRL_DATA_OUT_p[1]"	LOC = B32;
+#NET "Sora_FRL_DATA_OUT_n[1]"	LOC = A33;
+#NET "Sora_FRL_DATA_OUT_p[2]"	LOC = C32;
+#NET "Sora_FRL_DATA_OUT_n[2]"	LOC = D32;
+#NET "Sora_FRL_DATA_OUT_p[3]"	LOC = E32;
+#NET "Sora_FRL_DATA_OUT_n[3]"	LOC = E33;
+#NET "Sora_FRL_MSG_OUT_p"			LOC = G32;
+#NET "Sora_FRL_MSG_OUT_n"			LOC = H32;
+#NET "Sora_FRL_STATUS_OUT_p"		LOC = J32;
+#NET "Sora_FRL_STATUS_OUT_n"		LOC = H33;
+
+#port A
+#RSTATE  25		P6
+NET "Sora_FRL_STATUS_OUT_p" IOSTANDARD = LVDS_25;
+NET "Sora_FRL_STATUS_OUT_p" LOC = J32;
+#RSTATE  27		N6
+NET "Sora_FRL_STATUS_OUT_n" IOSTANDARD = LVDS_25;
+NET "Sora_FRL_STATUS_OUT_n" LOC = H33;
+#RCTL    21		P5
+NET "Sora_FRL_MSG_OUT_p" IOSTANDARD = LVDS_25;
+NET "Sora_FRL_MSG_OUT_p" LOC = G32;
+#RCTL    23		N5
+NET "Sora_FRL_MSG_OUT_n" IOSTANDARD = LVDS_25;
+NET "Sora_FRL_MSG_OUT_n" LOC = H32;
+#RX3N    5   	P1
+NET "Sora_FRL_DATA_OUT_p[0]" IOSTANDARD = LVDS_25;
+NET "Sora_FRL_DATA_OUT_p[0]" LOC = B33;
+#RX3P    7   	N1
+NET "Sora_FRL_DATA_OUT_n[0]" IOSTANDARD = LVDS_25;
+NET "Sora_FRL_DATA_OUT_n[0]" LOC = C33;
+#RX2N    9   	P2
+NET "Sora_FRL_DATA_OUT_p[1]" IOSTANDARD = LVDS_25;
+NET "Sora_FRL_DATA_OUT_p[1]" LOC = B32;
+#RX2P    11  	N2
+NET "Sora_FRL_DATA_OUT_n[1]" IOSTANDARD = LVDS_25;
+NET "Sora_FRL_DATA_OUT_n[1]" LOC = A33;
+#RX1N    13  	P3
+NET "Sora_FRL_DATA_OUT_p[2]" IOSTANDARD = LVDS_25;
+NET "Sora_FRL_DATA_OUT_p[2]" LOC = C32;
+#RX1P    15  	N3
+NET "Sora_FRL_DATA_OUT_n[2]" IOSTANDARD = LVDS_25;
+NET "Sora_FRL_DATA_OUT_n[2]" LOC = D32;
+#RX0N    17  	P4
+NET "Sora_FRL_DATA_OUT_p[3]" IOSTANDARD = LVDS_25;
+NET "Sora_FRL_DATA_OUT_p[3]" LOC = E32;
+#RX0P    19  	N4
+NET "Sora_FRL_DATA_OUT_n[3]" IOSTANDARD = LVDS_25;
+NET "Sora_FRL_DATA_OUT_n[3]" LOC = E33;
+#RCLKN    1  	P0
+NET "Sora_FRL_CLK_O_p" IOSTANDARD = LVDS_25;
+NET "Sora_FRL_CLK_O_p" LOC = C34;
+#RCLKP    3  	N0
+NET "Sora_FRL_CLK_O_n" IOSTANDARD = LVDS_25;
+NET "Sora_FRL_CLK_O_n" LOC = D34;
+NET "Sora_FRL_STATUS_IN_p" DIFF_TERM = "TRUE";
+#TSTATE_N 26	P13
+NET "Sora_FRL_STATUS_IN_p" IOSTANDARD = LVDS_25;
+NET "Sora_FRL_STATUS_IN_p" LOC = K18;
+NET "Sora_FRL_STATUS_IN_n" DIFF_TERM = "TRUE";
+#TSTATE_P 28	N13
+NET "Sora_FRL_STATUS_IN_n" IOSTANDARD = LVDS_25;
+NET "Sora_FRL_STATUS_IN_n" LOC = J19;
+NET "Sora_FRL_MSG_IN_p" DIFF_TERM = "TRUE";
+#TCTLN    22	P12
+NET "Sora_FRL_MSG_IN_p" IOSTANDARD = LVDS_25;
+NET "Sora_FRL_MSG_IN_p" LOC = F33;
+NET "Sora_FRL_MSG_IN_n" DIFF_TERM = "TRUE";
+#TCTLP    24	N12
+NET "Sora_FRL_MSG_IN_n" IOSTANDARD = LVDS_25;
+NET "Sora_FRL_MSG_IN_n" LOC = E34;
+NET "Sora_FRL_DATA_IN_p[0]" DIFF_TERM = "TRUE";
+#TX3N     6 	P8
+NET "Sora_FRL_DATA_IN_p[0]" IOSTANDARD = LVDS_25;
+NET "Sora_FRL_DATA_IN_p[0]" LOC = L33;
+NET "Sora_FRL_DATA_IN_n[0]" DIFF_TERM = "TRUE";
+#TX3P     8 	N8
+NET "Sora_FRL_DATA_IN_n[0]" IOSTANDARD = LVDS_25;
+NET "Sora_FRL_DATA_IN_n[0]" LOC = M32;
+NET "Sora_FRL_DATA_IN_p[1]" DIFF_TERM = "TRUE";
+#TX2N     10	P9
+NET "Sora_FRL_DATA_IN_p[1]" IOSTANDARD = LVDS_25;
+NET "Sora_FRL_DATA_IN_p[1]" LOC = K31;
+NET "Sora_FRL_DATA_IN_n[1]" DIFF_TERM = "TRUE";
+#TX2P     12	N9
+NET "Sora_FRL_DATA_IN_n[1]" IOSTANDARD = LVDS_25;
+NET "Sora_FRL_DATA_IN_n[1]" LOC = L31;
+NET "Sora_FRL_DATA_IN_p[2]" DIFF_TERM = "TRUE";
+#TX1N     14	P10
+NET "Sora_FRL_DATA_IN_p[2]" IOSTANDARD = LVDS_25;
+NET "Sora_FRL_DATA_IN_p[2]" LOC = K33;
+NET "Sora_FRL_DATA_IN_n[2]" DIFF_TERM = "TRUE";
+#TX1P     16	N10
+NET "Sora_FRL_DATA_IN_n[2]" IOSTANDARD = LVDS_25;
+NET "Sora_FRL_DATA_IN_n[2]" LOC = K32;
+NET "Sora_FRL_DATA_IN_p[3]" DIFF_TERM = "TRUE";
+#TX0N     18	P11
+NET "Sora_FRL_DATA_IN_p[3]" IOSTANDARD = LVDS_25;
+NET "Sora_FRL_DATA_IN_p[3]" LOC = G33;
+NET "Sora_FRL_DATA_IN_n[3]" DIFF_TERM = "TRUE";
+#TX0P     20	N11
+NET "Sora_FRL_DATA_IN_n[3]" IOSTANDARD = LVDS_25;
+NET "Sora_FRL_DATA_IN_n[3]" LOC = F34;
+NET "Sora_FRL_CLK_I_p" DIFF_TERM = "TRUE";
+#TCLKN    2 	P7
+NET "Sora_FRL_CLK_I_p" IOSTANDARD = LVDS_25;
+NET "Sora_FRL_CLK_I_p" LOC = N33;
+NET "Sora_FRL_CLK_I_n" DIFF_TERM = "TRUE";
+#TCLKP    4 	N7
+NET "Sora_FRL_CLK_I_n" IOSTANDARD = LVDS_25;
+NET "Sora_FRL_CLK_I_n" LOC = M33;
+
+#port H
+#RSTATE  25		P6
+NET "Sora_FRL_2nd_STATUS_OUT_p" IOSTANDARD = LVDS_25;
+NET "Sora_FRL_2nd_STATUS_OUT_p" LOC = B13;
+#RSTATE  27		N6
+NET "Sora_FRL_2nd_STATUS_OUT_n" IOSTANDARD = LVDS_25;
+NET "Sora_FRL_2nd_STATUS_OUT_n" LOC = C13;
+#RCTL    21		P5
+NET "Sora_FRL_2nd_MSG_OUT_p" IOSTANDARD = LVDS_25;
+NET "Sora_FRL_2nd_MSG_OUT_p" LOC = J10;
+#RCTL    23		N5
+NET "Sora_FRL_2nd_MSG_OUT_n" IOSTANDARD = LVDS_25;
+NET "Sora_FRL_2nd_MSG_OUT_n" LOC = J9;
+#RX3N    5   	P1
+NET "Sora_FRL_2nd_DATA_OUT_p[0]" IOSTANDARD = LVDS_25;
+NET "Sora_FRL_2nd_DATA_OUT_p[0]" LOC = L10;
+#RX3P    7   	N1
+NET "Sora_FRL_2nd_DATA_OUT_n[0]" IOSTANDARD = LVDS_25;
+NET "Sora_FRL_2nd_DATA_OUT_n[0]" LOC = L11;
+#RX2N    9   	P2
+NET "Sora_FRL_2nd_DATA_OUT_p[1]" IOSTANDARD = LVDS_25;
+NET "Sora_FRL_2nd_DATA_OUT_p[1]" LOC = K11;
+#RX2P    11  	N2
+NET "Sora_FRL_2nd_DATA_OUT_n[1]" IOSTANDARD = LVDS_25;
+NET "Sora_FRL_2nd_DATA_OUT_n[1]" LOC = J11;
+#RX1N    13  	P3
+NET "Sora_FRL_2nd_DATA_OUT_p[2]" IOSTANDARD = LVDS_25;
+NET "Sora_FRL_2nd_DATA_OUT_p[2]" LOC = H10;
+#RX1P    15  	N3
+NET "Sora_FRL_2nd_DATA_OUT_n[2]" IOSTANDARD = LVDS_25;
+NET "Sora_FRL_2nd_DATA_OUT_n[2]" LOC = H9;
+#RX0N    17  	P4
+NET "Sora_FRL_2nd_DATA_OUT_p[3]" IOSTANDARD = LVDS_25;
+NET "Sora_FRL_2nd_DATA_OUT_p[3]" LOC = D12;
+#RX0P    19  	N4
+NET "Sora_FRL_2nd_DATA_OUT_n[3]" IOSTANDARD = LVDS_25;
+NET "Sora_FRL_2nd_DATA_OUT_n[3]" LOC = C12;
+#RCLKN    1  	P0
+NET "Sora_FRL_2nd_CLK_O_p" IOSTANDARD = LVDS_25;
+NET "Sora_FRL_2nd_CLK_O_p" LOC = M8;
+#RCLKP    3  	N0
+NET "Sora_FRL_2nd_CLK_O_n" IOSTANDARD = LVDS_25;
+NET "Sora_FRL_2nd_CLK_O_n" LOC = L8;
+NET "Sora_FRL_2nd_STATUS_IN_p" DIFF_TERM = "TRUE";
+#TSTATE_N 26	P13
+NET "Sora_FRL_2nd_STATUS_IN_p" IOSTANDARD = LVDS_25;
+NET "Sora_FRL_2nd_STATUS_IN_p" LOC = J14;
+NET "Sora_FRL_2nd_STATUS_IN_n" DIFF_TERM = "TRUE";
+#TSTATE_P 28	N13
+NET "Sora_FRL_2nd_STATUS_IN_n" IOSTANDARD = LVDS_25;
+NET "Sora_FRL_2nd_STATUS_IN_n" LOC = H13;
+NET "Sora_FRL_2nd_MSG_IN_p" DIFF_TERM = "TRUE";
+#TCTLN    22	P12
+NET "Sora_FRL_2nd_MSG_IN_p" IOSTANDARD = LVDS_25;
+NET "Sora_FRL_2nd_MSG_IN_p" LOC = G8;
+NET "Sora_FRL_2nd_MSG_IN_n" DIFF_TERM = "TRUE";
+#TCTLP    24	N12
+NET "Sora_FRL_2nd_MSG_IN_n" IOSTANDARD = LVDS_25;
+NET "Sora_FRL_2nd_MSG_IN_n" LOC = H8;
+NET "Sora_FRL_2nd_DATA_IN_p[0]" DIFF_TERM = "TRUE";
+#TX3N     6 	P8
+NET "Sora_FRL_2nd_DATA_IN_p[0]" IOSTANDARD = LVDS_25;
+NET "Sora_FRL_2nd_DATA_IN_p[0]" LOC = F11;
+NET "Sora_FRL_2nd_DATA_IN_n[0]" DIFF_TERM = "TRUE";
+#TX3P     8 	N8
+NET "Sora_FRL_2nd_DATA_IN_n[0]" IOSTANDARD = LVDS_25;
+NET "Sora_FRL_2nd_DATA_IN_n[0]" LOC = E11;
+NET "Sora_FRL_2nd_DATA_IN_p[1]" DIFF_TERM = "TRUE";
+#TX2N     10	P9
+NET "Sora_FRL_2nd_DATA_IN_p[1]" IOSTANDARD = LVDS_25;
+NET "Sora_FRL_2nd_DATA_IN_p[1]" LOC = F10;
+NET "Sora_FRL_2nd_DATA_IN_n[1]" DIFF_TERM = "TRUE";
+#TX2P     12	N9
+NET "Sora_FRL_2nd_DATA_IN_n[1]" IOSTANDARD = LVDS_25;
+NET "Sora_FRL_2nd_DATA_IN_n[1]" LOC = G10;
+NET "Sora_FRL_2nd_DATA_IN_p[2]" DIFF_TERM = "TRUE";
+#TX1N     14	P10
+NET "Sora_FRL_2nd_DATA_IN_p[2]" IOSTANDARD = LVDS_25;
+NET "Sora_FRL_2nd_DATA_IN_p[2]" LOC = E9;
+NET "Sora_FRL_2nd_DATA_IN_n[2]" DIFF_TERM = "TRUE";
+#TX1P     16	N10
+NET "Sora_FRL_2nd_DATA_IN_n[2]" IOSTANDARD = LVDS_25;
+NET "Sora_FRL_2nd_DATA_IN_n[2]" LOC = E8;
+NET "Sora_FRL_2nd_DATA_IN_p[3]" DIFF_TERM = "TRUE";
+#TX0N     18	P11
+NET "Sora_FRL_2nd_DATA_IN_p[3]" IOSTANDARD = LVDS_25;
+NET "Sora_FRL_2nd_DATA_IN_p[3]" LOC = F9;
+NET "Sora_FRL_2nd_DATA_IN_n[3]" DIFF_TERM = "TRUE";
+#TX0P     20	N11
+NET "Sora_FRL_2nd_DATA_IN_n[3]" IOSTANDARD = LVDS_25;
+NET "Sora_FRL_2nd_DATA_IN_n[3]" LOC = F8;
+NET "Sora_FRL_2nd_CLK_I_p" DIFF_TERM = "TRUE";
+#TCLKN    2 	P7
+NET "Sora_FRL_2nd_CLK_I_p" IOSTANDARD = LVDS_25;
+NET "Sora_FRL_2nd_CLK_I_p" LOC = G11;
+NET "Sora_FRL_2nd_CLK_I_n" DIFF_TERM = "TRUE";
+#TCLKP    4 	N7
+NET "Sora_FRL_2nd_CLK_I_n" IOSTANDARD = LVDS_25;
+NET "Sora_FRL_2nd_CLK_I_n" LOC = G12;
+
+##port C
+#RSTATE  25		P6
+NET "Sora_FRL_3rd_STATUS_OUT_p" IOSTANDARD = LVDS_25;
+NET "Sora_FRL_3rd_STATUS_OUT_p" LOC = P31;
+#RSTATE  27		N6
+NET "Sora_FRL_3rd_STATUS_OUT_n" IOSTANDARD = LVDS_25;
+NET "Sora_FRL_3rd_STATUS_OUT_n" LOC = P30;
+#RCTL    21		P5
+NET "Sora_FRL_3rd_MSG_OUT_p" IOSTANDARD = LVDS_25;
+NET "Sora_FRL_3rd_MSG_OUT_p" LOC = H29;
+#RCTL    23		N5
+NET "Sora_FRL_3rd_MSG_OUT_n" IOSTANDARD = LVDS_25;
+NET "Sora_FRL_3rd_MSG_OUT_n" LOC = J29;
+#RX3N    5   	P1
+NET "Sora_FRL_3rd_DATA_OUT_p[0]" IOSTANDARD = LVDS_25;
+NET "Sora_FRL_3rd_DATA_OUT_p[0]" LOC = T28;
+#RX3P    7   	N1
+NET "Sora_FRL_3rd_DATA_OUT_n[0]" IOSTANDARD = LVDS_25;
+NET "Sora_FRL_3rd_DATA_OUT_n[0]" LOC = T29;
+#RX2N    9   	P2
+NET "Sora_FRL_3rd_DATA_OUT_p[1]" IOSTANDARD = LVDS_25;
+NET "Sora_FRL_3rd_DATA_OUT_p[1]" LOC = L30;
+#RX2P    11  	N2
+NET "Sora_FRL_3rd_DATA_OUT_n[1]" IOSTANDARD = LVDS_25;
+NET "Sora_FRL_3rd_DATA_OUT_n[1]" LOC = M30;
+#RX1N    13  	P3
+NET "Sora_FRL_3rd_DATA_OUT_p[2]" IOSTANDARD = LVDS_25;
+NET "Sora_FRL_3rd_DATA_OUT_p[2]" LOC = J30;
+#RX1P    15  	N3
+NET "Sora_FRL_3rd_DATA_OUT_n[2]" IOSTANDARD = LVDS_25;
+NET "Sora_FRL_3rd_DATA_OUT_n[2]" LOC = J31;
+#RX0N    17  	P4
+NET "Sora_FRL_3rd_DATA_OUT_p[3]" IOSTANDARD = LVDS_25;
+NET "Sora_FRL_3rd_DATA_OUT_p[3]" LOC = E29;
+#RX0P    19  	N4
+NET "Sora_FRL_3rd_DATA_OUT_n[3]" IOSTANDARD = LVDS_25;
+NET "Sora_FRL_3rd_DATA_OUT_n[3]" LOC = F29;
+#RCLKN    1  	P0
+NET "Sora_FRL_3rd_CLK_O_p" IOSTANDARD = LVDS_25;
+NET "Sora_FRL_3rd_CLK_O_p" LOC = T31;
+#RCLKP    3  	N0
+NET "Sora_FRL_3rd_CLK_O_n" IOSTANDARD = LVDS_25;
+NET "Sora_FRL_3rd_CLK_O_n" LOC = R31;
+NET "Sora_FRL_3rd_STATUS_IN_p" DIFF_TERM = "TRUE";
+#TSTATE_N 26	P13
+NET "Sora_FRL_3rd_STATUS_IN_p" IOSTANDARD = LVDS_25;
+NET "Sora_FRL_3rd_STATUS_IN_p" LOC = J20;
+NET "Sora_FRL_3rd_STATUS_IN_n" DIFF_TERM = "TRUE";
+#TSTATE_P 28	N13
+NET "Sora_FRL_3rd_STATUS_IN_n" IOSTANDARD = LVDS_25;
+NET "Sora_FRL_3rd_STATUS_IN_n" LOC = J21;
+NET "Sora_FRL_3rd_MSG_IN_p" DIFF_TERM = "TRUE";
+#TCTLN    22	P12
+NET "Sora_FRL_3rd_MSG_IN_p" IOSTANDARD = LVDS_25;
+NET "Sora_FRL_3rd_MSG_IN_p" LOC = K28;
+NET "Sora_FRL_3rd_MSG_IN_n" DIFF_TERM = "TRUE";
+#TCTLP    24	N12
+NET "Sora_FRL_3rd_MSG_IN_n" IOSTANDARD = LVDS_25;
+NET "Sora_FRL_3rd_MSG_IN_n" LOC = L28;
+NET "Sora_FRL_3rd_DATA_IN_p[0]" DIFF_TERM = "TRUE";
+#TX3N     6 	P8
+NET "Sora_FRL_3rd_DATA_IN_p[0]" IOSTANDARD = LVDS_25;
+NET "Sora_FRL_3rd_DATA_IN_p[0]" LOC = W34;
+NET "Sora_FRL_3rd_DATA_IN_n[0]" DIFF_TERM = "TRUE";
+#TX3P     8 	N8
+NET "Sora_FRL_3rd_DATA_IN_n[0]" IOSTANDARD = LVDS_25;
+NET "Sora_FRL_3rd_DATA_IN_n[0]" LOC = V34;
+NET "Sora_FRL_3rd_DATA_IN_p[1]" DIFF_TERM = "TRUE";
+#TX2N     10	P9
+NET "Sora_FRL_3rd_DATA_IN_p[1]" IOSTANDARD = LVDS_25;
+NET "Sora_FRL_3rd_DATA_IN_p[1]" LOC = V32;
+NET "Sora_FRL_3rd_DATA_IN_n[1]" DIFF_TERM = "TRUE";
+#TX2P     12	N9
+NET "Sora_FRL_3rd_DATA_IN_n[1]" IOSTANDARD = LVDS_25;
+NET "Sora_FRL_3rd_DATA_IN_n[1]" LOC = V33;
+NET "Sora_FRL_3rd_DATA_IN_p[2]" DIFF_TERM = "TRUE";
+#TX1N     14	P10
+NET "Sora_FRL_3rd_DATA_IN_p[2]" IOSTANDARD = LVDS_25;
+NET "Sora_FRL_3rd_DATA_IN_p[2]" LOC = U33;
+NET "Sora_FRL_3rd_DATA_IN_n[2]" DIFF_TERM = "TRUE";
+#TX1P     16	N10
+NET "Sora_FRL_3rd_DATA_IN_n[2]" IOSTANDARD = LVDS_25;
+NET "Sora_FRL_3rd_DATA_IN_n[2]" LOC = T34;
+NET "Sora_FRL_3rd_DATA_IN_p[3]" DIFF_TERM = "TRUE";
+#TX0N     18	P11
+NET "Sora_FRL_3rd_DATA_IN_p[3]" IOSTANDARD = LVDS_25;
+NET "Sora_FRL_3rd_DATA_IN_p[3]" LOC = AD32;
+NET "Sora_FRL_3rd_DATA_IN_n[3]" DIFF_TERM = "TRUE";
+#TX0P     20	N11
+NET "Sora_FRL_3rd_DATA_IN_n[3]" IOSTANDARD = LVDS_25;
+NET "Sora_FRL_3rd_DATA_IN_n[3]" LOC = AE32;
+NET "Sora_FRL_3rd_CLK_I_p" DIFF_TERM = "TRUE";
+#TCLKN    2 	P7
+NET "Sora_FRL_3rd_CLK_I_p" IOSTANDARD = LVDS_25;
+NET "Sora_FRL_3rd_CLK_I_p" LOC = Y32;
+NET "Sora_FRL_3rd_CLK_I_n" DIFF_TERM = "TRUE";
+#TCLKP    4 	N7
+NET "Sora_FRL_3rd_CLK_I_n" IOSTANDARD = LVDS_25;
+NET "Sora_FRL_3rd_CLK_I_n" LOC = W32;
+
+##port F
+#RSTATE  25		P6
+NET "Sora_FRL_4th_STATUS_OUT_p" IOSTANDARD = LVDS_25;
+NET "Sora_FRL_4th_STATUS_OUT_p" LOC = H7;
+#RSTATE  27		N6
+NET "Sora_FRL_4th_STATUS_OUT_n" IOSTANDARD = LVDS_25;
+NET "Sora_FRL_4th_STATUS_OUT_n" LOC = J7;
+#RCTL    21		P5
+NET "Sora_FRL_4th_MSG_OUT_p" IOSTANDARD = LVDS_25;
+NET "Sora_FRL_4th_MSG_OUT_p" LOC = P7;
+#RCTL    23		N5
+NET "Sora_FRL_4th_MSG_OUT_n" IOSTANDARD = LVDS_25;
+NET "Sora_FRL_4th_MSG_OUT_n" LOC = P6;
+#RX3N    5   	P1
+NET "Sora_FRL_4th_DATA_OUT_p[0]" IOSTANDARD = LVDS_25;
+NET "Sora_FRL_4th_DATA_OUT_p[0]" LOC = M6;
+#RX3P    7   	N1
+NET "Sora_FRL_4th_DATA_OUT_n[0]" IOSTANDARD = LVDS_25;
+NET "Sora_FRL_4th_DATA_OUT_n[0]" LOC = M5;
+#RX2N    9   	P2
+NET "Sora_FRL_4th_DATA_OUT_p[1]" IOSTANDARD = LVDS_25;
+NET "Sora_FRL_4th_DATA_OUT_p[1]" LOC = L4;
+#RX2P    11  	N2
+NET "Sora_FRL_4th_DATA_OUT_n[1]" IOSTANDARD = LVDS_25;
+NET "Sora_FRL_4th_DATA_OUT_n[1]" LOC = L5;
+#RX1N    13  	P3
+NET "Sora_FRL_4th_DATA_OUT_p[2]" IOSTANDARD = LVDS_25;
+NET "Sora_FRL_4th_DATA_OUT_p[2]" LOC = N5;
+#RX1P    15  	N3
+NET "Sora_FRL_4th_DATA_OUT_n[2]" IOSTANDARD = LVDS_25;
+NET "Sora_FRL_4th_DATA_OUT_n[2]" LOC = P5;
+#RX0N    17  	P4
+NET "Sora_FRL_4th_DATA_OUT_p[3]" IOSTANDARD = LVDS_25;
+NET "Sora_FRL_4th_DATA_OUT_p[3]" LOC = R6;
+#RX0P    19  	N4
+NET "Sora_FRL_4th_DATA_OUT_n[3]" IOSTANDARD = LVDS_25;
+NET "Sora_FRL_4th_DATA_OUT_n[3]" LOC = T6;
+#RCLKN    1  	P0
+NET "Sora_FRL_4th_CLK_O_p" IOSTANDARD = LVDS_25;
+NET "Sora_FRL_4th_CLK_O_p" LOC = K7;
+#RCLKP    3  	N0
+NET "Sora_FRL_4th_CLK_O_n" IOSTANDARD = LVDS_25;
+NET "Sora_FRL_4th_CLK_O_n" LOC = K6;
+NET "Sora_FRL_4th_STATUS_IN_p" DIFF_TERM = "TRUE";
+#TSTATE_N 26	P13
+NET "Sora_FRL_4th_STATUS_IN_p" IOSTANDARD = LVDS_25;
+NET "Sora_FRL_4th_STATUS_IN_p" LOC = G15;
+NET "Sora_FRL_4th_STATUS_IN_n" DIFF_TERM = "TRUE";
+#TSTATE_P 28	N13
+NET "Sora_FRL_4th_STATUS_IN_n" IOSTANDARD = LVDS_25;
+NET "Sora_FRL_4th_STATUS_IN_n" LOC = G16;
+NET "Sora_FRL_4th_MSG_IN_p" DIFF_TERM = "TRUE";
+#TCTLN    22	P12
+NET "Sora_FRL_4th_MSG_IN_p" IOSTANDARD = LVDS_25;
+NET "Sora_FRL_4th_MSG_IN_p" LOC = AJ7;
+NET "Sora_FRL_4th_MSG_IN_n" DIFF_TERM = "TRUE";
+#TCTLP    24	N12
+NET "Sora_FRL_4th_MSG_IN_n" IOSTANDARD = LVDS_25;
+NET "Sora_FRL_4th_MSG_IN_n" LOC = AJ6;
+NET "Sora_FRL_4th_DATA_IN_p[0]" DIFF_TERM = "TRUE";
+#TX3N     6 	P8
+NET "Sora_FRL_4th_DATA_IN_p[0]" IOSTANDARD = LVDS_25;
+NET "Sora_FRL_4th_DATA_IN_p[0]" LOC = V10;
+NET "Sora_FRL_4th_DATA_IN_n[0]" DIFF_TERM = "TRUE";
+#TX3P     8 	N8
+NET "Sora_FRL_4th_DATA_IN_n[0]" IOSTANDARD = LVDS_25;
+NET "Sora_FRL_4th_DATA_IN_n[0]" LOC = V9;
+NET "Sora_FRL_4th_DATA_IN_p[1]" DIFF_TERM = "TRUE";
+#TX2N     10	P9
+NET "Sora_FRL_4th_DATA_IN_p[1]" IOSTANDARD = LVDS_25;
+NET "Sora_FRL_4th_DATA_IN_p[1]" LOC = AE7;
+NET "Sora_FRL_4th_DATA_IN_n[1]" DIFF_TERM = "TRUE";
+#TX2P     12	N9
+NET "Sora_FRL_4th_DATA_IN_n[1]" IOSTANDARD = LVDS_25;
+NET "Sora_FRL_4th_DATA_IN_n[1]" LOC = AF6;
+NET "Sora_FRL_4th_DATA_IN_p[2]" DIFF_TERM = "TRUE";
+#TX1N     14	P10
+NET "Sora_FRL_4th_DATA_IN_p[2]" IOSTANDARD = LVDS_25;
+NET "Sora_FRL_4th_DATA_IN_p[2]" LOC = V8;
+NET "Sora_FRL_4th_DATA_IN_n[2]" DIFF_TERM = "TRUE";
+#TX1P     16	N10
+NET "Sora_FRL_4th_DATA_IN_n[2]" IOSTANDARD = LVDS_25;
+NET "Sora_FRL_4th_DATA_IN_n[2]" LOC = U8;
+NET "Sora_FRL_4th_DATA_IN_p[3]" DIFF_TERM = "TRUE";
+#TX0N     18	P11
+NET "Sora_FRL_4th_DATA_IN_p[3]" IOSTANDARD = LVDS_25;
+NET "Sora_FRL_4th_DATA_IN_p[3]" LOC = AH7;
+NET "Sora_FRL_4th_DATA_IN_n[3]" DIFF_TERM = "TRUE";
+#TX0P     20	N11
+NET "Sora_FRL_4th_DATA_IN_n[3]" IOSTANDARD = LVDS_25;
+NET "Sora_FRL_4th_DATA_IN_n[3]" LOC = AG7;
+NET "Sora_FRL_4th_CLK_I_p" DIFF_TERM = "TRUE";
+#TCLKN    2 	P7
+NET "Sora_FRL_4th_CLK_I_p" IOSTANDARD = LVDS_25;
+NET "Sora_FRL_4th_CLK_I_p" LOC = W10;
+NET "Sora_FRL_4th_CLK_I_n" DIFF_TERM = "TRUE";
+#TCLKP    4 	N7
+NET "Sora_FRL_4th_CLK_I_n" IOSTANDARD = LVDS_25;
+NET "Sora_FRL_4th_CLK_I_n" LOC = W9;
+#
+NET "Sora_FRL_CLK_I_p" CLOCK_DEDICATED_ROUTE = FALSE;
+NET "Sora_FRL_2nd_CLK_I_p" CLOCK_DEDICATED_ROUTE = FALSE;
+NET "Sora_FRL_3rd_CLK_I_p" CLOCK_DEDICATED_ROUTE = FALSE;
+NET "Sora_FRL_4th_CLK_I_p" CLOCK_DEDICATED_ROUTE = FALSE;
+
+################################################################################
+# I/O STANDARDS for Sora_FRL
+################################################################################
+#NET "Sora_FRL_CLK_O_p"		IOSTANDARD = LVDS_25;
+#NET "Sora_FRL_CLK_O_n"		IOSTANDARD = LVDS_25;
+#NET "Sora_FRL_DATA_IN_p[0]" 	IOSTANDARD = LVDS_25;
+#NET "Sora_FRL_DATA_IN_n[0]"	IOSTANDARD = LVDS_25;
+#NET "Sora_FRL_DATA_IN_p[1]"	IOSTANDARD = LVDS_25;
+#NET "Sora_FRL_DATA_IN_n[1]"	IOSTANDARD = LVDS_25;
+#NET "Sora_FRL_DATA_IN_p[2]"	IOSTANDARD = LVDS_25;
+#NET "Sora_FRL_DATA_IN_n[2]"	IOSTANDARD = LVDS_25;
+#NET "Sora_FRL_DATA_IN_p[3]"	IOSTANDARD = LVDS_25;
+#NET "Sora_FRL_DATA_IN_n[3]"	IOSTANDARD = LVDS_25;
+#NET "Sora_FRL_MSG_IN_p"			IOSTANDARD = LVDS_25;
+#NET "Sora_FRL_MSG_IN_n"			IOSTANDARD = LVDS_25;
+#NET "Sora_FRL_STATUS_IN_p"		IOSTANDARD = LVDS_25;
+#NET "Sora_FRL_STATUS_IN_n"		IOSTANDARD = LVDS_25;
+#
+#NET "Sora_FRL_CLK_I_p"		IOSTANDARD = LVDS_25;
+#NET "Sora_FRL_CLK_I_n"		IOSTANDARD = LVDS_25;
+#NET "Sora_FRL_DATA_OUT_p[0]" 	IOSTANDARD = LVDS_25;
+#NET "Sora_FRL_DATA_OUT_n[0]"	IOSTANDARD = LVDS_25;
+#NET "Sora_FRL_DATA_OUT_p[1]"	IOSTANDARD = LVDS_25;
+#NET "Sora_FRL_DATA_OUT_n[1]"	IOSTANDARD = LVDS_25;
+#NET "Sora_FRL_DATA_OUT_p[2]"	IOSTANDARD = LVDS_25;
+#NET "Sora_FRL_DATA_OUT_n[2]"	IOSTANDARD = LVDS_25;
+#NET "Sora_FRL_DATA_OUT_p[3]"	IOSTANDARD = LVDS_25;
+#NET "Sora_FRL_DATA_OUT_n[3]"	IOSTANDARD = LVDS_25;
+#NET "Sora_FRL_MSG_OUT_p"		IOSTANDARD = LVDS_25;
+#NET "Sora_FRL_MSG_OUT_n"		IOSTANDARD = LVDS_25;
+#NET "Sora_FRL_STATUS_OUT_p"	IOSTANDARD = LVDS_25;
+#NET "Sora_FRL_STATUS_OUT_n"	IOSTANDARD = LVDS_25;
+
+################################################################################
+# I/O STANDARDS for DDR2
+################################################################################
+NET  "DDR2_DQ[*]"                                    IOSTANDARD = SSTL18_II;
+NET  "DDR2_A[*]"                                     IOSTANDARD = SSTL18_II;
+NET  "DDR2_BA[*]"                                    IOSTANDARD = SSTL18_II;
+NET  "DDR2_RAS_N"                                    IOSTANDARD = SSTL18_II;
+NET  "DDR2_CAS_N"                                    IOSTANDARD = SSTL18_II;
+NET  "DDR2_WE_N"                                     IOSTANDARD = SSTL18_II;
+#NET  "DDR2_RESET_N"                                  IOSTANDARD = LVCMOS25;
+NET  "DDR2_CS_N"                                     IOSTANDARD = SSTL18_II;
+NET  "DDR2_ODT"                                      IOSTANDARD = SSTL18_II;
+NET  "DDR2_CKE"                                      IOSTANDARD = SSTL18_II;
+NET  "DDR2_DM[*]"                                    IOSTANDARD = SSTL18_II;
+NET  "SYS_CLK_P"                                     IOSTANDARD = LVDS_25; 
+NET  "SYS_CLK_N"                                     IOSTANDARD = LVDS_25; 
+NET  "CLK200_P"                                      IOSTANDARD = LVDS_25;
+NET  "CLK200_N"                                      IOSTANDARD = LVDS_25;
+NET  "DDR2_DQS[*]"                              IOSTANDARD = DIFF_SSTL18_II_DCI;
+NET  "DDR2_DQS_N[*]"                            IOSTANDARD = DIFF_SSTL18_II_DCI;
+NET  "DDR2_CK[*]"                               IOSTANDARD = DIFF_SSTL18_II;
+NET  "DDR2_CK_N[*]"                             IOSTANDARD = DIFF_SSTL18_II;
+
+################################################################################
+# Location Constraints for DDR2
+################################################################################
+NET  "DDR2_DQ[0]"                                     LOC = "W24" ; #Bank 12
+NET  "DDR2_DQ[1]"                                     LOC = "V24" ; #Bank 12
+NET  "DDR2_DQ[2]"                                     LOC = "Y26" ; #Bank 12
+NET  "DDR2_DQ[3]"                                     LOC = "W26" ; #Bank 12
+NET  "DDR2_DQ[4]"                                     LOC = "V25" ; #Bank 12
+NET  "DDR2_DQ[5]"                                     LOC = "W25" ; #Bank 12
+NET  "DDR2_DQ[6]"                                     LOC = "Y27" ; #Bank 12
+NET  "DDR2_DQ[7]"                                     LOC = "W27" ; #Bank 12
+NET  "DDR2_DQ[8]"                                     LOC = "V28" ; #Bank 12
+NET  "DDR2_DQ[9]"                                     LOC = "V27" ; #Bank 12
+NET  "DDR2_DQ[10]"                                    LOC = "W31" ; #Bank 12
+NET  "DDR2_DQ[11]"                                    LOC = "Y31" ; #Bank 12
+NET  "DDR2_DQ[12]"                                    LOC = "W29" ; #Bank 12
+NET  "DDR2_DQ[13]"                                    LOC = "V29" ; #Bank 12
+NET  "DDR2_DQ[14]"                                    LOC = "Y28" ; #Bank 12
+NET  "DDR2_DQ[15]"                                    LOC = "Y29" ; #Bank 12
+NET  "DDR2_DQ[16]"                                    LOC = "AC29"; #Bank 12
+NET  "DDR2_DQ[17]"                                    LOC = "AF31"; #Bank 12
+NET  "DDR2_DQ[18]"                                    LOC = "AJ31"; #Bank 12
+NET  "DDR2_DQ[19]"                                    LOC = "AK31"; #Bank 12
+NET  "DDR2_DQ[20]"                                    LOC = "AF29"; #Bank 12
+NET  "DDR2_DQ[21]"                                    LOC = "AF30"; #Bank 12
+NET  "DDR2_DQ[22]"                                    LOC = "AJ30"; #Bank 12
+NET  "DDR2_DQ[23]"                                    LOC = "AH30"; #Bank 12
+NET  "DDR2_DQ[24]"                                    LOC = "AA25"; #Bank 18
+NET  "DDR2_DQ[25]"                                    LOC = "AA26"; #Bank 18
+NET  "DDR2_DQ[26]"                                    LOC = "AB27"; #Bank 18
+NET  "DDR2_DQ[27]"                                    LOC = "AC27"; #Bank 18
+NET  "DDR2_DQ[28]"                                    LOC = "Y24"; #Bank 18
+NET  "DDR2_DQ[29]"                                    LOC = "AA24"; #Bank 18
+NET  "DDR2_DQ[30]"                                    LOC = "AB25"; #Bank 18
+NET  "DDR2_DQ[31]"                                    LOC = "AB26"; #Bank 18
+NET  "DDR2_DQ[32]"                                    LOC = "AB28"; #Bank 18
+NET  "DDR2_DQ[33]"                                    LOC = "AA28"; #Bank 18
+NET  "DDR2_DQ[34]"                                    LOC = "AG28"; #Bank 18
+NET  "DDR2_DQ[35]"                                    LOC = "AH28"; #Bank 18
+NET  "DDR2_DQ[36]"                                    LOC = "AK26"; #Bank 18
+NET  "DDR2_DQ[37]"                                    LOC = "AF28"; #Bank 18
+NET  "DDR2_DQ[38]"                                    LOC = "AE28"; #Bank 18
+NET  "DDR2_DQ[39]"                                    LOC = "AJ27"; #Bank 18
+NET  "DDR2_DQ[40]"                                    LOC = "AG25"; #Bank 18
+NET  "DDR2_DQ[41]"                                    LOC = "AG27"; #Bank 18
+NET  "DDR2_DQ[42]"                                    LOC = "AE27"; #Bank 18
+NET  "DDR2_DQ[43]"                                    LOC = "AE26"; #Bank 18
+NET  "DDR2_DQ[44]"                                    LOC = "AC25"; #Bank 18
+NET  "DDR2_DQ[45]"                                    LOC = "AC24"; #Bank 18
+NET  "DDR2_DQ[46]"                                    LOC = "AD26"; #Bank 18
+NET  "DDR2_DQ[47]"                                    LOC = "AD25"; #Bank 18
+NET  "DDR2_DQ[48]"                                    LOC = "AN14"; #Bank 20
+NET  "DDR2_DQ[49]"                                    LOC = "AP14"; #Bank 20
+NET  "DDR2_DQ[50]"                                    LOC = "AB10"; #Bank 20
+NET  "DDR2_DQ[51]"                                    LOC = "AA10"; #Bank 20
+NET  "DDR2_DQ[52]"                                    LOC = "AN13"; #Bank 20
+NET  "DDR2_DQ[53]"                                    LOC = "AM13"; #Bank 20
+NET  "DDR2_DQ[54]"                                    LOC = "AA8"; #Bank 20
+NET  "DDR2_DQ[55]"                                    LOC = "AA9"; #Bank 20
+NET  "DDR2_DQ[56]"                                    LOC = "AC8"; #Bank 20
+NET  "DDR2_DQ[57]"                                    LOC = "AB8"; #Bank 20
+NET  "DDR2_DQ[58]"                                    LOC = "AM12"; #Bank 20
+NET  "DDR2_DQ[59]"                                    LOC = "AM11"; #Bank 20
+NET  "DDR2_DQ[60]"                                    LOC = "AC10"; #Bank 20
+NET  "DDR2_DQ[61]"                                    LOC = "AC9";  #Bank 20
+NET  "DDR2_DQ[62]"                                    LOC = "AK9"; #Bank 20
+NET  "DDR2_DQ[63]"                                    LOC = "AF9"; #Bank 20
+NET  "DDR2_A[12]"                                     LOC = "AH19"; #Bank 18
+NET  "DDR2_A[11]"                                     LOC = "AH20"; #Bank 18
+NET  "DDR2_A[10]"                                     LOC = "AG15"; #Bank 18
+NET  "DDR2_A[9]"                                      LOC = "AH15"; #Bank 20
+NET  "DDR2_A[8]"                                      LOC = "AG20"; #Bank 20
+NET  "DDR2_A[7]"                                      LOC = "AG16"; #Bank 20
+NET  "DDR2_A[6]"                                      LOC = "AH17"; #Bank 22
+NET  "DDR2_A[5]"                                      LOC = "AH22"; #Bank 22
+NET  "DDR2_A[4]"                                      LOC = "AG22"; #Bank 22
+NET  "DDR2_A[3]"                                      LOC = "AG17"; #Bank 22
+NET  "DDR2_A[2]"                                      LOC = "AH18"; #Bank 22
+NET  "DDR2_A[1]"                                      LOC = "AF18"; #Bank 22
+NET  "DDR2_A[0]"                                      LOC = "AE18"; #Bank 22
+NET  "DDR2_BA[1]"                                     LOC = "AH13"; #Bank 22
+NET  "DDR2_BA[0]"                                     LOC = "AH14"; #Bank 22
+NET  "DDR2_RAS_N"                                     LOC = "AG13"; #Bank 22
+NET  "DDR2_CAS_N"                                     LOC = "AH12"; #Bank 22
+NET  "DDR2_WE_N"                                      LOC = "AF19"; #Bank 22
+#NET  "DDR2_RESET_N"                                   LOC = "U7";   #Bank 22 output signal
+NET  "DDR2_CS_N"                                      LOC = "AG18"; #Bank 22
+NET  "DDR2_ODT"                                       LOC = "AG30"; #Bank 22
+NET  "DDR2_CKE"                                       LOC = "AG8"; #Bank 22
+NET  "DDR2_DM[0]"                                     LOC = "V30"; #Bank 12
+NET  "DDR2_DM[1]"                                     LOC = "AD30"; #Bank 12
+NET  "DDR2_DM[2]"                                     LOC = "AH29"; #Bank 12
+NET  "DDR2_DM[3]"                                     LOC = "AC28"; #Bank 18
+NET  "DDR2_DM[4]"                                     LOC = "AF24"; #Bank 18
+NET  "DDR2_DM[5]"                                     LOC = "AD24"; #Bank 18
+NET  "DDR2_DM[6]"                                     LOC = "AP12"; #Bank 20
+NET  "DDR2_DM[7]"                                     LOC = "AJ9"; #Bank 20
+NET  "DDR2_DQS[0]"                                    LOC = "AB31"; #Bank 12
+NET  "DDR2_DQS_N[0]"                                  LOC = "AA31"; #Bank 12
+NET  "DDR2_DQS[1]"                                    LOC = "AB30"; #Bank 12
+NET  "DDR2_DQS_N[1]"                                  LOC = "AC30"; #Bank 12
+NET  "DDR2_DQS[2]"                                    LOC = "AA29"; #Bank 12
+NET  "DDR2_DQS_N[2]"                                  LOC = "AA30"; #Bank 12
+NET  "DDR2_DQS[3]"                                    LOC = "AK29"; #Bank 18
+NET  "DDR2_DQS_N[3]"                                  LOC = "AJ29"; #Bank 18
+NET  "DDR2_DQS[4]"                                    LOC = "AK28"; #Bank 18
+NET  "DDR2_DQS_N[4]"                                  LOC = "AK27"; #Bank 18
+NET  "DDR2_DQS[5]"                                    LOC = "AH27"; #Bank 18
+NET  "DDR2_DQS_N[5]"                                  LOC = "AJ26"; #Bank 18
+NET  "DDR2_DQS[6]"                                    LOC = "AD10"; #Bank 20
+NET  "DDR2_DQS_N[6]"                                  LOC = "AD11"; #Bank 20
+NET  "DDR2_DQS[7]"                                    LOC = "AK11"; #Bank 20
+NET  "DDR2_DQS_N[7]"                                  LOC = "AJ11"; #Bank 20
+NET  "DDR2_CK[0]"                                     LOC = "AH9" ; #Bank 12
+NET  "DDR2_CK_N[0]"                                   LOC = "AH10" ; #Bank 12
+NET  "DDR2_CK[1]"                                     LOC = "AG10" ; #Bank 12
+NET  "DDR2_CK_N[1]"                                   LOC = "AG11" ; #Bank 12
+
+###################################################
+##  Floorplanned location constrains - non-I/O
+###################################################
+# PLL specification LOCs 
+INST "ddr2_cntrl_inst/u_infrastructure/u_dcm_base" LOC = DCM_ADV_X0Y6;
+
+##Floorplan some of the blockrams
+
+#Egress fifo BRAMS
+###AREA_GROUP "pblock_egress_fifos" RANGE=RAMB36_X0Y6:RAMB36_X0Y11;
+###INST "dma_ddr2_if_inst/egress_fifo_wrapper_inst/egress_fifo_a" AREA_GROUP = "pblock_egress_fifos";
+###INST "dma_ddr2_if_inst/egress_fifo_wrapper_inst/egress_fifo_b" AREA_GROUP = "pblock_egress_fifos";
+#
+##Ingress fifo BRAMS
+##INST "dma_ddr2_if_inst/ingress_fifo_a"  LOC = "RAMB36_X0Y3";
+##INST "dma_ddr2_if_inst/ingress_fifo_b"  LOC = "RAMB36_X0Y4";
+#
+##DDR2 controller fifo BRAMS
+#INST "ddr2_cntrl_inst/u_ddr2_top_0/u_mem_if_top_0/u_usr_top_0/u_backend_fifos_0/gen_wdf[1].u_usr_wr_fifo/u_wdf"  LOC = "RAMB36_X0Y2";
+#INST "ddr2_cntrl_inst/u_ddr2_top_0/u_mem_if_top_0/u_usr_top_0/u_backend_fifos_0/gen_wdf[0].u_usr_wr_fifo/u_wdf"  LOC = "RAMB36_X0Y5";
+#INST "ddr2_cntrl_inst/u_ddr2_top_0/u_mem_if_top_0/u_usr_top_0/u_backend_fifos_0/u_usr_addr_fifo_0/u_af"  LOC = "RAMB36_X0Y7";
+#
+##RX Engine fifo BRAMS
+#INST "pcie_dma_wrapper_inst/rx_engine_inst/data_trn_mem_fifo_inst/BU2/U0/grf.rf/mem/gbm.gbmg.gbmga.ngecc.bmg/blk_mem_generator/valid.cstr/ramloop[3].ram.r/v5_noinit.ram/SDP.SINGLE_PRIM36.TDP"  LOC = "RAMB36_X1Y4";
+#INST "pcie_dma_wrapper_inst/rx_engine_inst/data_trn_mem_fifo_inst/BU2/U0/grf.rf/mem/gbm.gbmg.gbmga.ngecc.bmg/blk_mem_generator/valid.cstr/ramloop[2].ram.r/v5_noinit.ram/SDP.SINGLE_PRIM36.TDP"  LOC = "RAMB36_X1Y3";
+#INST "pcie_dma_wrapper_inst/rx_engine_inst/data_trn_mem_fifo_inst/BU2/U0/grf.rf/mem/gbm.gbmg.gbmga.ngecc.bmg/blk_mem_generator/valid.cstr/ramloop[1].ram.r/v5_noinit.ram/SDP.SINGLE_PRIM36.TDP"  LOC = "RAMB36_X1Y1";
+#INST "pcie_dma_wrapper_inst/rx_engine_inst/data_trn_mem_fifo_inst/BU2/U0/grf.rf/mem/gbm.gbmg.gbmga.ngecc.bmg/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_noinit.ram/SDP.SINGLE_PRIM36.TDP"  LOC = "RAMB36_X1Y2";
+#
+## PlanAhead generated physical constraints 
+#AREA_GROUP "pblock_r6_mem_cntrl" RANGE=SLICE_X12Y0:SLICE_X49Y9, 
+#                                       SLICE_X0Y0:SLICE_X11Y49, 
+#                                       SLICE_X12Y30:SLICE_X23Y44;
+#AREA_GROUP "pblock_r6_mem_cntrl" RANGE=RAMB36_X0Y0:RAMB36_X0Y9, 
+#                                       RAMB36_X1Y0:RAMB36_X1Y1;
+#INST "ddr2_cntrl_inst" AREA_GROUP = "pblock_r6_mem_cntrl";
+#
+##AREA_GROUP "pblock_dma_ctrl_wrapper" RANGE=SLICE_X0Y50:SLICE_X19Y89;
+#AREA_GROUP "pblock_dma_ctrl_wrapper" RANGE=SLICE_X0Y50:SLICE_X25Y95;
+#INST "pcie_dma_wrapper_inst/firmware_ctrl_wrapper_inst" AREA_GROUP = "pblock_dma_ctrl_wrapper";

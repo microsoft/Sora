@@ -1,0 +1,1 @@
+Xilinx files (mainly IP_cores) are removed to avoid potential licensing issue. The \ip_cores folder only contains necessary configuration files for customizing the IP cores. Please generate your own IP cores using Xilinx core generater. If you need help on this, you can try to contact V3best.

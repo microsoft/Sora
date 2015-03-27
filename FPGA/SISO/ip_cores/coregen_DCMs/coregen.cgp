@@ -1,0 +1,20 @@
+# Date: Wed Jul 08 14:34:38 2009
+SET addpads = False
+SET asysymbol = False
+SET busformat = BusFormatAngleBracketNotRipped
+SET createndf = False
+SET designentry = Verilog
+SET device = xc5vlx50t
+SET devicefamily = virtex5
+SET flowvendor = Other
+SET formalverification = False
+SET foundationsym = False
+SET implementationfiletype = Ngc
+SET package = ff1136
+SET removerpms = False
+SET simulationfiles = Behavioral
+SET speedgrade = -1
+SET verilogsim = True
+SET vhdlsim = False
+SET workingdirectory = D:\mydev\FPGA\xapp859_sora\fpga\ip_cores\coregen_DCMs\tmp
+

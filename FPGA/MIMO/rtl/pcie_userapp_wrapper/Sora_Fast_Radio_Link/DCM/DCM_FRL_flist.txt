@@ -1,0 +1,4 @@
+# Output products list for <DCM_FRL>
+DCM_FRL_flist.txt
+DCM_FRL_readme.txt
+DCM_FRL_xmdf.tcl
