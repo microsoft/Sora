@@ -1,0 +1,119 @@
+;-------------------------------------------------------------------------------
+; SDRMiniport.INF
+;
+; Microsoft Virtual Ethernet Adapter
+;
+; Copyright (c) Microsoft Corporation.  All rights reserved.
+
+
+[version]
+Signature   = "$Windows NT$"
+Class       = Net
+ClassGUID   = {4d36e972-e325-11ce-bfc1-08002be10318}
+Provider    = %Msft%
+CatalogFile = sdr.cat
+
+[ControlFlags]
+ExcludeFromSelect={b85b7c50-6a01-11d2-b841-00c04fad5171}\SDRMiniport
+
+[Manufacturer]
+%Msft% = Msft,NTx86,NTia64,NTamd64
+
+;For Win2k
+
+[Msft]
+%SDRMiniport.DeviceDesc%    = SDRMiniport.ndi, root\SDRMiniport ; root enumerated 
+%SDRMiniport.DeviceDesc%    = SDRMiniport.ndi, {b85b7c50-6a01-11d2-b841-00c04fad5171}\SDRMiniport ; Toaster Bus enumerated 
+
+;For WinXP and later
+
+[Msft.NTx86]
+%SDRMiniport.DeviceDesc%    = SDRMiniport.ndi, root\SDRMiniport ; root enumerated 
+%SDRMiniport.DeviceDesc%    = SDRMiniport.ndi, {b85b7c50-6a01-11d2-b841-00c04fad5171}\SDRMiniport ; Toaster Bus enumerated 
+
+[Msft.NTia64]
+%SDRMiniport.DeviceDesc%    = SDRMiniport.ndi, root\SDRMiniport ; Root enumerated 
+%SDRMiniport.DeviceDesc%    = SDRMiniport.ndi, {b85b7c50-6a01-11d2-b841-00c04fad5171}\SDRMiniport ; Toaster Bus enumerated 
+
+[Msft.NTamd64]
+%SDRMiniport.DeviceDesc%    = SDRMiniport.ndi, root\SDRMiniport ; Root enumerated 
+%SDRMiniport.DeviceDesc%    = SDRMiniport.ndi, {b85b7c50-6a01-11d2-b841-00c04fad5171}\SDRMiniport ; Toaster Bus enumerated 
+
+;-------------------------------------------------------------------------------
+; Microsoft Virtual Ethernet Adapter
+;
+[SDRMiniport.ndi]
+Characteristics = 0x1 ; NCF_VIRTUAL
+*IfType            = 0x6 ; IF_TYPE_ETHERNET_CSMACD
+*MediaType         = 0x0 ; NdisMedium802_3
+*PhysicalMediaType = 14  ; NdisPhysicalMedium802_3
+AddReg          = SDRMiniport.Reg
+CopyFiles       = SDRMiniport.CopyFiles
+
+[SDRMiniport.ndi.Services]
+AddService      = SDRMiniport, 2, SDRMiniport.Service, SDRMiniport.EventLog
+
+;-----------------------------------------------------------------------------
+; Microsoft Virtual Miniport Common
+;
+[SDRMiniport.Reg]
+HKR,    ,                         NetworkAddress,      0, "02-50-F2-00-00-01"
+HKR,    ,                         BSSID,               0, "B6 DB 71 64 51 75"
+HKR,    ,                         ModMode,             0, "802.11a"
+HKR,    ,                         11ADataRate,         0, "6"
+HKR,    ,                         DataRate,            0, "0x6E"
+HKR,    ,                         ModSelect,           0, "0x00"
+HKR,    ,                         PreambleType,        0, "0x00"
+HKR,    ,                         SampleRate,          0, "44"
+HKR,    ,                         BusNumber,           0, "0" 
+HKR, Ndi,                         Service,             0, "SDRMiniport"
+HKR, Ndi\Interfaces,              UpperRange,          0, "ndis5"
+HKR, Ndi\Interfaces,              LowerRange,          0, "ethernet"
+
+;-----------------------------------------------------------------------------
+; Driver and Service Section
+;
+[SDRMiniport.CopyFiles]
+SDRMiniport.sys,,,2
+
+[SDRMiniport.Service]
+DisplayName     = %SDRMiniport.Service.DispName%
+ServiceType     = 1 ;%SERVICE_KERNEL_DRIVER%
+StartType       = 3 ;%SERVICE_DEMAND_START%
+ErrorControl    = 1 ;%SERVICE_ERROR_NORMAL%
+ServiceBinary   = %12%\SDRMiniport.sys
+LoadOrderGroup  = NDIS
+;Dependencies    = "Sora Radio Manager Service for PCIE board"
+AddReg          = TextModeFlags.Reg
+
+[SDRMiniport.EventLog]
+AddReg = SDRMiniport.AddEventLog.Reg
+
+[SDRMiniport.AddEventLog.Reg]
+HKR, , EventMessageFile, 0x00020000, "%%SystemRoot%%\System32\netevent.dll"
+HKR, , TypesSupported,   0x00010001, 7
+
+[TextModeFlags.Reg]
+HKR, , TextModeFlags,    0x00010001, 0x0001
+
+[SourceDisksNames]
+1 = %DiskId1%,,,""
+
+[SourceDisksFiles]
+SDRMiniport.sys  = 1,,
+
+;-----------------------------------------------------------------------------
+; DestinationDirs
+;
+[DestinationDirs]
+SDRMiniport.CopyFiles = 12
+
+;-----------------------------------------------------------------------------
+; Localizable Strings
+;
+[Strings]
+Msft                       = "Microsoft"                      
+SDRMiniport.DeviceDesc        = "Microsoft SDR Ethernet Adapter"
+SDRMiniport.Service.DispName    = "Microsoft SDR Miniport"
+DiskId1 = "Microsoft SDR Miniport Device Installation Disk #1"
+

@@ -1,0 +1,15 @@
+!include "$(SORA_ROOT)\build\sources_ke.inc"
+
+TARGETNAME=libbba_modu
+TARGETTYPE=LIBRARY
+
+INCLUDES= \
+    ..\..\inc;\
+    $(INCLUDES)
+
+USER_C_FLAGS = $(USER_C_FLAGS) /DUSER_MODE /DSTATIC_LUT /Fd /TP
+
+SOURCES= \
+    ..\async.c \
+    ..\ademap.c \
+    ..\viterbi.c

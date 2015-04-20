@@ -1,0 +1,36 @@
+!include "$(SORA_ROOT)\build\sources_ke.inc"
+
+TARGETNAME=libbba_lutstu
+TARGETTYPE=LIBRARY
+
+INCLUDES= \
+    ..\..\inc;\
+    $(INCLUDES)
+
+USER_C_FLAGS = $(USER_C_FLAGS) /DOFFLINE /DSTATIC_LUT /Fd
+
+!if "$(DDKBUILDENV)" == "fre"
+MSC_OPTIMIZATION=/O2
+!endif
+
+SOURCES=\
+    ..\conv_encoder_1_2.c \
+    ..\conv_encoder_2_3.c \
+    ..\conv_encoder_3_4.c \
+    ..\interleave_6m.c \
+    ..\interleave_12m.c \
+    ..\interleave_24m.c \
+    ..\interleave_48m.c \
+    ..\preamble_11a.c \
+    ..\preamble16_11a.c \
+    ..\preamble40_11a.c \
+    ..\scramble_11a.c \
+    ..\atan64.c \
+    ..\sin0xffff.c \
+    ..\cos0xffff.c \
+    ..\arg.c \
+    ..\pilotsgn.c \
+    ..\mapa_bpsk.c \
+    ..\mapa_qpsk.c \
+    ..\mapa_16qam.c \
+    ..\mapa_64qam.c \

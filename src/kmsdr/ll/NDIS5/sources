@@ -1,0 +1,42 @@
+!include "$(SORA_ROOT)\build\sources_ke.inc"
+
+TARGETNAME      = sdr_ll
+TARGETTYPE      = LIBRARY
+
+INCLUDES        = \
+                  ..\..\..\bb\dot11b;\
+                  ..\..\..\util\src;\
+                  ..\..\SDRMiniport;\
+                  ..\..\mac; \
+                  $(INCLUDES)
+
+C_DEFINES       = $(C_DEFINES) \
+                  -DNDIS_MINIPORT_DRIVER=1 \
+                  -DNDIS_WDM=1 \
+                  -DIOCTL_INTERFACE \
+                  -DEVENT_TRACING
+                  
+!if !defined(DDK_TARGET_OS) || "$(DDK_TARGET_OS)"=="Win2K"
+#
+# The driver is built in the Win2K build environment
+#
+C_DEFINES       = $(C_DEFINES) -DNDIS50_MINIPORT=1 
+!else 
+#
+# The driver is built in the XP or .NET build environment
+# So let us build NDIS 5.1 version.
+#
+C_DEFINES=$(C_DEFINES) -DNDIS51_MINIPORT=1 
+!endif
+
+
+SOURCES         = \
+                  ..\sdr_ll_main.c \
+                  ..\sdr_ll_util.c \
+                  sdr_ll_recv.c \
+                  sdr_ll_send.c
+   
+RUN_WPP         = \
+                  $(SOURCES) \
+                  -km \
+                  -func:TraceEvents(LEVEL,FLAGS,MSG,...)

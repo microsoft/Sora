@@ -1,0 +1,9 @@
+!include "$(SORA_ROOT)\build\sources_ke.inc"
+
+TARGETNAME      = sora_utility
+TARGETTYPE      = LIBRARY
+
+USER_C_FLAGS = $(USER_C_FLAGS) /TP
+
+SOURCES         = \
+                  mdl.c

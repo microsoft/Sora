@@ -1,0 +1,6 @@
+DIRS    = bb \
+          util \
+          kmsdr \
+          umxsdr \
+          dbgplot-sample \
+		  Samples

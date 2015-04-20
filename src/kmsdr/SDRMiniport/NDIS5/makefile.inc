@@ -1,0 +1,1 @@
+!include "$(SORA_ROOT)\build\makefile.inx"

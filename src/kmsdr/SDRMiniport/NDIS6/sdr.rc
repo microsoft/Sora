@@ -1,0 +1,6 @@
+#define VER_FILEDESCRIPTION_STR     "SDR Miniport Driver"
+#define VER_INTERNALNAME_STR        "SDRMiniport.sys"
+#define VER_ORIGINALFILENAME_STR    "SDRMiniport.sys"
+
+#include "Version.rc"
+

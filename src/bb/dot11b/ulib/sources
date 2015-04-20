@@ -1,0 +1,24 @@
+!include "$(SORA_ROOT)\build\sources_ke.inc"
+
+TARGETNAME      = dot11bbbu
+TARGETTYPE      = LIBRARY
+
+SOURCES         = \
+                  ..\bbb_rx.c \
+                  ..\bbb_descramble.c \
+                  ..\bbb_scramble.c \
+                  ..\bbb_tx.c \
+                  ..\bbb_cck5.c \
+                  ..\bbb_cck11.c \
+                  ..\bbb_dbpsk.c \
+                  ..\bbb_dqpsk.c \
+                  ..\bbb_fir.c \
+                  ..\bbb_spd.c 
+                  
+
+INCLUDES        = $(INCLUDES) \
+				  ..\..\..\inc\bb;
+                  
+USER_C_FLAGS    = $(USER_C_FLAGS) \
+                  /DUSER_MODE \
+                  /TP

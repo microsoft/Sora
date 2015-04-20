@@ -1,0 +1,50 @@
+!include "$(SORA_ROOT)\build\sources_ke.inc"
+
+TARGETNAME  = UMXDot11
+TARGETTYPE  = PROGRAM
+UMTYPE      = console
+    
+USE_MSVCRT  = 1
+
+INCLUDES        = $(INCLUDES) \
+                  ..\..\..\inc\brick; \
+                  ..\brick11\src; \
+                  ..\..\bb\dot11b; \
+                  ..\..\bb\dot11a; \
+                  ..\..\bb\dot11a\inc;  \
+                  ..\..\util\src;    \
+                  $(SORA_ROOT)\build;
+                  
+TARGETLIBS      = $(TARGETLIBS) \
+                  $(TARGETPATH)\*\dot11bbbu.lib \
+				  $(TARGETPATH)\*\dot11bbau.lib \
+				  $(TARGETPATH)\*\libbba_lutstu.lib \
+				  $(TARGETPATH)\*\libbba_modu.lib \
+                  $(SORA_ROOT)\lib\$(BUILD_ALT_DIR)\*\usora.lib\
+                  $(TARGETPATH)\*\sora_utility.lib \
+                  
+C_DEFINES       = $(C_DEFINES) \
+                  -DUSER_MODE
+
+USER_C_FLAGS = $(USER_C_FLAGS) /TP /GR
+
+SOURCES     = \
+              main.c                \
+              dot11atx.c            \
+              dot11arx.c            \
+              dot11btx.c            \
+              dot11brx.c            \
+              dot11atx_fb.cpp       \
+              dot11arx_fb.cpp       \
+              dot11btx_fb.cpp       \
+              dot11brx_fb.cpp       \
+              UMXDot11.rc
+
+NTTARGETFILE2=POSTBUILD
+
+## Use STL
+USE_STL=1
+STL_VER=70
+USE_IOSTREAM=0
+C_DEFINES=$(C_DEFINES) -D_STL70_
+USE_NATIVE_EH=1
